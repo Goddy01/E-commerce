@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from store.views import (
-    HomeView,
+    HomeView, ContactView,
     ShopDetailView, ShopView,
     CartView, CheckoutView,
     )
@@ -26,9 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
     path('shop', ShopView.as_view(), name='shop'),
-    path('shop_details', ShopDetailView.as_view(), name='shop_details'),
+    path('shop_details', ShopDetailView.as_view(), name='shop detail'),
     path('cart', CartView.as_view(), name='cart'),
-    path('checkout', CheckoutView.as_view(), name='checkout')
+    path('checkout', CheckoutView.as_view(), name='checkout'),
+    path('contact', ContactView.as_view(), name='contact'),
 ]
 
 
