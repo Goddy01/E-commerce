@@ -17,10 +17,18 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from store.views import DefView
+from store.views import (
+    HomeView,
+    ShopDetailView, ShopView,
+    CartView, CheckoutView,
+    )
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', DefView.as_view(), name='home')
+    path('', HomeView.as_view(), name='home'),
+    path('shop', ShopView.as_view(), name='shop'),
+    path('shop_details', ShopDetailView.as_view(), name='shop_details'),
+    path('cart', CartView.as_view(), name='cart'),
+    path('checkout', CheckoutView.as_view(), name='checkout')
 ]
 
 
