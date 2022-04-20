@@ -21,6 +21,7 @@ from store.views import (
     HomeView, ContactView,
     ShopDetailView, ShopView,
     CartView, CheckoutView,
+    AddProductView,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +31,7 @@ urlpatterns = [
     path('cart', CartView.as_view(), name='cart'),
     path('checkout', CheckoutView.as_view(), name='checkout'),
     path('contact', ContactView.as_view(), name='contact'),
-    
+    path('add-product', AddProductView.as_view(), name='add product'),
 ]
 
 

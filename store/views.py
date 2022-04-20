@@ -18,3 +18,6 @@ class CheckoutView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = 'contact.html'
+
+class AddProductView(TemplateView):
+    template_name = 'create_product.html'

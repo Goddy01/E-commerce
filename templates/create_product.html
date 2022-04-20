@@ -3,11 +3,11 @@
 {% block title %} {% endblock title %}
 
 {% block content %}
-<div class="w-50 mx-auto" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ccc; padding: 4rem 6rem; border-radius: 20px;margin-top: 10rem;">
+<div class="w-75 mx-auto" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ccc; padding: 4rem 2rem; border-radius: 20px;margin-top: 10rem;">
     <h4 style="text-align: center; margin-bottom: 4rem">Want to sell your product</h4>
     <form>
         <div style="display: flex;">
-            <label for="upload-image" class="m-auto"><img src="img/profile-image.png" style="width: 8rem; height: auto; text-align: center; cursor: pointer; margin-bottom: 3rem"></label>
+            <label for="upload-image" class="m-auto"><img src="{% static 'img/profile-image.png' %}" style="width: 8rem; height: auto; text-align: center; cursor: pointer; margin-bottom: 3rem"></label>
             <input type="file" name="upload-image" accept="image/png, image/gif, image/jpeg" id="upload-image" style="display: none">
         </div>
 
@@ -93,6 +93,8 @@
 
         <textarea placeholder="Description" id="description" style="width: 100%;" rows="10"></textarea>
 
-        <button class="btn btn-primary" style="display: flex; margin: auto; padding: .5rem 2rem">Save</button>
+        <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;">
+            <span style="margin: 0 auto;font-weight: bold;">Save</span>
+        </button>
     </form>
 {% endblock content %}
