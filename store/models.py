@@ -1,7 +1,9 @@
 import uuid
 from django.db import models
+from django.dispatch import receiver
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
+from django.dispatch import receiver
 
 SIZE_CHOICES = (
     ('XS', 'EXTRA SMALL'),
@@ -51,3 +53,11 @@ def pre_save_product_receiver(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.seller + '-' + instance.product_name + '-' + instance.product_id)
 pre_save.connect(pre_save_product_receiver, sender=AddProduct)
+
+
+@receiver(post_delete, sender=AddProduct)
+def submission_delete(sender, instance, **kwargs):
+    """Deletes the image(s) of a product when the correlating product is deleted"""
+    instance.product_image1.delete(False)
+    instance.product_image2.delete(False)
+    instance.product_image3.delete(False)
