@@ -62,7 +62,6 @@ body {
   color: #6F6F6F;
   text-align: left;
   background-color: #fff;
-  color: red;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
