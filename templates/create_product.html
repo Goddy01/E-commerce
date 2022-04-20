@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock title %}
+
+{% block content %}
+<div class="w-50 mx-auto" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ccc; padding: 4rem 6rem; border-radius: 20px;margin-top: 10rem;">
+    <h4 style="text-align: center; margin-bottom: 4rem">Want to sell your product</h4>
+    <form>
+        <div style="display: flex;">
+            <label for="upload-image" class="m-auto"><img src="img/profile-image.png" style="width: 8rem; height: auto; text-align: center; cursor: pointer; margin-bottom: 3rem"></label>
+            <input type="file" name="upload-image" accept="image/png, image/gif, image/jpeg" id="upload-image" style="display: none">
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <label for="product-name">Product name</label>
+            <input type="text" name="product-name" id="product-name">
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- PRICE -->
+            <label for="product-price">Price</label>
+            <input type="number" name="product-price" id="product-price">
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- SIZE -->
+            <label for="">Size</label>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+                <span style="display: flex; align-items: center">
+                    <input type="checkbox" name="XS" id="" style="margin-right: 1rem;">XS
+                </span>
+                <span style="display: flex; align-items: center">
+                    <input type="checkbox" name="S" id="" style="margin-right: 1rem;">S
+                </span>
+                <span style="display: flex; align-items: center">
+                    <input type="checkbox" name="M" id="" style="margin-right: 1rem;">M
+                </span>
+                <span style="display: flex; align-items: center">
+                    <input type="checkbox" name="L" id="" style="margin-right: 1rem;">L
+                </span>
+                <span style="display: flex; align-items: center">
+                    <input type="checkbox" name="XL" id="" style="margin-right: 1rem;">XL
+                </span>
+            </div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <label for="available-product">Number available</label>
+            <input type="number" name="available-product" id="available-product">
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- COLOR -->
+            <label for="product-color">Color</label>
+            <select name="product-color" id="product-color">
+                <option value="red">red</option>
+                <option value="blue">blue</option>
+                <option value="green">green</option>
+                <option value="white">white</option>
+                <option value="black">black</option>
+            </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- Weight -->
+            <label for="product-weight">Weight</label>
+            <input type="number" name="product-weight" id="product-weight">
+        </div>
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- Dimensions -->
+            <label for="product-dimensions">Dimensions</label>
+            <div style="display: flex">
+                <div style="display: flex">
+                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; width: 4rem"> x
+                </div>
+                <div style="display: flex">
+                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; 
+                    margin-left: .5rem;width: 4rem"> x
+                </div>
+                <div style="display: flex">
+                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; 
+                    margin-left: .5rem;width: 4rem">
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
+            <!-- Product Materials -->
+            <label for="product-materials">Materials</label>
+            <input type="text" name="product-materials" id="product-materials">
+        </div>
+
+        <textarea placeholder="Description" id="description" style="width: 100%;" rows="10"></textarea>
+
+        <button class="btn btn-primary" style="display: flex; margin: auto; padding: .5rem 2rem">Save</button>
+    </form>
+{% endblock content %}

@@ -4,34 +4,17 @@ $primary: #D19C97;
 $secondary: #EDF1FF;
 $light: #FFFFFF;
 $dark: #1C1C1C;
-
-$theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "light": $light,
-    "dark": $dark,
-);
-
+$theme-colors: ( "primary": $primary, "secondary": $secondary, "light": $light, "dark": $dark, );
 $font-family-sans-serif: 'Poppins', sans-serif;
-
 $body-color: #6F6F6F;
-
 $headings-color: $dark;
-
 $border-color: $secondary;
-
 $input-border-color: $secondary;
-
 $enable-responsive-font-sizes: true;
-
 $enable-rounded: false;
-
 $btn-focus-box-shadow: none;
-
 $btn-active-box-shadow: none;
-
 $input-btn-focus-box-shadow: none;
-
 $input-placeholder-color: #999999;
 
 @import "bootstrap/scss/bootstrap";
