@@ -1,5 +1,7 @@
 import uuid
 from django.db import models
+from django.utils.text import slugify
+from django.db.models.signals import pre_save, post_delete
 
 SIZE_CHOICES = (
     ('XS', 'EXTRA SMALL'),
@@ -44,3 +46,8 @@ class AddProduct(models.Model):
         return self.product_name
 
 
+def pre_save_product_receiver(sender, instance, **kwargs):
+    """Checks if a product has a slug, if not it creates one before committing to the database"""
+    if not instance.slug:
+        instance.slug = slugify(instance.seller + '-' + instance.product_name + '-' + instance.product_id)
+pre_save.connect(pre_save_product_receiver, sender=AddProduct)
