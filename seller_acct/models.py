@@ -46,8 +46,9 @@ class Vendor_Acct(AbstractBaseUser):
     is_active               = models.BooleanField(default=True)
     is_superuser            = models.BooleanField(default=False)
 
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', ]
+    REQUIRED_FIELDS = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num']
 
     objects = AccountManager()
 
