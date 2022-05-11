@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Vendor Registration{% endblock title %}
+
+{% block content %}
+    {% csrf_token %}
+    {% form.as_p %}
+{% endblock content %}
