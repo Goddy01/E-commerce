@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
+from .models import Vendor_Acct
 
 class VendorRegForm(UserCreationForm):
     """The form for vendors to register their accounts."""
-    fields = ('fullname', 'username', 'address', 'first_phone_number', 'second_phone_number')
+    class Meta:
+        model = Vendor_Acct
+        fields = ('fullname', 'username', 'address', 'first_phone_number', 'second_phone_number')
