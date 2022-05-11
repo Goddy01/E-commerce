@@ -15,7 +15,7 @@ def vendor_reg_view(request):
             context['success_message'] = 'Account Creation Successful!'
             return redirect(login)
         else:
-            form = VendorRegForm()
+            context['form'] = form
     else:
         context['form'] = VendorRegForm()
-    return render(request, 'login.html', context)
+    return render(request, 'seller_acct/register.html', context)

@@ -3,6 +3,8 @@
 {% block title %}Vendor Registration{% endblock title %}
 
 {% block content %}
-    {% csrf_token %}
-    {% form.as_p %}
+    <form action="" style="margin-left: 5rem; color: black;">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>    
 {% endblock content %}
