@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Vendor Login{% endblock title %}
+
+{% block content %}
+    <form action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+{% endblock content %}
