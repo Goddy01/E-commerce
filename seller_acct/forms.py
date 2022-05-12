@@ -9,14 +9,14 @@ class VendorRegForm(UserCreationForm):
     email = forms.EmailField(max_length=128, help_text="Provide a valid email address.")
     class Meta:
         model = Vendor_Acct
-        fields = ('fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email')
+        fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email']
 
 
 class VendorLoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
     class Meta:
         model = Vendor_Acct
-        fields = ('email', 'password')
+        fields = ['email', 'password']
 
     def clean(self):
         if self.is_valid():

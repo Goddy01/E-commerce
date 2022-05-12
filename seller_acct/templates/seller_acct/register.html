@@ -3,13 +3,19 @@
 {% block title %}Vendor Registration{% endblock title %}
 
 {% block content %}
-    <form action="" style="color: black;padding: 30px;">
-        {% csrf_token %}
-        {{ form.as_p }}
-    </form>
-    <p>
-        <a href="{% url 'vendor login' %}">
-            Already have an account?Login
-        </a>
-    </p>
+    <div class="content text-dark p-5">
+        <form action="" class="mb-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="px-5 py-2" style="background-color: #C5837C;">
+                Submit
+            </button>
+        </form>
+        <p>
+            <a href="{% url 'vendor login' %}" class="text-dark">
+                Already have an account? <span style="color: blue;">Login</span>
+            </a>
+        </p>
+    </div>
 {% endblock content %}

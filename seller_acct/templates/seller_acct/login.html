@@ -3,13 +3,19 @@
 {% block title %}Vendor Login{% endblock title %}
 
 {% block content %}
-    <form action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-    </form>
-    <p>
-        <a href="{% url 'vendor login' %}">
-            Don't have an account?Register
-        </a>
-    </p>
+    <div class="content text-dark p-5 mx-auto">
+        <form action="" class="mb-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="px-5 py-2" style="background-color: #C5837C;">
+                Login
+            </button>
+        </form>
+        <p class="mx-auto">
+            <a href="{% url 'vendor reg' %}" class="text-dark">
+                Don't have an account? <span style="color: blue;">Register</span>
+            </a>
+        </p>
+    </div>
 {% endblock content %}
