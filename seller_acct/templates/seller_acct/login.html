@@ -7,4 +7,9 @@
         {% csrf_token %}
         {{ form.as_p }}
     </form>
+    <p>
+        <a href="{% url 'vendor login' %}">
+            Don't have an account?Register
+        </a>
+    </p>
 {% endblock content %}
