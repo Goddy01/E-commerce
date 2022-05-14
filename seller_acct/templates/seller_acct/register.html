@@ -10,7 +10,7 @@
     </style>
     <div class="content text-dark p-5">
         <h2 style="text-align: center;">Register as a Vendor</h2>
-        <form class="mb-4" method="POST" action="{% url 'vendor login' %}">
+        <form class="mb-4" method="POST">
             {% csrf_token %}
                 <div class="form-group">
                   <label for="fullname">Fullname</label>
@@ -48,7 +48,7 @@
             {% for field in form %}
                 <p>
                     {% for error in field.errors %}
-                        <b style="color: rgb(175, 23, 23);">{{error}}</b>
+                        <p style="color: rgb(175, 23, 23);">{{error}}</p>
                     {% endfor %}
                 </p>
             {% endfor %}
@@ -62,6 +62,7 @@
             <button class="mt-4 px-5 py-2" style="background-color: #C5837C;" type="submit">
                 Submit
             </button>
+            <p class="text-center text-success">{{success_message}}</p>
         </form>
         <p>
             <a href="{% url 'vendor login' %}" class="text-dark">
