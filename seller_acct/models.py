@@ -49,7 +49,7 @@ class Vendor_Acct(AbstractBaseUser):
 
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email']
+    REQUIRED_FIELDS = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email', ]
 
     objects = AccountManager()
 
