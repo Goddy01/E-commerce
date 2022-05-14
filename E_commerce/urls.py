@@ -33,8 +33,8 @@ urlpatterns = [
     path('checkout', CheckoutView.as_view(), name='checkout'),
     path('contact', ContactView.as_view(), name='contact'),
     path('add-product', AddProductView.as_view(), name='add product'),
-    path('vendor-login', vendor_reg_view, name='vendor reg'),
-    path('vendor-reg/', vendor_login_view, name='vendor login'),
+    path('vendor-reg', vendor_reg_view, name='vendor reg'),
+    path('vendor-login/', vendor_login_view, name='vendor login'),
 ]
 
 

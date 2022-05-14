@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="content text-dark p-5">
-        <form action="" class="mb-4">
+        <form class="mb-4" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
 
