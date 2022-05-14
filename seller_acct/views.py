@@ -28,13 +28,13 @@ def vendor_login_view(request):
         form = VendorLoginForm(request.POST)
 
         if form.is_valid():
-            email = request.POST.get('email').lower()
-            password = request.POST.get('password')
+            email = request.POST['email']
+            password = request.POST['password']
 
-            user = authenticate(email=email, password=password)
-            if user:
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('home')
     else:
         form = VendorLoginForm()
     context['form'] = form
