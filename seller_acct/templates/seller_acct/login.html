@@ -20,6 +20,24 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
             </div>
 
+            <div class="errors" style="margin-left: 2rem;">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p style="color: rgb(175, 23, 23);">
+                            {{error}}
+                        </p>
+                    {% endfor %}
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                    <div style="color: rgb(175, 23, 23);">
+                        {{form.non_field_errors}}
+                    </div>
+                {% endif %}
+            </div>
+
+
+
             <button class="px-5 py-2" style="background-color: #C5837C;margin-left: 3rem;">
                 Login
             </button>

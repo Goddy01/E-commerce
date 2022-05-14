@@ -45,19 +45,21 @@
                     <input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat your password" required>
                 </div>
 
-            {% for field in form %}
-                <p>
+            <div class="errors">
+                {% for field in form %}
+                    <p>
                     {% for error in field.errors %}
                         <p style="color: rgb(175, 23, 23);">{{error}}</p>
                     {% endfor %}
-                </p>
-            {% endfor %}
+                    </p>
+                {% endfor %}
     
-            {% if form.non_field_errors %}
+                {% if form.non_field_errors %}
                     <div style="color: rgb(175, 23, 23);">
                         {{form.non_field_errors}}
                     </div>
-            {% endif %}
+                {% endif %}
+            </div>
 
             <button class="mt-4 px-5 py-2" style="background-color: #C5837C;margin-left: 3rem;" type="submit">
                 Submit
