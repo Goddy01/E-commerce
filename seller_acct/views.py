@@ -13,7 +13,7 @@ def vendor_reg_view(request):
             user = form.save()
             login(request, user)
             context['success_message'] = 'Account Creation Successful!'
-            return redirect(login)
+            return redirect('vendor login')
         else:
             context['form'] = form
     else:
