@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class SellerAcctConfig(AppConfig):
+class VendorsAcctConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'seller_acct'
+    name = 'Vendors_Acct'
