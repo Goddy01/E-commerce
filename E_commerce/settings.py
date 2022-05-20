@@ -32,19 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-        # My Apps
-    'seller_acct',
-    'custmr_acct',
-    'store',
-    'phonenumber_field',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+        # My Apps
+    'Vendors_Acct',
+    'custmr_acct',
+    'store',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +143,5 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 # LOGIN_REDIRECT_URL = 'checkout'
 # LOGOUT_REDIRECT_URL = 'venlogin'
+
+AUTH_USER_MODEL = 'Vendors_Acct.Vendor_Acct'

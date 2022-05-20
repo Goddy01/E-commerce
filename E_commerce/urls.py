@@ -34,7 +34,7 @@ urlpatterns = [
     path('add-product', AddProductView.as_view(), name='add product'),
     # path('vendor-reg/', vendor_reg_view, name='vendor reg'),
     # path('vendor-login/', vendor_login_view, name='vendor login'),
-    path('vendors/', include('Vendors_Acct.urls')),
+    path('vendors/', include('Vendors_Acct.urls', namespace='vendor')),
 ]
 
 
