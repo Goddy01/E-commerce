@@ -19,9 +19,8 @@ def vendor_reg_view(request):
         'form': form, 
         'msg': msg, 
         })
-    
 
-    return render()
+
 
 def vendor_login_view(request):
     form = VendorLoginForm(request.POST or None)
