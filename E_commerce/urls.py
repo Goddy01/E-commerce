@@ -36,17 +36,17 @@ urlpatterns = [
     path('add-product', AddProductView.as_view(), name='add product'),
     path('vendors/', include('Vendors_Acct.urls', namespace='vendor')),
 
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password/password_reset.html'), name='password reset'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password/password_reset.html'), name='password_reset'),
     
-    path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_done.html"), name="pasword reset done"),
+    path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name="password/password_reset_done.html"), name="pasword_reset_done"),
     
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password/password_reset_form.html'), name="password reset confirm"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password/password_reset_form.html'), name="password_reset_confirm"),
     
-    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name="password/password_change_done.html"), name="password change done"),
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name="password/password_change_done.html"), name="password_change_done"),
 
-    path('password_change/', auth_views.PasswordChangeView.as_view(template_name='password/password_change.html'), name='password change'),
+    path('password_change/', auth_views.PasswordChangeView.as_view(template_name='password/password_change.html'), name='password_change'),
     
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password/password_reset_complete.html'), name="password reset complete"),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password/password_reset_complete.html'), name="password_reset_complete"),
 ]
 
 
