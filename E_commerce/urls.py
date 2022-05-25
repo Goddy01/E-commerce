@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from store.views import (
     HomeView, ContactView,
     ShopDetailView, ShopView,
@@ -33,7 +34,13 @@ urlpatterns = [
     path('contact', ContactView.as_view(), name='contact'),
     path('add-product', AddProductView.as_view(), name='add product'),
     path('vendors/', include('Vendors_Acct.urls', namespace='vendor')),
-    
+
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password/password_reset.html'), name='password reset'),
+    # path(),
+    # path(),
+    # path(),
+    # path(),
+    # path(),
 ]
 
 
