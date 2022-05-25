@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 
+
+# import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
@@ -32,17 +35,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+        # My Apps
+    'Vendors_Acct',
+    'custmr_acct',
+    'store',
+    'phonenumber_field',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-        # My Apps
-    'Vendors_Acct',
-    'custmr_acct',
-    'store',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'E_commerce.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -89,6 +95,14 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -145,3 +159,13 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 # LOGOUT_REDIRECT_URL = 'venlogin'
 
 AUTH_USER_MODEL = 'Vendors_Acct.Vendor_Acct'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = '587'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = 'Bloggie <noreply@bloggie-blogapp.com>'
+# SERVER_EMAIL = 'bloggie.blogapp@gmail.com'
