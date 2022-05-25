@@ -43,9 +43,12 @@
                 Login
             </button>
         </form>
-        <p class="mx-auto">
-            <a href="{% url 'vendor:registration' %}" class="text-dark" style="margin-left: 3rem;">
+        <p class="" style="margin-left: 3rem;">
+            <a href="{% url 'vendor:registration' %}" class="text-dark">
                 Don't have an account? <span style="color: blue;">Register</span>
+            </a>
+            <a href="{% url 'password reset' %}" class="d-block mt-2" style="color: blue;">
+                Forgot Password?
             </a>
         </p>
     </div>
