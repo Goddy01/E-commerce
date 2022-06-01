@@ -22,4 +22,4 @@ class AccountAdmin(UserAdmin):
     #     }),
     # )
 
-admin.site.register(Vendor_Acct, AccountAdmin)
+admin.site.register(User_Acct, AccountAdmin)
