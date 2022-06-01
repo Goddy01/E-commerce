@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Vendor_Acct
+from .models import User_Acct
 # Register your models here.
 class AccountAdmin(UserAdmin):
     list_display = ('fullname', 'username', 'address', 'email', 'first_phone_num', 'second_phone_num', 'date_joined', 'last_login', 'is_admin', 'is_staff')
