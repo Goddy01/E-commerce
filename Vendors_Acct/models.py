@@ -52,7 +52,7 @@ class AccountManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
 
-class Vendor_Acct(AbstractBaseUser):
+class User_Acct(AbstractBaseUser):
     fullname =                      models.CharField(max_length=256)
     username =                      models.CharField(max_length=256, unique=True)
     email =                         models.EmailField(max_length=128, unique=True)
@@ -66,6 +66,8 @@ class Vendor_Acct(AbstractBaseUser):
     is_staff                = models.BooleanField(default=False)
     is_active               = models.BooleanField(default=True)
     is_superuser            = models.BooleanField(default=False)
+    is_vendor               = models.BooleanField(default=False)
+    is_customer             = models.BooleanField(default=False)
 
 
     USERNAME_FIELD = 'email'
