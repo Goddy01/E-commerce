@@ -1,9 +1,9 @@
-from .views import vendor_reg_view, vendor_login_view
+from .views import user_reg_view, user_login_view
 from django.urls import path
 
-app_name = 'vendor'
+app_name = 'user'
 
 urlpatterns = [
-    path('reg/', vendor_reg_view, name='registration'),
-    path('login/', vendor_login_view, name='login')
+    path('reg/', user_reg_view, name='registration'),
+    path('login/', user_login_view, name='login')
 ]

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import VendorRegForm, VendorLoginForm
+from .forms import UserRegForm, UserLoginForm
 # Create your views here.
-def vendor_reg_view(request):
+def user_reg_view(request):
     msg = None
     if request.method == 'POST':
-        form = VendorRegForm(request.POST)
+        form = UserRegForm(request.POST)
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
@@ -14,16 +14,16 @@ def vendor_reg_view(request):
             msg = 'Form is Invalid!'
 
     else:
-        form = VendorRegForm()
-    return render(request, 'Vendors_Acct/register.html', {
+        form = UserRegForm()
+    return render(request, 'Accounts/register.html', {
         'form': form, 
         'msg': msg, 
         })
 
 
 
-def vendor_login_view(request):
-    form = VendorLoginForm(request.POST or None)
+def user_login_view(request):
+    form = UserLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
@@ -39,7 +39,7 @@ def vendor_login_view(request):
                 msg = 'User does not exist.'
         else:
             msg = 'Validation Error'
-    return render(request, 'Vendors_Acct/login.html', {
+    return render(request, 'Accounts/login.html', {
         'form': form,
         'msg': msg,
     })
