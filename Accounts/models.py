@@ -118,6 +118,6 @@ class Customer(User_Acct):
         proxy = True
 
     def save(self, *args, **kwargs):
-        if not slef.pk:
+        if not self.pk:
             self.type = User_Acct.Types.CUSTOMER
         return super().save(*args, **kwargs)
