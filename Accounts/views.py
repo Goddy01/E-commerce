@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegForm, UserLoginForm
+from .forms import CustomerRegForm, CustomerLoginForm
 # Create your views here.
 def user_reg_view(request):
     msg = None
     if request.method == 'POST':
-        form = UserRegForm(request.POST)
+        form = CustomerRegForm(request.POST)
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
@@ -13,7 +13,7 @@ def user_reg_view(request):
         else:
             msg = 'Form is Invalid!'
     else:
-        form = UserRegForm()
+        form = CustomerRegForm()
     return render(request, 'Accounts/register.html', {
         'form': form, 
         'msg': msg, 
@@ -22,7 +22,7 @@ def user_reg_view(request):
 
 
 def user_login_view(request):
-    form = UserLoginForm(request.POST or None)
+    form = CustomerLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
@@ -47,5 +47,3 @@ def user_login_view(request):
         'form': form,
         'msg': msg,
     })
-
-    return render()
