@@ -93,6 +93,11 @@ class User_Acct(AbstractBaseUser):
         CUSTOMER = "CUSTOMER", "Customer"
 
     type =                          models.CharField(max_length=50, default=Types.CUSTOMER, choices=Types.choices, verbose_name='Type')
+
+class VendorManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super.get_queryset(*args, **kwargs).filter(type=User_Acct.Types.VENDOR)
+
 class Vendor(User_Acct):
     class Meta:
         proxy = True
