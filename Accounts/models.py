@@ -52,6 +52,23 @@ class AccountManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
 
+
+class Role(models.Model):
+    CUSTOMER = 1
+    VENDOR = 2
+    ADMIN = 3
+
+    ROLE_CHOICES = (
+        (CUSTOMER, 'customer'),
+        (VENDOR, 'vendor'),
+        (ADMIN, 'admin'),
+    )
+
+    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
+
+    def __str__(self):
+        return self.get_id_display()
+
 class User_Acct(AbstractBaseUser):
     fullname =                      models.CharField(max_length=256)
     username =                      models.CharField(max_length=256, unique=True)
@@ -87,18 +104,4 @@ class User_Acct(AbstractBaseUser):
         """Checks if the user has permission to view the app 'app_label'"""
         return True
 
-class Role(models.Model):
-    CUSTOMER = 1
-    VENDOR = 2
-    ADMIN = 3
 
-    ROLE_CHOICES = (
-        (CUSTOMER, 'customer'),
-        (VENDOR, 'vendor'),
-        (ADMIN, 'admin'),
-    )
-
-    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
-
-    def __str__(self):
-        return self.get_id_display()

@@ -37,8 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
         # My Apps
-    'Vendors_Acct',
-    'custmr_acct',
+    'Accounts',
     'store',
     'phonenumber_field',
 
@@ -158,7 +157,7 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 # LOGIN_REDIRECT_URL = 'checkout'
 # LOGOUT_REDIRECT_URL = 'venlogin'
 
-AUTH_USER_MODEL = 'Vendors_Acct.Vendor_Acct'
+AUTH_USER_MODEL = 'Accounts.User_Acct'
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
