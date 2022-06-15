@@ -92,3 +92,10 @@ class User_Acct(AbstractBaseUser):
         """Checks if the user has permission to view the app 'app_label'"""
         return True
 
+class Vendor(User_Acct):
+    class Meta:
+        proxy = True
+
+class Customer(User_Acct):
+    class Meta:
+        proxy = True
