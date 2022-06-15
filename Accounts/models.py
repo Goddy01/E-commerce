@@ -116,3 +116,8 @@ class Customer(User_Acct):
     objects = CustomerManager()
     class Meta:
         proxy = True
+
+    def save(self, *args, **kwargs):
+        if not slef.pk:
+            self.type = User_Acct.Types.CUSTOMER
+        return super().save(*args, **kwargs)
