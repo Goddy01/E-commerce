@@ -108,5 +108,6 @@ class Vendor(User_Acct):
         proxy = True
 
 class Customer(User_Acct):
+    objects = CustomerManager()
     class Meta:
         proxy = True
