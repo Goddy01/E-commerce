@@ -12,7 +12,6 @@ def user_reg_view(request):
             return redirect('vendor:login')
         else:
             msg = 'Form is Invalid!'
-
     else:
         form = UserRegForm()
     return render(request, 'Accounts/register.html', {
@@ -34,7 +33,12 @@ def user_login_view(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('checkout')
+                print(user.type)
+                if user.type == "CUSTOMER":
+                    return redirect('checkout')
+                elif user.type == "VENDOR":
+                    return redirect('add product')
+                # return redirect('checkout')
             else:
                 msg = 'User does not exist.'
         else:

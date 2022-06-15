@@ -1,20 +1,20 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib.auth import authenticate
-from .models import User_Acct
+from .models import Customer, Vendor
 
-class UserRegForm(UserCreationForm):
-    """The form for vendors to register their accounts."""
+class CustomerRegForm(UserCreationForm):
+    """The form for Customers to register their accounts."""
     email = forms.EmailField(max_length=128, help_text="Provide a valid email address.")
     class Meta:
-        model = User_Acct
+        model = Customer
         fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
 
 
-class UserLoginForm(forms.ModelForm):
+class CustomerLoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
     class Meta:
-        model = User_Acct
+        model = Customer
         fields = ['email', 'password']
 
     def clean(self):
