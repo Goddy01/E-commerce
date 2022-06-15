@@ -98,7 +98,9 @@ class VendorManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return super.get_queryset(*args, **kwargs).filter(type=User_Acct.Types.VENDOR)
 
-
+class CustomerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super.get_queryset(*args, **kwargs).filter(type=User_Acct.Types.CUSTOMER)
 
 class Vendor(User_Acct):
     objects = VendorManager()
