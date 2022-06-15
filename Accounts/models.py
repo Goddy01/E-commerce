@@ -54,11 +54,7 @@ class AccountManager(BaseUserManager):
 
 
 class User_Acct(AbstractBaseUser):
-    class Types(models.TextChoices):
-        VENDOR = "VENDOR", "Vendor"
-        CUSTOMER = "CUSTOMER", "Customer"
 
-    type =                          models.CharField(max_length=50, verbose_name='Type', default=Types, choices=Types.choices)
     fullname =                      models.CharField(max_length=256)
     username =                      models.CharField(max_length=256, unique=True)
     email =                         models.EmailField(max_length=128, unique=True)
@@ -92,6 +88,11 @@ class User_Acct(AbstractBaseUser):
         """Checks if the user has permission to view the app 'app_label'"""
         return True
 
+    class Types(models.TextChoices):
+        VENDOR = "VENDOR", "Vendor"
+        CUSTOMER = "CUSTOMER", "Customer"
+
+    type =                          models.CharField(max_length=50, default=Types.CUSTOMER, choices=Types.choices, verbose_name='Type')
 class Vendor(User_Acct):
     class Meta:
         proxy = True
