@@ -68,6 +68,7 @@ class User_Acct(AbstractBaseUser):
     is_superuser            = models.BooleanField(default=False)
     is_vendor               = models.BooleanField(default=False)
     is_customer             = models.BooleanField(default=False)
+    roles                   = models.ManyToManyField(Role)
 
 
     USERNAME_FIELD = 'email'
@@ -85,3 +86,19 @@ class User_Acct(AbstractBaseUser):
     def has_module_perms(self, app_label):
         """Checks if the user has permission to view the app 'app_label'"""
         return True
+
+class Role(models.Model):
+    CUSTOMER = 1
+    VENDOR = 2
+    ADMIN = 3
+
+    ROLE_CHOICES = (
+        (CUSTOMER, 'customer'),
+        (VENDOR, 'vendor'),
+        (ADMIN, 'admin'),
+    )
+
+    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
+
+    def __str__(self):
+        return self.get_id_display()
