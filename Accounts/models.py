@@ -68,8 +68,8 @@ class User_Acct(AbstractBaseUser):
     is_staff                = models.BooleanField(default=False)
     is_active               = models.BooleanField(default=True)
     is_superuser            = models.BooleanField(default=False)
-    is_vendor               = models.BooleanField(default=False)
-    is_customer             = models.BooleanField(default=False)
+    # is_vendor               = models.BooleanField(default=False)
+    # is_customer             = models.BooleanField(default=False)
 
 
     USERNAME_FIELD = 'email'
@@ -96,12 +96,12 @@ class User_Acct(AbstractBaseUser):
 
 class VendorManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        User_Acct.is_vendor = True
+        # User_Acct.is_vendor = True
         return super().get_queryset(*args, **kwargs).filter(type=User_Acct.Types.VENDOR)
 
 class CustomerManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        User_Acct.is_customer = True
+        # User_Acct.is_customer = True
         return super().get_queryset(*args, **kwargs).filter(type=User_Acct.Types.CUSTOMER)
 
 class Vendor(User_Acct):
@@ -111,7 +111,7 @@ class Vendor(User_Acct):
         
     def save(self, *args, **kwargs):
         if not self.pk:
-            User_Acct.is_vendor = True
+            # User_Acct.is_vendor = True
             self.type = User_Acct.Types.VENDOR
         return super().save(*args, **kwargs)
 
@@ -122,6 +122,6 @@ class Customer(User_Acct):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            User_Acct.is_customer = True
+            # User_Acct.is_customer = True
             self.type = User_Acct.Types.CUSTOMER
         return super().save(*args, **kwargs)
