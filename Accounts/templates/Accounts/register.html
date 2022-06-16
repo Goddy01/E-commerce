@@ -10,7 +10,7 @@
     </style>
     <div class="content text-dark p-5">
         <h2 style="text-align: center;">Register as a Vendor</h2>
-        <form class="mb-4" method="POST" action="{% url 'vendor:registration' %}">
+        <form class="mb-4" method="POST" action="{% url 'user:registration' %}">
             {% csrf_token %}
                 <div class="form-group">
                   <label for="fullname">Fullname</label>
@@ -67,7 +67,7 @@
             <p class="text-center text-success">{{success_message}}</p>
         </form>
         <p style="margin-left: 3rem;">
-        <a href="{% url 'vendor:login' %}" class="text-dark">
+        <a href="{% url 'user:login' %}" class="text-dark">
                 Already have an account? <span style="color: blue;">Login</span>
             </a>
         </p>

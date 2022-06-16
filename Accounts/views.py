@@ -15,7 +15,7 @@ def user_reg_view(request):
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
-            return redirect('vendor:login')
+            return redirect('user:login')
         else:
             msg = 'Form is Invalid!'
     else:
