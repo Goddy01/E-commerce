@@ -186,15 +186,9 @@
                             <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            {{request.user.type}}
-                            {% with request.user.type as "CUSTOMER" %}
-                                <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Customer</a>
-                            {% endwith %}
+                            <a href="{% url 'user:c_reg' %}" class="nav-item nav-link">Register/Login as a Customer</a>
                             
-                            {% with request.user.type as "VENDOR" %}
-                            {{request.user.type}}
-                                <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Vendor</a>
-                            {% endwith %}
+                            <a href="{% url 'user:v_reg' %}" class="nav-item nav-link">Register/Login as a Vendor</a>
                         </div>
                     </div>
                 </nav>
