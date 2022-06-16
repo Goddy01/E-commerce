@@ -5,7 +5,7 @@
 {% block content %}
 <style>
     .form-group{
-        margin: 3rem;
+        margin: .3rem;
     }
 </style>
     <div class="content text-dark p-5 mx-auto">
@@ -39,11 +39,11 @@
 
 
 
-            <button class="px-5 py-2" style="background-color: #C5837C;margin-left: 3rem;">
+            <button class="px-5 py-2" style="background-color: #C5837C;margin-left: .3rem;">
                 Login
             </button>
         </form>
-        <p class="" style="margin-left: 3rem;">
+        <p class="" style="margin-left: .3rem;">
             {% if request.user.type == "CUSTOMER" %}
                 <a href="{% url 'user:c_reg' %}" class="text-dark">
                     Don't have an account? <span style="color: blue;">Register</span>

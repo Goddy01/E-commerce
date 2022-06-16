@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import (
-    CustomerRegForm, CustomerLoginForm, 
-    VendorRegForm, VendorLoginForm)
+    CustomerRegForm,
+    VendorRegForm, UserLoginForm)
 
 # Create your views here.
-def vendor_reg_view(request):
+def customer_reg_view(request):
     msg = None
+    request.user.type = "CUSTOMER"
     if request.method == 'POST':
-        request.user.type = "CUSTOMER"
         form = CustomerRegForm(request.POST)
         if form.is_valid():
             form.save()
@@ -23,10 +23,10 @@ def vendor_reg_view(request):
         'msg': msg, 
         })
 
-def customer_reg_view(request):
+def vendor_reg_view(request):
     msg = None
+    request.user.type = "VENDOR"
     if request.method == 'POST':
-        request.user.type = "VENDOR"
         form = VendorRegForm(request.POST)
         if form.is_valid():
             form.save()
@@ -35,14 +35,14 @@ def customer_reg_view(request):
         else:
             msg = 'Form is Invalid!'
     else:
-        form = CustomerRegForm()
+        form = VendorRegForm()
     return render(request, 'Accounts/register.html', {
         'form': form, 
         'msg': msg, 
         })
 
 def user_login_view(request):
-    form = CustomerLoginForm(request.POST or None)
+    form = UserLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
