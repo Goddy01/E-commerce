@@ -33,7 +33,7 @@ class VendorRegForm(UserCreationForm):
         fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
 
 
-class CustomerLoginForm(forms.ModelForm):
+class VendorLoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
     class Meta:
         model = Vendor
