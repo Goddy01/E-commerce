@@ -10,7 +10,12 @@
     </style>
     <div class="content text-dark p-5">
         <h2 style="text-align: center;">Register as a Vendor</h2>
-        <form class="mb-4" method="POST" action="{% url 'user:registration' %}">
+        {% if request.user.type == "CUSTOMER" %}
+            <form class="mb-4" method="POST" action="{% url 'user:c_reg' %}">
+        {% elif request.user.type == "VENDOR" %}
+            <form class="mb-4" method="POST" action="{% url 'user:v_reg' %}">
+        {% endif %}
+        
             {% csrf_token %}
                 <div class="form-group">
                   <label for="fullname">Fullname</label>
