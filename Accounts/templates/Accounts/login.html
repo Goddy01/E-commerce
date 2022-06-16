@@ -9,11 +9,7 @@
     }
 </style>
     <div class="content text-dark p-5 mx-auto">
-        {% if request.user.type == "CUSTOMER" %}
-            <h2 style="text-align: center;">Login as a Customer</h2>
-        {% elif request.user.type == "VENDOR" %}
-            <h2 style="text-align: center;">Login as a Vendor</h2>
-        {% endif %}
+        <h1 style="text-align: center;">Login</h1>
         <form action="{% url 'user:login' %}" class="mb-4" method="POST">
             {% csrf_token %}
             <div class="form-group">
