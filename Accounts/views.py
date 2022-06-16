@@ -5,13 +5,11 @@ from .forms import (
     VendorRegForm, VendorLoginForm)
 
 # Create your views here.
-def user_reg_view(request):
+def vendor_reg_view(request):
     msg = None
     if request.method == 'POST':
-        if request.user.type == "CUSTOMER":
-            form = CustomerRegForm(request.POST)
-        elif request.user.type == "VENDOR":
-            form = VendorLoginForm(request.POST)
+        request.user.type = "CUSTOMER"
+        form = CustomerRegForm(request.POST)
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
@@ -25,13 +23,26 @@ def user_reg_view(request):
         'msg': msg, 
         })
 
-
+def customer_reg_view(request):
+    msg = None
+    if request.method == 'POST':
+        request.user.type = "VENDOR"
+        form = VendorRegForm(request.POST)
+        if form.is_valid():
+            form.save()
+            msg = 'Account created successfully'
+            return redirect('user:login')
+        else:
+            msg = 'Form is Invalid!'
+    else:
+        form = CustomerRegForm()
+    return render(request, 'Accounts/register.html', {
+        'form': form, 
+        'msg': msg, 
+        })
 
 def user_login_view(request):
-    if request.user.type == "CUSTOMER":
-        form = CustomerLoginForm(request.POST or None)
-    elif request.user.type == "VENDOR":
-        form = VendorLoginForm(request.POST or None)
+    form = CustomerLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():

@@ -186,11 +186,15 @@
                             <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            {{ request.user.type|assign_variable:"CUSTOMER" }}
-                            <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Customer</a>
-
-                            {{ request.user.type|assign_variable|VENDOR }}
-                            <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Vendor</a>
+                            {{request.user.type}}
+                            {% with request.user.type as "CUSTOMER" %}
+                                <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Customer</a>
+                            {% endwith %}
+                            
+                            {% with request.user.type as "VENDOR" %}
+                            {{request.user.type}}
+                                <a href="{% url 'user:registration' %}" class="nav-item nav-link">Register/Login as a Vendor</a>
+                            {% endwith %}
                         </div>
                     </div>
                 </nav>
