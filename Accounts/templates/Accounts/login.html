@@ -44,9 +44,16 @@
             </button>
         </form>
         <p class="" style="margin-left: 3rem;">
-            <a href="{% url 'user:registration' %}" class="text-dark">
-                Don't have an account? <span style="color: blue;">Register</span>
-            </a>
+            {% if request.user.type == "CUSTOMER" %}
+                <a href="{% url 'user:c_reg' %}" class="text-dark">
+                    Don't have an account? <span style="color: blue;">Register</span>
+                </a>
+            {% elif request.user.type == "VENDOR"%}
+                <a href="{% url 'user:v_reg' %}" class="text-dark">
+                    Don't have an account? <span style="color: blue;">Register</span>
+                </a>
+            {% endif %}
+            
             <a href="{% url 'password_reset' %}" class="d-block mt-2" style="color: blue;">
                 Forgot Password?
             </a>
