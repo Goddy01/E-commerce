@@ -10,7 +10,11 @@
 </style>
     <div class="content text-dark p-5 mx-auto">
         <h1 style="text-align: center;">Login</h1>
-        <form action="{% url 'user:login' %}" class="mb-4" method="POST">
+        {% if request.user.type == "CUSTOMER" %}
+            <form action="{% url 'user:c_login' %}" class="mb-4" method="POST">
+        {% elif request.user.type == "VENDOR" %}
+            <form action="{% url 'user:v_login' %}" class="mb-4" method="POST"></form>
+        {% endif %}
             {% csrf_token %}
             <div class="form-group">
                 <label for="email">Email: </label>
