@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (
-    CustomerRegForm,
-    VendorRegForm, UserLoginForm)
+    CustomerRegForm, CustomerLoginForm, 
+    VendorRegForm, VendorLoginForm)
 
 # Create your views here.
 def customer_reg_view(request):
@@ -44,7 +44,7 @@ def vendor_reg_view(request):
         })
 
 def customer_login_view(request):
-    form = UserLoginForm(request.POST or None)
+    form = CustomerLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
@@ -56,10 +56,7 @@ def customer_login_view(request):
             if user is not None and request.user.type == "CUSTOMER":
                 login(request, user)
                 # print(user.type)
-                if user.type == "CUSTOMER":
-                    return redirect('checkout')
-                elif user.type == "VENDOR":
-                    return redirect('add product')
+                return redirect('checkout')
                 # return redirect('checkout')
             if request.user.type != "CUSTOMER":
                 return HttpResponse('Sorry you do not have a Customer account with us.')
@@ -73,7 +70,7 @@ def customer_login_view(request):
     })
 
 def vendor_login_view(request):
-    form = UserLoginForm(request.POST or None)
+    form = VendorLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
@@ -84,9 +81,7 @@ def vendor_login_view(request):
 
             if user is not None and request.user.type == "VENDOR":
                 login(request, user)
-                # print(user.type)
-                if user.type == "VENDOR":
-                    return redirect('add product')
+                return redirect('add product')
             if request.user.type != "VENDORR":
                 return HttpResponse('Sorry you do not have a Vendor account with us.')
             else:
