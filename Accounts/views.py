@@ -53,12 +53,12 @@ def customer_login_view(request):
 
             user = authenticate(email=email, password=password)
 
-            if user is not None and request.user.type == "CUSTOMER":
+            if user is not None and user.type == "CUSTOMER":
                 login(request, user)
                 # print(user.type)
                 return redirect('checkout')
                 # return redirect('checkout')
-            if request.user.type != "CUSTOMER":
+            if user.type != "CUSTOMER":
                 return HttpResponse('Sorry you do not have a Customer account with us.')
             else:
                 msg = 'User does not exist.'
@@ -79,10 +79,10 @@ def vendor_login_view(request):
 
             user = authenticate(email=email, password=password)
 
-            if user is not None and request.user.type == "VENDOR":
+            if user is not None and user.type == "VENDOR":
                 login(request, user)
                 return redirect('add product')
-            if request.user.type != "VENDORR":
+            if user.type != "VENDORR":
                 return HttpResponse('Sorry you do not have a Vendor account with us.')
             else:
                 msg = 'User does not exist.'
