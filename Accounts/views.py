@@ -15,7 +15,7 @@ def customer_reg_view(request):
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
-            return redirect('user:login')
+            return redirect('user:c_login')
         else:
             msg = 'Form is Invalid!'
     else:
@@ -33,7 +33,7 @@ def vendor_reg_view(request):
         if form.is_valid():
             form.save()
             msg = 'Account created successfully'
-            return redirect('user:login')
+            return redirect('user:v_login')
         else:
             msg = 'Form is Invalid!'
     else:
