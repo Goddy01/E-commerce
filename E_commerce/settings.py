@@ -158,7 +158,7 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 # LOGIN_REDIRECT_URL = 'checkout'
 # LOGOUT_REDIRECT_URL = 'venlogin'
 
-AUTH_USER_MODEL = 'Accounts.User_Acct'
+AUTH_USER_MODEL = 'Accounts.User'
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
