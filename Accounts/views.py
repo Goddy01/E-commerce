@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .forms import (
     CustomerRegForm,
     VendorRegForm, UserLoginForm)
@@ -67,3 +68,8 @@ def user_login_view(request):
         'form': form,
         'msg': msg,
     })
+
+@login_required
+def user_logout_view(request):
+    logout(request)
+    return redirect('home')
