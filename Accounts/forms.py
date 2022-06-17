@@ -33,10 +33,25 @@ class VendorRegForm(UserCreationForm):
         fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
 
 
-class UserLoginForm(forms.ModelForm):
+class CustomerLoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
     class Meta:
-        model = User_Acct
+        model = Customer
+        fields = ['email', 'password']
+
+    def clean(self):
+        if self.is_valid():
+            email = self.cleaned_data['email'].lower()
+            password = self.cleaned_data['password']
+            user = authenticate(email=email, password=password)
+
+            if not user:
+                raise forms.ValidationError('Invalid login details')
+
+class VendorLoginForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, label='Password')
+    class Meta:
+        model = Vendor
         fields = ['email', 'password']
 
     def clean(self):
