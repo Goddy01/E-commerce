@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from .models import Customer, Vendor
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class CustomerRegForm(UserCreationForm):
     """The form for Customers to register their accounts."""
@@ -9,6 +12,17 @@ class CustomerRegForm(UserCreationForm):
     class Meta:
         model = Customer
         fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
+    
+    # def clean(self):
+    #     if self.is_valid():
+    #         email = self.cleaned_data.get('email').lower()
+    #         password = self.cleaned_data.get('password')
+
+    #         user = authenticate(email=email, password=password)
+            
+    #         users = User.objects.all()
+    #         if user in users:
+    #             raise forms.ValidationError(f"A similar user of the Customer user type already exist.")
 
 
 class VendorRegForm(UserCreationForm):
