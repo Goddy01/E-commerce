@@ -189,9 +189,9 @@
                             {% if request.user.is_authenticated %}
                                 <a href="{% url 'user:logout' %}" class="nav-item nav-link">Sign-out</a>
                             {% else %}
-                                <a href="{% url 'user:c_reg' %}" class="nav-item nav-link">Sign-up/Sign-in as a Customer</a>
+                                <a href="{% url 'user:c_reg' %}" class="nav-item nav-link">Sign-up/Sign-in(Customer)</a>
                             
-                                <a href="{% url 'user:v_reg' %}" class="nav-item nav-link">Sign-up/Sign-in as a Vendor</a>
+                                <a href="{% url 'user:v_reg' %}" class="nav-item nav-link">Sign-up/Sign-in(Vendor)</a>
                             {% endif %}
 
                         </div>
