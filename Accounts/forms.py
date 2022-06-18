@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from .models import Customer, Vendor
-from django.contrib.auth import get_user_model
-User = get_user_model()
+# from django.contrib.auth.models import User
+from .models import Customer, Vendor, User
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 class CustomerRegForm(UserCreationForm):
     """The form for Customers to register their accounts."""
@@ -33,10 +33,10 @@ class VendorRegForm(UserCreationForm):
         fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
 
 
-class CustomerLoginForm(forms.ModelForm):
+class UserLoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
     class Meta:
-        model = Customer
+        model = User
         fields = ['email', 'password']
 
     def clean(self):
@@ -48,17 +48,17 @@ class CustomerLoginForm(forms.ModelForm):
             if not user:
                 raise forms.ValidationError('Invalid login details')
 
-class VendorLoginForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label='Password')
-    class Meta:
-        model = Vendor
-        fields = ['email', 'password']
+# class VendorLoginForm(forms.ModelForm):
+#     password = forms.CharField(widget=forms.PasswordInput, label='Password')
+#     class Meta:
+#         model = Vendor
+#         fields = ['email', 'password']
 
-    def clean(self):
-        if self.is_valid():
-            email = self.cleaned_data['email'].lower()
-            password = self.cleaned_data['password']
-            user = authenticate(email=email, password=password)
+#     def clean(self):
+#         if self.is_valid():
+#             email = self.cleaned_data['email'].lower()
+#             password = self.cleaned_data['password']
+#             user = authenticate(email=email, password=password)
 
-            if not user:
-                raise forms.ValidationError('Invalid login details')
+#             if not user:
+#                 raise forms.ValidationError('Invalid login details')

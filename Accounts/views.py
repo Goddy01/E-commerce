@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (
-    CustomerRegForm, CustomerLoginForm, 
-    VendorRegForm, VendorLoginForm)
+    CustomerRegForm, UserLoginForm, 
+    VendorRegForm)
 
 # Create your views here.
 def customer_reg_view(request):
@@ -43,8 +43,8 @@ def vendor_reg_view(request):
         'msg': msg, 
         })
 
-def customer_login_view(request):
-    form = CustomerLoginForm(request.POST or None)
+def user_login_view(request):
+    form = UserLoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
         if form.is_valid():
@@ -69,29 +69,29 @@ def customer_login_view(request):
         'msg': msg,
     })
 
-def vendor_login_view(request):
-    form = VendorLoginForm(request.POST or None)
-    msg = None
-    if request.method == 'POST':
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
+# def vendor_login_view(request):
+#     form = VendorLoginForm(request.POST or None)
+#     msg = None
+#     if request.method == 'POST':
+#         if form.is_valid():
+#             email = form.cleaned_data.get('email')
+#             password = form.cleaned_data.get('password')
 
-            user = authenticate(email=email, password=password)
+#             user = authenticate(email=email, password=password)
 
-            if user is not None:
-                login(request, user)
-                return redirect('add product')
-            # if user.type != "VENDORR":
-            #     return HttpResponse('Sorry you do not have a Vendor account with us.')
-            else:
-                msg = 'User does not exist.'
-        else:
-            msg = 'Validation Error'
-    return render(request, 'Accounts/login.html', {
-        'form': form,
-        'msg': msg,
-    })
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('add product')
+#             # if user.type != "VENDORR":
+#             #     return HttpResponse('Sorry you do not have a Vendor account with us.')
+#             else:
+#                 msg = 'User does not exist.'
+#         else:
+#             msg = 'Validation Error'
+#     return render(request, 'Accounts/login.html', {
+#         'form': form,
+#         'msg': msg,
+#     })
 
 @login_required
 def user_logout_view(request):

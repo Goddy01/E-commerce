@@ -75,7 +75,7 @@
         
         
         {% if request.user.type == "CUSTOMER" %}
-        <a href="{% url 'user:c_login' %}" class="text-dark">
+        <a href="{% url 'user:login' %}" class="text-dark">
                 Already have an account? <span style="color: blue;">Login(Customer)</span>
         </a>
         {% elif request.user.type == "VENDOR" %}
