@@ -76,11 +76,11 @@
         
         {% if request.user.type == "CUSTOMER" %}
         <a href="{% url 'user:login' %}" class="text-dark">
-                Already have an account? <span style="color: blue;">Login(Customer)</span>
+                Already have an account? <span style="color: blue;">Login</span>
         </a>
         {% elif request.user.type == "VENDOR" %}
-        <a href="{% url 'user:v_login' %}" class="text-dark">
-            Already have an account? <span style="color: blue;">Login(Vendor)</span>
+        <a href="{% url 'user:login' %}" class="text-dark">
+            Already have an account? <span style="color: blue;">Login</span>
         </a>
         {% endif %}
         </p>

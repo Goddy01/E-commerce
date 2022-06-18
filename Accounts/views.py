@@ -13,9 +13,10 @@ def customer_reg_view(request):
     if request.method == 'POST':
         form = CustomerRegForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             msg = 'Account created successfully'
-            return redirect('user:c_login')
+            login(request, user)
+            return redirect('checkout')
         else:
             msg = 'Form is Invalid!'
     else:
@@ -31,9 +32,10 @@ def vendor_reg_view(request):
     if request.method == 'POST':
         form = VendorRegForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             msg = 'Account created successfully'
-            return redirect('user:v_login')
+            login(request, user)
+            return redirect('add product')
         else:
             msg = 'Form is Invalid!'
     else:
