@@ -12,19 +12,19 @@
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
-            <label for="seller-name">Seller's name</label>
-            <input type="text" name="seller-name" id="seller-name">
+            <label for="id_seller">Seller's name</label>
+            <input type="text" name="seller" id="id_seller">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
-            <label for="product-name">Product name</label>
-            <input type="text" name="product-name" id="product-name">
+            <label for="id_product">Product name</label>
+            <input type="text" name="product" id="id_product">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- PRICE -->
-            <label for="product-price">Price</label>
-            <input type="number" name="product-price" id="product-price">
+            <label for="id_product_price">Price</label>
+            <input type="number" name="product_price" id="id_product_price" placeholder="In dollars($)">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
@@ -58,8 +58,8 @@
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
-            <label for="available-product">Number available</label>
-            <input type="number" name="available-product" id="available-product">
+            <label for="id_available_product">Number available</label>
+            <input type="number" name="available_product" id="id_available_product">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 3rem;">
@@ -108,20 +108,20 @@
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- Picture -->
             <div style="margin-bottom: 1rem;">
-                <label for="upload-image1">Image 1</label>
-                <input type="file" name="upload-image1" accept="image/png, image/gif, image/jpeg" id="upload-image1">
+                <label for="id_product_image1">Image 1</label>
+                <input type="file" name="product_image1" accept="image/png, image/gif, image/jpeg" id="id_product_image1">
             </div>
             <div style="margin-bottom: 1rem;">
-                <label for="upload-image2">Image 2</label>
-                <input type="file" name="upload-image2" accept="image/png, image/gif, image/jpeg" id="upload-image2">
+                <label for="id_product_image2">Image 2</label>
+                <input type="file" name="product_image2" accept="image/png, image/gif, image/jpeg" id="id_product_image2">
             </div>
             <div style="margin-bottom: 1rem;">
-                <label for="upload-image1">Image 3</label>
-                <input type="file" name="upload-image3" accept="image/png, image/gif, image/jpeg" id="upload-image3">
+                <label for="product_image3">Image 3</label>
+                <input type="file" name="product_image3" accept="image/png, image/gif, image/jpeg" id="id_product_image3">
             </div>
         </div>
 
-        <textarea placeholder="Description" id="description" style="width: 100%;" rows="10"></textarea>
+        <textarea placeholder="Description" name="product_description" id="id_product_description" style="width: 100%;" rows="10"></textarea>
 
         <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;">
             <span style="margin: 0 auto;font-weight: bold;">Save</span>
