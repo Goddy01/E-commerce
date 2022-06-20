@@ -41,7 +41,7 @@ class Product(models.Model):
     product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=False, blank=False)
     number_available =          models.IntegerField(verbose_name='number available', null=False, blank=False)
     product_colors =            models.CharField(max_length=10, choices=Color.choices, default=Color.WHITE, verbose_name="product's colors", null=False, blank=False)
-    product_weight =            models.FloatField(verbose_name="product's weight", null=False, blank=False)
+    # product_weight =            models.FloatField(verbose_name="product's weight", null=False, blank=False)
     product_image1 =            models.ImageField(upload_to=upload_location, null=False, blank=False, verbose_name='product image 1')
     product_image2 =            models.ImageField(upload_to=upload_location, null=True, blank=True, verbose_name='product image 2')
     product_image3 =            models.ImageField(upload_to=upload_location, null=True, blank=True, verbose_name='product image 3')
