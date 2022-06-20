@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
         # My Apps
     'Accounts',
+    'Vendor',
     'store',
     'phonenumber_field',
 

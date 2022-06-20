@@ -5,38 +5,42 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 
-SIZE_CHOICES = (
-    ('XS', 'EXTRA SMALL'),
-    ('S', 'SMALL'),
-    ('M', 'MEDIUM'),
-    ('L', 'LARGE'),
-    ('XL', 'EXTRA LARGE'),
-    ('XXL', 'EXTRA EXTRA LARGE'),
-    ('XXXL', 'EXTRA EXTRA EXTRA LARGE'),
-)
-
-COLOR_CHOICES = (
-    ('green','GREEN'),
-    ('blue', 'BLUE'),
-    ('red','RED'),
-    ('orange','ORANGE'),
-    ('black','BLACK'),
-    ('white', 'WHITE')
-)
-
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
 
 # Create your models here.
 class AddProduct(models.Model):
     """Creates these fields in the database for a new product."""
+
+    class Color(models.TextChoices):
+        """Choices for different colors"""
+        GREEN = "GREEN"
+        BLUE = "BLUE"
+        RED = "RED"
+        ORANGE = "ORANGE"
+        BLACK = "BLACK"
+        WHITE = "WHITE"
+        YELLOW = "YELLOW"
+        PURPLE = "PURPLE"
+        BROWN = "BROWN"
+        PINK = "PINK"
+    
+    class Size(models.TextChoices):
+        """Choices for sizes"""
+        XS =    "XS", "EXTRA SMALL"
+        S =     "S", "SMALL"
+        M =     "M", "MEDIUM"
+        L =     "L", "LARGE"
+        XL =    "XL", "EXTRA LARGE"
+        XXL =   "XXL", "EXTRA EXTRA LARGE"
+        XXXL =  "XXXL", "EXTRA EXTRA EXTRA LARGE"
     seller =                    models.CharField(max_length=126, blank=False, null=False)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=False, null=False)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
     product_price =             models.IntegerField(verbose_name="product's price", null=False, blank=False)
-    product_sizes =             models.CharField(max_length=7, choices=SIZE_CHOICES, default='M', null=True, blank=True)
+    product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=True, blank=True)
     number_available =          models.IntegerField(verbose_name='number available', null=False, blank=False)
-    product_colors =            models.CharField(max_length=10, choices=COLOR_CHOICES, default='green', verbose_name="product's colors", null=False, blank=False)
+    product_colors =            models.CharField(max_length=10, choices=Color.choices, default=Color.WHITE, verbose_name="product's colors", null=False, blank=False)
     product_weight =            models.FloatField(verbose_name="product's weight", null=False, blank=False)
     product_image1 =            models.ImageField(upload_to=upload_location, null=False, blank=False, verbose_name='product image 1')
     product_image2 =            models.ImageField(upload_to=upload_location, null=True, blank=True, verbose_name='product image 2')
