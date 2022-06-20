@@ -27,7 +27,7 @@ class ContactView(TemplateView):
 def add_product_view(request):
     """The view for vendors to add products to the store"""
     user = request.user
-    
+
     if not user.is_authenticated:
         return redirect('user:login')
 
