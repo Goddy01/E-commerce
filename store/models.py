@@ -9,7 +9,7 @@ def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
 
 # Create your models here.
-class AddProduct(models.Model):
+class Product(models.Model):
     """Creates these fields in the database for a new product."""
 
     class Color(models.TextChoices):
@@ -38,7 +38,7 @@ class AddProduct(models.Model):
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=False, null=False)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
     product_price =             models.IntegerField(verbose_name="product's price", null=False, blank=False)
-    product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=True, blank=True)
+    product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=False, blank=False)
     number_available =          models.IntegerField(verbose_name='number available', null=False, blank=False)
     product_colors =            models.CharField(max_length=10, choices=Color.choices, default=Color.WHITE, verbose_name="product's colors", null=False, blank=False)
     product_weight =            models.FloatField(verbose_name="product's weight", null=False, blank=False)
@@ -56,10 +56,10 @@ def pre_save_product_receiver(sender, instance, **kwargs):
     """Checks if a product has a slug, if not it creates one before committing to the database"""
     if not instance.slug:
         instance.slug = slugify(instance.seller + '-' + instance.product_name + '-' + instance.product_id)
-pre_save.connect(pre_save_product_receiver, sender=AddProduct)
+pre_save.connect(pre_save_product_receiver, sender=Product)
 
 
-@receiver(post_delete, sender=AddProduct)
+@receiver(post_delete, sender=Product)
 def submission_delete(sender, instance, **kwargs):
     """Deletes the image(s) of a product when the correlating product is deleted"""
     instance.product_image1.delete(False)
