@@ -35,7 +35,7 @@ def vendor_reg_view(request):
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
-            return redirect('add product')
+            return redirect('add-product')
         else:
             msg = 'Form is Invalid!'
     else:

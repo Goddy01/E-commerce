@@ -56,7 +56,7 @@ class Product(models.Model):
 def pre_save_product_receiver(sender, instance, **kwargs):
     """Checks if a product has a slug, if not it creates one before committing to the database"""
     if not instance.slug:
-        instance.slug = slugify(instance.seller + '-' + instance.product_name + '-' + f"{instance.product_id}")
+        instance.slug = slugify(f"{instance.seller}" + '-' + f"{instance.product_name}" + '-' + f"{instance.product_id}")
 pre_save.connect(pre_save_product_receiver, sender=Product)
 
 
