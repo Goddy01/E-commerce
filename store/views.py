@@ -38,6 +38,8 @@ def add_product_view(request):
         add_form = AddProductForm(request.POST, request.FILES)
         print(add_form)
         if add_form.is_valid():
+            add_form.save(commit=False)
+            add_form.seller = request.user.fullname
             add_form.save()
             context['success'] = 'Product has been added.'
         # else:

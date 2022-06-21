@@ -1,4 +1,5 @@
 import uuid
+from django.conf import settings
 from django.db import models
 from django.dispatch import receiver
 from django.utils.text import slugify
@@ -34,7 +35,7 @@ class Product(models.Model):
         XL =    "XL", "EXTRA LARGE"
         XXL =   "XXL", "EXTRA EXTRA LARGE"
         XXXL =  "XXXL", "EXTRA EXTRA EXTRA LARGE"
-    seller =                    models.CharField(max_length=126, blank=False, null=False)
+    seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
     product_price =             models.IntegerField(verbose_name="product's price", null=True, blank=False)
