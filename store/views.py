@@ -38,9 +38,10 @@ def add_product_view(request):
         add_form = AddProductForm(request.POST, request.FILES)
         print(add_form)
         if add_form.is_valid():
-            add_form.save(commit=False)
-            add_form.seller = request.user.fullname
-            add_form.save()
+            obj = add_form.save(commit=False)
+            seller = Vendor.objects.filter(email=request.user.email).first()
+            obj.seller = seller
+            obj.save()
             context['success'] = 'Product has been added.'
         # else:
         #     return HttpResponse('buggy')
