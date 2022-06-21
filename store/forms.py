@@ -2,7 +2,7 @@ from django import forms
 from .models import Product
 
 
-class AddProduct(forms.ModelForm):
+class AddProductForm(forms.ModelForm):
     class Meta():
         model = Product
         fields = '__all__'

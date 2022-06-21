@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="{% static 'css/jupyter-pattern.css' %}">
 <div class="w-75 mx-auto bg-white" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ececec; padding: 4rem 2rem; border-radius: 20px;margin-top: 10rem;margin-bottom: 5rem;color: black;">
     <h4 style="text-align: center; margin-bottom: 2rem">Want to sell your product</h4>
-    <form>
+    <form method="post" action="{% url 'add-product' %}" enctype="multipart/form-data">
+        {% csrf_token %}
         <div style="display: flex;">
             <label for="upload-image" class="m-auto shadow"><img src="{% static 'img/profile-image.png' %}" style="width: max-content; border-radius: 50%;"></label>
         </div>
@@ -59,7 +60,7 @@
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <label for="id_available_product">Number available</label>
-            <input type="number" name="available_product" id="id_available_product">
+            <input type="number" name="number_available" id="id_number_available">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 3rem;">
@@ -123,8 +124,24 @@
 
         <textarea placeholder="Description" name="product_description" id="id_product_description" style="width: 100%;" rows="10"></textarea>
 
-        <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;">
-            <span style="margin: 0 auto;font-weight: bold;">Save</span>
+        <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;" type="submit">
+            <span style="margin: 0 auto;font-weight: bold;">Add Product</span>
         </button>
+        <p style="color: green;text-align: center;" class="h5 mt-5">{{success}}</p>
     </form>
+    <div class="errors" style="margin-left: 2rem;">
+        {% for field in add_product_form %}
+            <p>
+            {% for error in field.errors %}
+                <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
+            {% endfor %}
+            </p>
+        {% endfor %}
+
+        {% if add_product_form.non_field_errors %}
+            <div style="color: rgb(175, 23, 23);">
+                {{add_product_form.non_field_errors}}
+            </div>
+        {% endif %}
+    </div>
 {% endblock content %}

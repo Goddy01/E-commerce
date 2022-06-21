@@ -61,7 +61,7 @@ def user_login_view(request):
                 if user.type == "CUSTOMER":
                     return redirect('checkout')
                 elif user.type == "VENDOR":
-                    return redirect('add product')
+                    return redirect('add-product')
                 # return redirect('checkout')
             # if user.type != "CUSTOMER":
             #     return HttpResponse('Sorry you do not have a Customer account with us.')

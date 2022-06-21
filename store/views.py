@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProduct
+from .forms import AddProductForm
 from Accounts.models import Vendor
 # Create your views here.
 class HomeView(TemplateView):
@@ -32,14 +33,17 @@ def add_product_view(request):
         return redirect('user:login')
 
     context = {}
-    add_form = AddProduct(request.POST or None, request.FILES or None)
-    if add_form.is_valid():
-        add_form.save()
-        # vendor = Vendor.objects.filter(email=user.email)
-        # print(vendor)
-        context['success_message'] = "Product has been posted."
-        return redirect('home')
+    
+    if request.method == "POST":
+        add_form = AddProductForm(request.POST, request.FILES)
+        print(add_form)
+        if add_form.is_valid():
+            add_form.save()
+            context['success'] = 'Product has been added.'
+        # else:
+        #     return HttpResponse('buggy')
+
     else:
-        add_form = AddProduct()
+        add_form = AddProductForm()
     context['add_product_form'] = add_form
     return render(request,'store/create_product.html',context)

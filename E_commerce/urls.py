@@ -34,7 +34,7 @@ urlpatterns = [
     path('cart/', CartView.as_view(), name='cart'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
-    path('add-product/', add_product_view, name='add product'),
+    path('add-product/', add_product_view, name='add-product'),
     path('vendors/', include('Accounts.urls')),
 
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name="password/password_change_done.html"), name="password_change_done"),
