@@ -31,12 +31,12 @@ class AddProductForm(forms.ModelForm):
         ("Brown", "BROWN"),
         ("Pink", "PINK"),
     )
-    category = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
+    product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=SIZE_CHOICES)
     product_colors = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=COLOR_CHOICES)
 
     class Meta():
         model = Product
-        fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'category')
+        fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
         # fields = '__all__'
     # instance = ""
