@@ -35,6 +35,13 @@ class Product(models.Model):
         XL =    "XL", "EXTRA LARGE"
         XXL =   "XXL", "EXTRA EXTRA LARGE"
         XXXL =  "XXXL", "EXTRA EXTRA EXTRA LARGE"
+
+    class Category(models.TextChoices):
+        """Choices for product category"""
+        M = "MEN"
+        W = "WOMEN"
+        MC = "MALE CHILDREN"
+        FC = "FEMALE CHILDREN"
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
