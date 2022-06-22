@@ -6,17 +6,9 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 
-
-category_choices = (
-        ("M", "MEN"), 
-        ("W", "WOMEN"), 
-        ("MC", "MALE CHILDREN"), 
-        ("FC", "FEMALE CHILDREN"), 
-)
-
-
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
+
 
 class Product(models.Model):
     """Creates these fields in the database for a new product."""
@@ -51,7 +43,7 @@ class Product(models.Model):
     product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=True, blank=False)
     number_available =          models.IntegerField(verbose_name='number available', blank=False, null=False)
     product_colors =            models.CharField(max_length=10, choices=Color.choices, default=Color.WHITE, verbose_name="product's colors", blank=False)
-    product_category =          models.CharField(choices=category_choices, max_length=4)
+    # product_category =          models.ManyToManyField(Category)
     # product_weight =            models.FloatField(verbose_name="product's weight", null=False, blank=False)
     product_image1 =            models.ImageField(upload_to=upload_location, null=True, blank=False, verbose_name='product image 1')
     product_image2 =            models.ImageField(upload_to=upload_location, null=True, blank=True, verbose_name='product image 2')
