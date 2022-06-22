@@ -3,11 +3,24 @@ from .models import Product
 
 class AddProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
-    ("M", "MEN"), 
-    ("W", "WOMEN"), 
-    ("MC", "MALE CHILDREN"), 
-    ("FC", "FEMALE CHILDREN"), )
+        ("M", "MEN"), 
+        ("W", "WOMEN"), 
+        ("MC", "MALE CHILDREN"), 
+        ("FC", "FEMALE CHILDREN"),
+    )
+
+    SIZE_CHOICES = (
+        ("XS", "EXTRA SMALL"),
+        ("S", "SMALL"),
+        ("M", "MEDIUM"),
+        ("L", "LARGE"),
+        ("XL", "EXTRA LARGE"),
+        ("XXL", "EXTRA EXTRA LARGE"),
+        ("XXXL", "EXTRA EXTRA EXTRA LARGE"),
+    )
     category = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
+    product_sizes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=SIZE_CHOICES)
+
 
     class Meta():
         model = Product

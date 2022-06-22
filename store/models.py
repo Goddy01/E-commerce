@@ -25,22 +25,12 @@ class Product(models.Model):
         PURPLE = "PURPLE"
         BROWN = "BROWN"
         PINK = "PINK"
-    
-    class Size(models.TextChoices):
-        """Choices for sizes"""
-        XS =    "XS", "EXTRA SMALL"
-        S =     "S", "SMALL"
-        M =     "M", "MEDIUM"
-        L =     "L", "LARGE"
-        XL =    "XL", "EXTRA LARGE"
-        XXL =   "XXL", "EXTRA EXTRA LARGE"
-        XXXL =  "XXXL", "EXTRA EXTRA EXTRA LARGE"
 
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
     product_price =             models.IntegerField(verbose_name="product's price", null=True, blank=False)
-    product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=True, blank=False)
+    # product_sizes =             models.CharField(max_length=7, choices=Size.choices, default=Size.M, null=True, blank=False)
     number_available =          models.IntegerField(verbose_name='number available', blank=False, null=False)
     product_colors =            models.CharField(max_length=10, choices=Color.choices, default=Color.WHITE, verbose_name="product's colors", blank=False)
     # product_category =          models.ManyToManyField(Category)
