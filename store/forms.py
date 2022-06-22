@@ -18,9 +18,22 @@ class AddProductForm(forms.ModelForm):
         ("XXL", "EXTRA EXTRA LARGE"),
         ("XXXL", "EXTRA EXTRA EXTRA LARGE"),
     )
+
+    COLOR_CHOICES = (
+        ("Green", "GREEN"),
+        ("Blue", "BLUE"),
+        ("Red", "RED"),
+        ("Orange", "ORANGE"),
+        ("Black", "BLACK"),
+        ("Yellow", "WHITE"),
+        ("Yellow", "YELLOW"),
+        ("Purple", "PURPLE"),
+        ("Brown", "BROWN"),
+        ("Pink", "PINK"),
+    )
     category = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=SIZE_CHOICES)
-
+    product_colors = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=COLOR_CHOICES)
 
     class Meta():
         model = Product
