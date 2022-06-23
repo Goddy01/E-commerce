@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm
 from Accounts.models import Vendor
+from .models import Product
 # Create your views here.
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -36,7 +37,7 @@ def add_product_view(request):
     
     if request.method == "POST":
         add_form = AddProductForm(request.POST, request.FILES)
-        print(add_form)
+        # print(add_form)
         if add_form.is_valid():
             obj = add_form.save(commit=False)
             # seller = Vendor.objects.filter(email=request.user.email).first()
@@ -50,3 +51,15 @@ def add_product_view(request):
         add_form = AddProductForm()
     context['add_product_form'] = add_form
     return render(request,'store/create_product.html',context)
+
+def home_page(request):
+    context = {}
+    m_products = Product.objects.filter(product_categories='M').order_by('?')
+    f_products = Product.objects.filter(product_categories='W').order_by('?')
+    mc_products = Product.objects.filter(product_categories='MC').order_by('?')
+    fc_products = Product.objects.filter(product_categories='FC').order_by('?')
+    context['m_products'] = m_products
+    context['f_products'] = f_products
+    context['mc_products'] = mc_products
+    context['fc_products'] = fc_products
+    return render(request, 'index.html', context)
