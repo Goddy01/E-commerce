@@ -54,10 +54,10 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
-    m_products = Product.objects.filter(product_categories='M').order_by('?')
-    f_products = Product.objects.filter(product_categories='W').order_by('?')
-    mc_products = Product.objects.filter(product_categories='MC').order_by('?')
-    fc_products = Product.objects.filter(product_categories='FC').order_by('?')
+    m_products = Product.objects.filter(product_categories='MEN').order_by('?')[:1]
+    f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
+    mc_products = Product.objects.all().filter(product_categories='MC').order_by('?')[:1]
+    fc_products = Product.objects.all().filter(product_categories='FC').order_by('?')[:1]
     context['m_products'] = m_products
     context['f_products'] = f_products
     context['mc_products'] = mc_products

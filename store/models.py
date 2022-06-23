@@ -12,9 +12,6 @@ def upload_location(instance, filename):
 
 class Product(models.Model):
     """Creates these fields in the database for a new product."""
-
-    class Color(models.TextChoices):
-        """Choices for different colors"""
         
 
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE, null=True, blank=True)
