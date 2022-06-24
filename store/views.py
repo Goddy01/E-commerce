@@ -3,10 +3,10 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm
 from Accounts.models import Vendor
-from .models import Product
+from store.models import Product
 # Create your views here.
-class HomeView(TemplateView):
-    template_name = 'index.html'
+# class HomeView(TemplateView):
+#     template_name = 'store/index.html'
 
 class ShopView(TemplateView):
     template_name = 'shop.html'
@@ -37,7 +37,7 @@ def add_product_view(request):
     
     if request.method == "POST":
         add_form = AddProductForm(request.POST, request.FILES)
-        # print(add_form)
+        
         if add_form.is_valid():
             obj = add_form.save(commit=False)
             # seller = Vendor.objects.filter(email=request.user.email).first()
@@ -54,12 +54,12 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
-    m_products = Product.objects.filter(product_categories='MEN').order_by('?')[:1]
-    f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
-    mc_products = Product.objects.all().filter(product_categories='MC').order_by('?')[:1]
-    fc_products = Product.objects.all().filter(product_categories='FC').order_by('?')[:1]
-    context['m_products'] = m_products
-    context['f_products'] = f_products
-    context['mc_products'] = mc_products
-    context['fc_products'] = fc_products
-    return render(request, 'index.html', context)
+    products = Product.objects.all()[:5]
+    # f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
+    # mc_products = Product.objects.all().filter(product_categories='MC').order_by('?')[:1]
+    # fc_products = Product.objects.all().filter(product_categories='FC').order_by('?')[:1]
+    context['products'] = products
+    # context['f_products'] = f_products
+    # context['mc_products'] = mc_products
+    # context['fc_products'] = fc_products
+    return render(request, 'store/index.html', context)

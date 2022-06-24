@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from store.views import (
-    HomeView, ContactView,
+    home_page, ContactView,
     ShopDetailView, ShopView,
     CartView, CheckoutView,
     add_product_view,
@@ -28,7 +28,7 @@ from store.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('django.contrib.auth.urls')),
-    path('', HomeView.as_view(), name='home'),
+    path('', home_page, name='home'),
     path('shop/', ShopView.as_view(), name='shop'),
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', CartView.as_view(), name='cart'),
