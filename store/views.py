@@ -54,7 +54,7 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
-    products = Product.objects.all().order_by('?')[:8]
+    products = Product.objects.all().order_by('?')[:9]
     # f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
     # mc_products = Product.objects.all().filter(product_categories='MC').order_by('?')[:1]
     # fc_products = Product.objects.all().filter(product_categories='FC').order_by('?')[:1]
