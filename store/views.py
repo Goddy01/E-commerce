@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm
 from Accounts.models import Vendor
-from store.models import Product
+from store.models import Product, Order
 # Create your views here.
 # class HomeView(TemplateView):
 #     template_name = 'store/index.html'
@@ -65,3 +65,15 @@ def home_page(request):
     # context['mc_products'] = mc_products
     # context['fc_products'] = fc_products
     return render(request, 'store/index.html', context)
+
+
+def cart(request):
+    context = []
+    if request.user.is_authenticated():
+        customer = request.user.fullname
+        order, created = Order.objects.get_or_set(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+    context['items'] = items
+    return render(request, 'store/cart.html', context)
