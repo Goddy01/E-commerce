@@ -65,3 +65,13 @@ class OrderItem(models.Model):
     product =       models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_added =    models.DateTimeField(auto_now_add=True)
     quantity =      models.IntegerField(null=True, blank=True, default=0)
+
+
+class BillingAddress(models.Model):
+    customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    address =           models.CharField(null=False, max_length=256)
+    city =              models.CharField(null=False, max_length=256)
+    state =             models.CharField(null=False, max_length=256)
+    zipcode =           models.CharField(null=False, max_length=256)
+    date_added =        models.DateTimeField(auto_now_add=True)
