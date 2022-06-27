@@ -51,17 +51,17 @@ def submission_delete(sender, instance, **kwargs):
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    complete = models.BooleanField(default=False)
-    transaction_id = models.UUIDField(default=uuid.uuid4, editable=True, null=True)
+    customer =              models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
+    date_ordered =          models.DateTimeField(auto_now_add=True)
+    complete =              models.BooleanField(default=False)
+    transaction_id =        models.UUIDField(default=uuid.uuid4, editable=True, null=True)
 
     def __str__(self):
         return str(self.transaction_id)
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(null=True, blank=True, default=0)
+    order =         models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    product =       models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    date_added =    models.DateTimeField(auto_now_add=True)
+    quantity =      models.IntegerField(null=True, blank=True, default=0)
