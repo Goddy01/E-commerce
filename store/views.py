@@ -14,9 +14,6 @@ class ShopView(TemplateView):
 class ShopDetailView(TemplateView):
     template_name = 'detail.html'
 
-class CartView(TemplateView):
-    template_name = 'cart.html'
-
 class CheckoutView(TemplateView):
     template_name = 'checkout.html'
 
@@ -69,7 +66,7 @@ def home_page(request):
 
 def cart(request):
     context = []
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         customer = request.user.fullname
         order, created = Order.objects.get_or_set(customer=customer, complete=False)
         items = order.orderitem_set.all()
