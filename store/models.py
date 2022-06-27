@@ -58,3 +58,10 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.transaction_id)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField(null=True, blank=True, default=0)
