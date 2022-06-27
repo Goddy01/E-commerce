@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
+from Accounts.models import Customer
 
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
@@ -47,3 +48,10 @@ def submission_delete(sender, instance, **kwargs):
     instance.product_image1.delete(False)
     instance.product_image2.delete(False)
     instance.product_image3.delete(False)
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False)
+    transaction_id = models.UUIDField(default=uuid.uuid4, editable=True, null=True)
