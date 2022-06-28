@@ -116,6 +116,7 @@ class Vendor(User):
         return super().save(*args, **kwargs)
 
 class Customer(User):
+    # customer =          models.CharField(max_length=256, null=True)
     objects = CustomerManager()
     class Meta:
         proxy = True
