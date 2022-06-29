@@ -33,8 +33,8 @@
                     <tbody class="align-middle">
                         {% for item in items %}
                             <tr>
-                                <td class="align-middle"><img src="{{ item.product_iamge1.url }}" alt="Product Image" style="width: 50px;">{{item.product_name}}</td>
-                                <td class="align-middle">${{item.product_price}}</td>
+                                <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">{{item.product.product_name}}</td>
+                                <td class="align-middle">${{item.product.product_price}}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">${% widthratio item.product_price 1 item.quantity %}</td>
+                                <td class="align-middle">${% widthratio item.product.product_price 1 item.quantity %}</td>
                                 <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                             </tr>
                         {% endfor %}
