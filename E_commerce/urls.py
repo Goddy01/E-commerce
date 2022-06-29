@@ -23,7 +23,8 @@ from store.views import (
     home_page, ContactView,
     ShopDetailView, ShopView,
     cart, CheckoutView,
-    add_product_view,
+    add_product_view, quantity_increment
+
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,7 @@ urlpatterns = [
     path('shop/', ShopView.as_view(), name='shop'),
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', cart, name='cart'),
+    path('cart/<int:id>', quantity_increment, name='q_incr'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
