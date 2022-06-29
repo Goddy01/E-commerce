@@ -74,3 +74,10 @@ def cart(request):
         items = []
     context['items'] = items
     return render(request, 'store/cart.html', context)
+
+
+def quantity_increment(request):
+    value = Order.objects.filter(customer=request.user)
+    value.orderitem.quantity += 1
+    value.save()
+    return render(request, 'stor/cart.html')
