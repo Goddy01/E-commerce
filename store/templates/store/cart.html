@@ -34,8 +34,9 @@
                         {{items}}
                         {% for item in items %}
                             <tr>
-                                <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">{{item.product.product_name}}</td>
-                                <td class="align-middle">${{item.product_price}}</td>
+                                <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
+                                    <p class="text-dark">{{item.product.product_name}}</p></td>
+                                <td class="align-middle">${{item.product.product_price}}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
