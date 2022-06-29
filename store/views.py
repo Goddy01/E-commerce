@@ -67,8 +67,8 @@ def home_page(request):
 def cart(request):
     context = {}
     if request.user.is_authenticated:
-        customer = request.user.fullname
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        c_username = request.user.username
+        order, created = Order.objects.get_or_create(customer__username=c_username, complete=False)
         items = order.orderitem_set.all()
     else:
         items = []

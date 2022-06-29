@@ -51,10 +51,10 @@ def submission_delete(sender, instance, **kwargs):
 
 
 class Order(models.Model):
+    transaction_id =        models.UUIDField(default=uuid.uuid4, editable=True, null=True)
     customer =              models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     date_ordered =          models.DateTimeField(auto_now_add=True)
     complete =              models.BooleanField(default=False)
-    transaction_id =        models.UUIDField(default=uuid.uuid4, editable=True, null=True)
 
     def __str__(self):
         return str(self.transaction_id)
