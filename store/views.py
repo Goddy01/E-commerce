@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm
 from Accounts.models import Vendor
-from store.models import Product, Order
+from store.models import Product, Order, OrderItem
 # Create your views here.
 # class HomeView(TemplateView):
 #     template_name = 'store/index.html'
@@ -76,8 +76,14 @@ def cart(request):
     return render(request, 'store/cart.html', context)
 
 
-def quantity_increment(request):
-    value = Order.objects.filter(customer=request.user)
-    value.orderitem.quantity += 1
-    value.save()
-    return render(request, 'stor/cart.html')
+def quantity_increment(request, transaction_id):
+    order_item = OrderItem.objects.filter(pk=transaction_id)
+    # orderitem = OrderItem.objects.filter(order=order)
+
+    print(order_item)
+    # value1 = value.orderitem_set.all()
+    # orderitem.quantity += 1
+    # orderitem.product.product_price += orderitem.product.product_price
+    # orderitem.save()
+    return render(request, 'store/cart.html', {'value':order_item, })
+    
