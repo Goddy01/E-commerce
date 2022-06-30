@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        {{items}}
+                        <!-- {{order_item}} -->
                         {% for item in items %}
                             <tr>
                                 <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
@@ -46,7 +46,6 @@
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
                                         <div class="input-group-btn">
-                                            <a href="{% url 'q_incr' item.transaction_id %}">
                                                 <button class="btn btn-sm btn-primary btn-plus">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
