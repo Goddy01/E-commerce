@@ -68,7 +68,9 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        order = Order.objects.filter(customer=user)
+        if not order.exists():
+            order, created = Order.objects.create(customer=user, complete=False), True
         items = order.orderitem_set.all()
     else:
         items = []
