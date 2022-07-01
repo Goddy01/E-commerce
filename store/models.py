@@ -62,7 +62,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     item_id =       models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
-    order =         models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    order =         models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, related_name='order_items')
     product =       models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_added =    models.DateTimeField(auto_now_add=True)
     quantity =      models.IntegerField(null=True, blank=True, default=0)

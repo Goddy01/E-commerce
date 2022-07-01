@@ -1,3 +1,4 @@
+from typing import OrderedDict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -69,9 +70,11 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         order = Order.objects.filter(customer=user)
+        print(order.count())
+        print(order)
         if not order.exists():
-            order, created = Order.objects.create(customer=user, complete=False), True
-        items = order.orderitem_set.all()
+            order, created = Order.objects.create(customer=user, complete=False)
+        items = OrderedDict.objects.all()
     else:
         items = []
     context['items'] = items
@@ -83,7 +86,7 @@ def quantity_increment(request):
     order_item = Order.objects.all()
     # orderitem = OrderItem.objects.filter(order=order)
 
-    print(order_item)
+    # print(order_item)
     # value1 = value.orderitem_set.all()
     # orderitem.quantity += 1
     # orderitem.product.product_price += orderitem.product.product_price
