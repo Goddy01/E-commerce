@@ -70,13 +70,14 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         order = Order.objects.filter(customer=user)
-        print(order.count())
-        print(order)
+        # print(order.count())
+        # print(order)
         if not order.exists():
             order, created = Order.objects.create(customer=user, complete=False)
-        items = OrderedDict.objects.all()
+        items = OrderItem.objects.all()
     else:
         items = []
+    context['orders'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
 
