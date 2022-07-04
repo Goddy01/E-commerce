@@ -32,8 +32,11 @@
                     </thead>
                     <tbody class="align-middle">
                         <!-- {{order_item}} -->
+                        {{ order_item }}
+                        {{ request.user.OrderItem }}
                         
                         {% for item in items %}
+                        
                         {% if item.order.customer.username == request.user.username %}
                             <tr>
                                 <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
@@ -49,7 +52,10 @@
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
                                         <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-primary btn-plus">
-                                                    <i class="fa fa-plus"></i>
+                                                    {{ order_item }}
+                                                    <a href="{% url 'q_incr' item.item_id %}">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
                                                 </button>
                                             </a>
                                         </div>
