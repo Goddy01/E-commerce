@@ -100,10 +100,17 @@ def quantity_increment(request, item_id):
     
 
 def quantity_decrement(request, item_id):
-    context = {}
 
     order_item = OrderItem.objects.get(item_id=item_id)
     order_item.quantity -= 1
+    order_item.save()
+
+    return render(request, 'store/cart.html')
+
+
+def remove_product(request, item_id):
+    order_item = OrderItem.objects.get(item_id=item_id)
+    order_item.delete()
     order_item.save()
 
     return render(request, 'store/cart.html')
