@@ -82,10 +82,10 @@ def cart(request):
     return render(request, 'store/cart.html', context)
 
 
-def quantity_increment(request):
+def quantity_increment(request, item_id):
     context = {}
-    order_item = Order.objects.all()
-    # orderitem = OrderItem.objects.filter(order=order)
+    # order_item = Order.objects.all()
+    order_item = OrderItem.objects.all()
 
     # print(order_item)
     # value1 = value.orderitem_set.all()
