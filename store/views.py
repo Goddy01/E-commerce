@@ -88,6 +88,7 @@ def quantity_increment(request, item_id):
     # customer = OrderItem.objects.get(order.customer=request.user)
     order_item = OrderItem.objects.get(item_id=item_id)
     order_item.quantity += 1
+    order_item.save()
 
     # print(order_item)
     # value1 = value.orderitem_set.all()
