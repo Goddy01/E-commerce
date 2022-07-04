@@ -108,7 +108,7 @@ def quantity_decrement(request, item_id):
     return render(request, 'store/cart.html')
 
 
-def remove_product(request, item_id):
+def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
     order_item.delete()
     order_item.save()

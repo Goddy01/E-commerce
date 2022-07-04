@@ -20,11 +20,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from store.views import (
-    home_page, ContactView,
+    delete_order_item, home_page, ContactView,
     ShopDetailView, ShopView,
     cart, CheckoutView,
     add_product_view, quantity_increment,
-    quantity_decrement,
+    quantity_decrement, delete_order_item
 
     )
 urlpatterns = [
@@ -36,6 +36,7 @@ urlpatterns = [
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
     path('cart/<item_id>/decrement/', quantity_decrement, name='q_decr'),
+    path('cart/<item_id>/delete/', delete_order_item, name='del_item'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
