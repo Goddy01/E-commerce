@@ -85,7 +85,9 @@ def cart(request):
 def quantity_increment(request, item_id):
     context = {}
     # order_item = Order.objects.all()
-    order_item = OrderItem.objects.all()
+    # customer = OrderItem.objects.get(order.customer=request.user)
+    order_item = OrderItem.objects.get(customer=request.user)
+    order_item.quantity += 1
 
     # print(order_item)
     # value1 = value.orderitem_set.all()
