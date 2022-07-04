@@ -34,6 +34,7 @@ urlpatterns = [
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
+    path('cart/<item_id>/decrement/', quantity_increment, name='q_decr'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
