@@ -83,7 +83,7 @@ def cart(request):
 
 
 def quantity_increment(request, item_id):
-    context = {}
+    # context = {}
     # order_item = Order.objects.all()
     # customer = OrderItem.objects.get(order.customer=request.user)
     order_item = OrderItem.objects.get(item_id=item_id)
@@ -95,6 +95,15 @@ def quantity_increment(request, item_id):
     # orderitem.quantity += 1
     # orderitem.product.product_price += orderitem.product.product_price
     # orderitem.save()
-    context['order_item'] = order_item
-    return render(request, 'store/cart.html', context)
+    # context['order_item'] = order_item
+    return render(request, 'store/cart.html')
     
+
+def quantity_decrement(request, item_id):
+    context = {}
+
+    order_item = OrderItem.objects.get(item_id=item_id)
+    order_item.quantity -= 1
+    order_item.save()
+
+    return render(request, 'store/cart.html')
