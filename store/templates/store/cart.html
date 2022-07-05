@@ -61,7 +61,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">${% widthratio item.product.product_price 1 item.quantity %}</td>
+                                <td class="align-middle">$
+                                    {{ item.get_items_price }}
+                                </td>
                                 <td class="align-middle">
                                     <a href="{% url 'del_item' item.item_id %}" class="text-dark">
                                         <button class="btn btn-sm btn-primary">
