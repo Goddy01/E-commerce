@@ -67,7 +67,11 @@ class OrderItem(models.Model):
     product =       models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_added =    models.DateTimeField(auto_now_add=True)
     quantity =      models.IntegerField(null=True, blank=True, default=0)
-    price =         models.IntegerField(null=True)
+
+    def get_items_price(self):
+        total_item_price = self.quantity * self.product.product_price
+        return total_item_price
+
 
 
 class BillingAddress(models.Model):

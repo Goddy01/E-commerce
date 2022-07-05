@@ -114,3 +114,4 @@ def delete_order_item(request, item_id):
     # order_item.save()
 
     return render(request, 'store/cart.html')
+
