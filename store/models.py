@@ -66,6 +66,12 @@ class Order(models.Model):
         total =         sum([item.get_items_price for item in orderitems])
         return total
 
+    @property
+    def get_cart_items(self):
+        orderitems =    self.orderitems_set.all()
+        items_total =         sum([item.quantity for item in orderitems])
+        return items_total
+
 
 class OrderItem(models.Model):
     item_id =       models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
