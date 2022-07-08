@@ -55,7 +55,7 @@ class Order(models.Model):
     customer =              models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     date_ordered =          models.DateTimeField(auto_now_add=True)
     complete =              models.BooleanField(default=False)
-    total_order_price =     models.IntegerField(null=True)
+    # total_order_price =     models.IntegerField(null=True)
 
     def __str__(self):
         return str(self.transaction_id)
@@ -68,14 +68,14 @@ class Order(models.Model):
 
     @property
     def get_cart_items(self):
-        orderitems =    self.orderitems_set.all()
+        orderitems =          self.orderitem_set.all()
         items_total =         sum([item.quantity for item in orderitems])
         return items_total
 
 
 class OrderItem(models.Model):
     item_id =       models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
-    order =         models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, related_name='order_items')
+    order =         models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     product =       models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_added =    models.DateTimeField(auto_now_add=True)
     quantity =      models.IntegerField(null=True, blank=True, default=0)

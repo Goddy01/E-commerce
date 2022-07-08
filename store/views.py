@@ -69,15 +69,20 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        orders = Order.objects.filter(customer=user)
+        order = Order.objects.filter(customer=user)
         # print(order.count())
         # print(order)
-        if not orders.exists():
+        if not order.exists():
             order, created = Order.objects.create(customer=user, complete=False), False
+            # print(order.get_cart_total)
+        else:
+            order = Order.objects.filter(customer=user)
         items = OrderItem.objects.all()
     else:
         items = []
-    context['orders'] = orders
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+    
+    context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
 
