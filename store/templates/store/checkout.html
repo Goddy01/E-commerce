@@ -139,8 +139,8 @@
                         <h5 class="font-weight-medium mb-3">Products</h5>
                         {% for item in items %}
                         <div class="d-flex justify-content-between text-dark">
-                            <p>{{ item.product.product_name }} ({{ item.quantity }})</p>
-                            <p>${{ item.get_items_price }}</p>
+                            <p>{{ item.product.product_name }}</p>
+                            <p>${{ item.get_items_price }} (${{ item.product.product_price }}x{{ item.quantity }})</p>
                         </div>
                         {% endfor %}
                         <!-- <div class="d-flex justify-content-between">
