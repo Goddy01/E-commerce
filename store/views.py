@@ -15,8 +15,8 @@ class ShopView(TemplateView):
 class ShopDetailView(TemplateView):
     template_name = 'detail.html'
 
-class CheckoutView(TemplateView):
-    template_name = 'checkout.html'
+# class CheckoutView(TemplateView):
+#     template_name = 'checkout.html'
 
 class ContactView(TemplateView):
     template_name = 'contact.html'
@@ -136,6 +136,6 @@ def checkout(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         items = []
 
-    context['order1'] = order
-    context['items1'] = items
+    context['order'] = order
+    context['items'] = items
     return render(request, 'store/checkout.html', context)
