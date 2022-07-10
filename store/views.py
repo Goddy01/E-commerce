@@ -126,3 +126,16 @@ def delete_order_item(request, item_id):
 
     return render(request, 'store/cart.html')
 
+def checkout(request):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        items = []
+
+    context['order1'] = order
+    context['items1'] = items
+    return render(request, 'store/checkout.html', context)
