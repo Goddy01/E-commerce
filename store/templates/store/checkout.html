@@ -135,12 +135,12 @@
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Order Total</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body font-weight-semi-bold">
                         <h5 class="font-weight-medium mb-3">Products</h5>
                         {% for item in items %}
                         <div class="d-flex justify-content-between text-dark">
-                            <p>{{ item.product.product_name }}</p>
-                            <p>${{ item.product.product_price }}</p>
+                            <p>{{ item.product.product_name }} ({{ item.quantity }})</p>
+                            <p>${{ item.get_items_price }}</p>
                         </div>
                         {% endfor %}
                         <!-- <div class="d-flex justify-content-between">
@@ -154,7 +154,7 @@
                         <hr class="mt-0">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium">${{ order.get_cart_total }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
@@ -164,7 +164,7 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold">${{ order.total_order_price }}</h5>
                         </div>
                     </div>
                 </div>
