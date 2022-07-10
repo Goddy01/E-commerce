@@ -94,8 +94,13 @@ class OrderItem(models.Model):
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    firstname =         models.CharField(max_length=256, null=True)
+    lastname =          models.CharField(max_length=256, null=True)
+    email =             models.EmailField(max_length=128, unique=True, null=True)
+    address1 =          models.CharField(max_length=512, null=True)
+    address2 =          models.CharField(max_length=512, null=True)
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    address =           models.CharField(null=False, max_length=256)
+    country =           models.CharField(max_length=256, null=True)
     city =              models.CharField(null=False, max_length=256)
     state =             models.CharField(null=False, max_length=256)
     zipcode =           models.CharField(null=False, max_length=256)
