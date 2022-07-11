@@ -115,7 +115,7 @@ class BillingAddress(models.Model):
     address2 =          models.CharField(max_length=512, null=True)
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     country =           models.ForeignKey(Country, on_delete=models.CASCADE, null=True)
-    city =              models.KoreignKey(City, max_length=256, null=True)
+    city =              models.ForeignKey(City, max_length=256, null=True)
     state =             models.CharField(null=False, max_length=256)
     zipcode =           models.CharField(null=False, max_length=256)
     date_added =        models.DateTimeField(auto_now_add=True)
