@@ -16,8 +16,11 @@ decorator==5.1.1
 defusedxml==0.7.1
 distlib==0.3.4
 Django==4.0.2
+django-countries==7.3.2
+django-extensions==3.1.5
 django-phone-field==1.8.1
 django-phonenumber-field==6.1.0
+django-shell-plus==1.1.7
 entrypoints==0.3
 et-xmlfile==1.1.0
 Faker==13.2.0
@@ -81,6 +84,7 @@ terminado==0.12.1
 testpath==0.5.0
 tornado==6.1
 traitlets==5.1.1
+typing_extensions==4.3.0
 tzdata==2021.5
 uncertainties==3.1.6
 validus==0.3.0

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Vendor',
     'store',
     'phonenumber_field',
+    'django_countries',
 
     'django.contrib.admin',
     'django.contrib.auth',
