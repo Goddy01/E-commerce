@@ -92,30 +92,18 @@ class OrderItem(models.Model):
         return total_item_price
 
 
-class Country(models.Model):
-    name =          models.CharField(max_length=30, null=True)
-
-    def __str__(self):
-        return self.name
-
-class City(models.Model):
-    country =       models.ForeignKey(Country, on_delete=models.CASCADE)
-    name =          models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.name
 
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    firstname =         models.CharField(max_length=256, null=True)
-    lastname =          models.CharField(max_length=256, null=True)
-    email =             models.EmailField(max_length=128, unique=True, null=True)
-    address1 =          models.CharField(max_length=512, null=True)
-    address2 =          models.CharField(max_length=512, null=True)
+    firstname =         models.CharField(max_length=256, null=False, default="")
+    lastname =          models.CharField(max_length=256, null=False, default="")
+    email =             models.EmailField(max_length=128, unique=True, null=False, default="")
+    address1 =          models.CharField(max_length=512, null=False, default="")
+    address2 =          models.CharField(max_length=512, null=False, default="")
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    country =           models.ForeignKey(Country, on_delete=models.CASCADE, null=True)
-    city =              models.ForeignKey(City, max_length=256, null=True, on_delete=models.CASCADE)
+    country =           CountryField(max_length=256, null=False, default="")
+    city =              models.CharField(null=False, max_length=256, default="")
     state =             models.CharField(null=False, max_length=256)
     zipcode =           models.CharField(null=False, max_length=256)
     date_added =        models.DateTimeField(auto_now_add=True)

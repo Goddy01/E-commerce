@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm,BillingForm
 from Accounts.models import Vendor
-from store.models import Product, Order, OrderItem, City
+from store.models import Product, Order, OrderItem
 # Create your views here.
 # class HomeView(TemplateView):
 #     template_name = 'store/index.html'
@@ -150,7 +150,7 @@ def checkout(request):
     return render(request, 'store/checkout.html', context)
 
 
-def load_cities(request):
-    country_id = request.GET.get('country')
-    cities = City.objects.filter(country_id=country_id).order_by('name')
-    return render(request, 'store/checkout.html', {'cities': cities})
+# def load_cities(request):
+#     country_id = request.GET.get('country')
+#     cities = City.objects.filter(country_id=country_id).order_by('name')
+#     return render(request, 'store/checkout.html', {'cities': cities})
