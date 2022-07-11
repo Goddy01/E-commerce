@@ -93,7 +93,7 @@ class OrderItem(models.Model):
 
 
 class Country(models.Model):
-    name =          CountryField(max_length=256, null=True)
+    name =          models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return self.name
