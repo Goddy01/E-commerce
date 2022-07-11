@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, BillingAddress
+from .models import Product, BillingAddress, City
 
 class AddProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
@@ -46,3 +46,7 @@ class BillingForm(forms.ModelForm):
     class Meta:
         model = BillingAddress
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
