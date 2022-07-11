@@ -129,17 +129,20 @@ def delete_order_item(request, item_id):
 def checkout(request):
     context = {}
     user = request.user
-    if request.methos == 'POST':
+    if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
             billing_form.save()
-    if user.is_authenticated:
-        order, created = Order.objects.get_or_create(customer=user, complete=False)
-        items = order.orderitem_set.all()
+        if user.is_authenticated:
+            order, created = Order.objects.get_or_create(customer=user, complete=False)
+            items = order.orderitem_set.all()
+        else:
+            order = {'get_cart_total': 0, 'get_cart_items': 0}
+            items = []
     else:
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
-        items = []
+        billing_form = BillingForm()
 
+    context['billing_form'] = billing_form
     context['order'] = order
     context['items'] = items
     return render(request, 'store/checkout.html', context)
