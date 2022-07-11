@@ -2,7 +2,7 @@ from typing import OrderedDict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm
+from .forms import AddProductForm,BillingForm
 from Accounts.models import Vendor
 from store.models import Product, Order, OrderItem
 # Create your views here.
@@ -129,6 +129,10 @@ def delete_order_item(request, item_id):
 def checkout(request):
     context = {}
     user = request.user
+    if request.methos == 'POST':
+        billing_form = BillingForm(request.POST)
+        if billing_form.is_valid():
+            billing_form.save()
     if user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
