@@ -133,14 +133,16 @@ def checkout(request):
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
             billing_form.save()
-        if user.is_authenticated:
-            order, created = Order.objects.get_or_create(customer=user, complete=False)
-            items = order.orderitem_set.all()
-        else:
-            order = {'get_cart_total': 0, 'get_cart_items': 0}
-            items = []
     else:
         billing_form = BillingForm()
+
+
+    if user.is_authenticated:
+        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        items = []    
 
     context['billing_form'] = billing_form
     context['order'] = order
