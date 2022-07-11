@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 from Accounts.models import Customer
+from django_countries.fields import CountryField
 
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
@@ -100,7 +101,7 @@ class BillingAddress(models.Model):
     address1 =          models.CharField(max_length=512, null=True)
     address2 =          models.CharField(max_length=512, null=True)
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    country =           models.CharField(max_length=256, null=True)
+    country =           CountryField(max_length=256, null=True)
     city =              models.CharField(null=False, max_length=256)
     state =             models.CharField(null=False, max_length=256)
     zipcode =           models.CharField(null=False, max_length=256)
