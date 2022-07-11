@@ -92,6 +92,19 @@ class OrderItem(models.Model):
         return total_item_price
 
 
+class Country(models.Model):
+    name =          CountryField(max_length=256, null=True)
+
+    def __str__(self):
+        return self.name
+
+class City(models.Model):
+    country =       models.ForeignKey(Country, on_delete=models.CASCADE)
+    name =          models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
@@ -101,7 +114,7 @@ class BillingAddress(models.Model):
     address1 =          models.CharField(max_length=512, null=True)
     address2 =          models.CharField(max_length=512, null=True)
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    country =           CountryField(max_length=256, null=True)
+    country =           models.ForeignKey(Country, on_delete=models.CASCADE)
     city =              models.CharField(null=False, max_length=256)
     state =             models.CharField(null=False, max_length=256)
     zipcode =           models.CharField(null=False, max_length=256)
