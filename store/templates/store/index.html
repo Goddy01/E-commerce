@@ -31,7 +31,9 @@
                                     <p>Female Children's Wears</p>
                                 {% endif %}
                             </span>
-                            <a href="" class="btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;"><i class="fas fa-shopping-cart text-white mr-1"></i>Add To Cart</a>
+                            <button data-product={{prouct.id}} data-action="add">
+                                <a href="" class="btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;"><i class="fas fa-shopping-cart text-white mr-1"></i>Add To Cart</a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -282,7 +284,9 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                            <button data-product={{product.id}} data-action="add">
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                            </button>
                         </div>
                     </div>
                 </div>
