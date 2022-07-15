@@ -1,4 +1,5 @@
 from typing import OrderedDict
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -154,3 +155,6 @@ def checkout(request):
 #     country_id = request.GET.get('country')
 #     cities = City.objects.filter(country_id=country_id).order_by('name')
 #     return render(request, 'store/checkout.html', {'cities': cities})
+
+def updateItem(request):
+    return JsonResponse('Item was added', safe=False)
