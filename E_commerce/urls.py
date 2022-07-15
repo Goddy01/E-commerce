@@ -26,6 +26,7 @@ from store.views import (
     add_product_view, quantity_increment,
     quantity_decrement, delete_order_item,
     # load_cities,
+    updateItem,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
     path('vendors/', include('Accounts.urls')),
+    path('update_item/', updateItem, name='update_item'),
     # path('ajax/load-cities/', load_cities, name='ajax_load_cities'),
 
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name="password/password_change_done.html"), name="password_change_done"),
