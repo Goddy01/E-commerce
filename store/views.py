@@ -1,4 +1,4 @@
-from typing import OrderedDict
+import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -157,4 +157,10 @@ def checkout(request):
 #     return render(request, 'store/checkout.html', {'cities': cities})
 
 def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('ProuctId:', productId)
+    print('Action:', action)
     return JsonResponse('Item was added', safe=False)
