@@ -163,4 +163,9 @@ def updateItem(request):
 
     print('ProuctId:', productId)
     print('Action:', action)
+
+    customer = request.user.username
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem = OrderItem.objects.get_or_create(order=order, product=product)
     return JsonResponse('Item was added', safe=False)
