@@ -1,4 +1,5 @@
 import json
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -156,18 +157,20 @@ def checkout(request):
 #     cities = City.objects.filter(country_id=country_id).order_by('name')
 #     return render(request, 'store/checkout.html', {'cities': cities})
 
+@csrf_exempt
 def updateItem(request):
     data = json.loads(request.body)
+    print(data)
     productId = data['productId']
     action = data['action']
 
     print('ProuctId:', productId)
     print('Action:', action)
 
-    customer = request.user.username
-    product = Product.objects.get(id=productId)
+    customer = request.user
+    product = Product.objects.get(product_id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem = OrderItem.objects.get_or_create(order=order, product=product)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
         orderItem.quantity += 1

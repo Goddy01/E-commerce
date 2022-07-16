@@ -15,7 +15,7 @@ Including another URLconf
 """
 from re import template
 from django.contrib import admin
-from django.urls import path, include, reverse_lazy
+from django.urls import path, include, reverse_lazy,re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -42,7 +42,7 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
     path('vendors/', include('Accounts.urls')),
-    path('update_item/', updateItem, name='update_item'),
+    re_path(r'^update_item/$', updateItem, name='update_item'),
     # path('ajax/load-cities/', load_cities, name='ajax_load_cities'),
 
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name="password/password_change_done.html"), name="password_change_done"),
