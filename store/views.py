@@ -173,4 +173,5 @@ def updateItem(request):
         orderItem.quantity += 1
     elif action == 'remove':
         orderItem.quantity -= 1
+    orderItem.save()
     return JsonResponse('Item was added', safe=False)
