@@ -11,6 +11,18 @@ from store.models import Product, Order, OrderItem
 # class HomeView(TemplateView):
 #     template_name = 'store/index.html'
 
+def store(request):
+    if request.user.is_authenticated:
+        order, created = Order.objects.get_or_create(customer=request.user, complete=False)
+        items = order.orderitem_set.all()
+        cart_items = order.get_cart_items
+    else:
+        order = {'get_cart_total':0, 'get_cart_items':0}
+        items = []
+        cart_items = order['get_cart_items']
+    context = {'items':items, 'cart_items':cart_items}
+    return render(request, 'store/base.html', context)
+
 class ShopView(TemplateView):
     template_name = 'shop.html'
 
@@ -71,25 +83,20 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        # order = Order.objects.filter(customer=user)
-        # print(order.count())
-        # print(order)
-        # if not order.exists():
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
-            # print(order.get_cart_total)
-        # else:
-        #     order = Order.objects.filter(customer=user)
-        # items = OrderItem.objects.all()
+        # c_i = order.get_cart_items
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
     # order_total = 0
     # for ord in order:
         # order_total += ord.get_cart_total
+        # c_i = 0
     order.total_order_price = order.get_cart_total + 10
     order.save()
     # context['order_total'] = order_total
+    # context['c_i'] = c_i
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
@@ -181,3 +188,5 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
+
+

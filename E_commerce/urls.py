@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('django.contrib.auth.urls')),
     path('', home_page, name='home'),
-    path('shop/', ShopView.as_view(), name='shop'),
+    path('shop/', ShopDetailView.as_view(), name='shop'),
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
