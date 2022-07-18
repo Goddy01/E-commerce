@@ -37,7 +37,7 @@
                         
                         {% for item in items %}
                         
-                        {% if item.order.customer.username == request.user.username %}
+                        {% if item.order.customer.username == request.user.username and item.quantity != 0 %}
                             <tr>
                                 <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
                                     <p class="text-dark">{{item.product.product_name}}</p></td>
