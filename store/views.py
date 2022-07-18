@@ -21,7 +21,7 @@ def store(request):
         items = []
         cart_items = order['get_cart_items']
     context = {'items':items, 'cart_items':cart_items}
-    return render(request, 'store/base.html', context)
+    return render(request, 'base.html', context)
 
 class ShopView(TemplateView):
     template_name = 'shop.html'
