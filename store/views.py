@@ -122,8 +122,11 @@ def quantity_increment(request, item_id):
 def quantity_decrement(request, item_id):
 
     order_item = OrderItem.objects.get(item_id=item_id)
-    order_item.quantity -= 1
-    order_item.save()
+    if order_item.quantity <=  0:
+        order_item.delete()
+    else:
+        order_item.quantity -= 1
+        order_item.save()
 
     return render(request, 'store/cart.html')
 
