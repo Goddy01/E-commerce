@@ -54,7 +54,7 @@
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
                                         <div class="input-group-btn">
                                             <a href="{% url 'q_incr' item.item_id %}" class="text-dark">
-                                                <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                                <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity >= item.product.number_available %}disabled{% endif %}>
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </a>
