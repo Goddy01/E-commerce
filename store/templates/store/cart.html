@@ -46,7 +46,7 @@
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
                                             <a href="{% url 'q_decr' item.item_id %}" class="text-dark">
-                                                <button class="btn btn-sm btn-primary btn-plus" name="q_decr">
+                                                <button class="btn btn-sm btn-primary btn-plus" name="q_decr" {% if item.quantity <= 0 %}disabled{% endif %} >
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </a>
