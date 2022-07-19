@@ -85,38 +85,31 @@ def cart(request):
         user = request.user
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
-        # c_i = order.get_cart_items
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-    # order_total = 0
-    # for ord in order:
-        # order_total += ord.get_cart_total
-        # c_i = 0
     order.total_order_price = order.get_cart_total + 10
     order.save()
-    # context['order_total'] = order_total
-    # context['c_i'] = c_i
+
+    subtotal = order.get_cart_total
+    order.total_order_price += 10
+    order.save()
+
+    total = order.total_order_price - 10
+    context['sub_total'] = subtotal
+    context['total'] = total
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
 
 
 def quantity_increment(request, item_id):
-    # context = {}
-    # order_item = Order.objects.all()
-    # customer = OrderItem.objects.get(order.customer=request.user)
     order_item = OrderItem.objects.get(item_id=item_id)
     order_item.quantity += 1
     order_item.save()
-
-    # print(order_item)
-    # value1 = value.orderitem_set.all()
-    # orderitem.quantity += 1
-    # orderitem.product.product_price += orderitem.product.product_price
-    # orderitem.save()
-    # context['order_item'] = order_item
-    return render(request, 'store/cart.html')
+    subtotal = order_item.order.get_cart_total
+    total = subtotal + 10
+    return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
     
 
 def quantity_decrement(request, item_id):
@@ -127,16 +120,19 @@ def quantity_decrement(request, item_id):
     else:
         order_item.quantity -= 1
         order_item.save()
-
-    return render(request, 'store/cart.html')
+    subtotal = order_item.order.get_cart_total
+    total = subtotal + 10
+    return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
 
 def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
+    subtotal = order_item.order.get_cart_total - order_item.get_items_price
+    total = subtotal + 10
     order_item.delete()
     # order_item.save()
 
-    return render(request, 'store/cart.html')
+    return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
 def checkout(request):
     context = {}
@@ -191,5 +187,3 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
-
-
