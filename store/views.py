@@ -109,6 +109,9 @@ def quantity_increment(request, item_id):
     order_item.save()
     subtotal = order_item.order.get_cart_total
     total = subtotal + 10
+    i = 1
+    if i == 1:
+        return redirect('cart')
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
     
 
@@ -120,6 +123,9 @@ def quantity_decrement(request, item_id):
     else:
         order_item.quantity -= 1
         order_item.save()
+    i = 1
+    if i == 1:
+        return redirect('cart')
     subtotal = order_item.order.get_cart_total
     total = subtotal + 10
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
@@ -131,6 +137,9 @@ def delete_order_item(request, item_id):
     total = subtotal + 10
     order_item.delete()
     # order_item.save()
+    i = 1
+    if i == 1:
+        return redirect('cart')
 
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
