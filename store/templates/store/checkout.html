@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3 make-payment">Place Order</button>
+                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" id="make-payment">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -194,5 +194,14 @@
     </div>
     <!-- Checkout End -->
 
+    <script>
+        document.getElementById('make-payment').addEventListener('onclick', function(e) {
+            submitFormData
+        })
+
+        function submitFormData() {
+            console.log('Payment button has been clicked')
+        }
+    </script>
 
 {% endblock content %}
