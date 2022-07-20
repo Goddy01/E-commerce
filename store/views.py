@@ -159,6 +159,10 @@ def checkout(request):
             order.complete = True
             order.save()
             billing_form= obj.save()
+
+            i = 0 
+            if i == 0:
+                return redirect('home')
     else:
         billing_form = BillingForm()    
 
@@ -185,8 +189,7 @@ def checkout(request):
     context['order'] = order
     context['items'] = items
 
-    i = 0 
-    if i == 0
+    
     return render(request, 'store/checkout.html', context)
 
 
