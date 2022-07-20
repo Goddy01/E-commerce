@@ -142,7 +142,7 @@ def delete_order_item(request, item_id):
     if i == 1:
         return redirect('cart')
 
-    return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
+    return render(request, 'ore/cart.html', {'sub_total':subtotal, 'total':total})
 
 def checkout(request):
     context = {}
