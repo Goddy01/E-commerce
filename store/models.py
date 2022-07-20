@@ -97,8 +97,7 @@ class OrderItem(models.Model):
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    firstname =         models.CharField(max_length=256, null=False, default="", blank=True)
-    lastname =          models.CharField(max_length=256, null=False, default="", blank=True)
+    fullname =         models.CharField(max_length=256, null=False, default="", blank=True)
     phone_num1 =        PhoneNumberField(null=True, blank=True, unique=True, verbose_name="Phone No 1")
     phone_num2 =        PhoneNumberField(null=True, blank=True, unique=True, verbose_name= "Phone No 2")
     email =             models.EmailField(max_length=128, unique=True, null=False, default="", blank=False)
