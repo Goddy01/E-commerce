@@ -17,34 +17,30 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8">
-                <form action="" method="post" id="billingForm">
+                <form action="{% url 'checkout' %}" method="post" id="billingForm">
                     {% csrf_token %}
                     <div class="mb-4">
                         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label>First Name</label>
-                                <input class="form-control" name="firstname" id="id_firstname" type="text" placeholder="John" required>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" name="lastname" id="id_lastname" type="text" placeholder="Doe" required>
+                                <input class="form-control" name="fullname" id="id_fullname" type="text" placeholder="John" required value="{{request.user.fullname}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>E-mail</label>
-                                <input class="form-control" type="text" name="email" id="id_email" placeholder="example@email.com" required>
+                                <input class="form-control" type="email" name="email" id="id_email" placeholder="example@email.com" required value="{{request.user.email}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Mobile No 1</label>
-                                <input class="form-control" type="text" name="phone_num1" id="id_phone_num1" placeholder="+123 456 789" required>
+                                <input class="form-control" type="tel" name="phone_num1" id="id_phone_num1" placeholder="+123 456 789" required value="{{request.user.first_phone_num}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Mobile No 2</label>
-                                <input class="form-control" type="text" name="phone_num2" id="id_phone_num2" placeholder="+123 456 789" required>
+                                <input class="form-control" type="tel" name="phone_num2" id="id_phone_num2" placeholder="+123 456 789" required value="{{request.user.second_phone_num}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Line 1</label>
-                                <input class="form-control" type="text" name="address1" id="id_address1" placeholder="123 Street" required>
+                                <input class="form-control" type="text" name="address1" id="id_address1" placeholder="123 Street" required value="{{request.user.address}}">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Line 2</label>

@@ -105,7 +105,7 @@ class BillingAddress(models.Model):
     address1 =          models.CharField(max_length=512, null=False, default="", blank=False)
     address2 =          models.CharField(max_length=512, null=False, default="", blank=False)
     order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=False)
-    country =           CountryField(max_length=256, null=False, default="", blank=False)
+    country =           CountryField(max_length=256, null=False, blank=False)
     city =              models.CharField(null=False, max_length=256, default="", blank=False)
     state =             models.CharField(null=False, max_length=256, blank=False)
     zipcode =           models.CharField(null=False, max_length=256, blank=False)
