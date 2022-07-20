@@ -106,7 +106,7 @@ class BillingAddress(models.Model):
     country =           CountryField(max_length=256, null=False, blank=False)
     city =              models.CharField(null=False, max_length=256, default="", blank=False)
     state =             models.CharField(null=False, max_length=256, blank=False)
-    zipcode =           models.IntegerField(null=False, max_length=256, blank=False)
+    zipcode =           models.IntegerField(null=False, blank=False)
     date_added =        models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
