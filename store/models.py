@@ -1,5 +1,6 @@
 import uuid
 from django.conf import settings
+from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 from django.dispatch import receiver
 from django.utils.text import slugify
@@ -98,6 +99,8 @@ class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     firstname =         models.CharField(max_length=256, null=False, default="", blank=False)
     lastname =          models.CharField(max_length=256, null=False, default="", blank=False)
+    first_phone_num =   PhoneNumberField(null=True, blank=False, unique=True, verbose_name="Phone No 1")
+    second_phone_num =  PhoneNumberField(null=True, blank=False, unique=True, verbose_name= "Phone No 2")
     email =             models.EmailField(max_length=128, unique=True, null=False, default="", blank=False)
     address1 =          models.CharField(max_length=512, null=False, default="", blank=False)
     address2 =          models.CharField(max_length=512, null=False, default="", blank=False)
