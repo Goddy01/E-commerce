@@ -95,6 +95,7 @@ def cart(request):
         context['total'] = total
     else:
         items = []
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
         context['sub_total'] = 0
         context['total'] = 10
 
@@ -163,6 +164,7 @@ def checkout(request):
         total = order.total_order_price
     else:
         items = []
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
         subtotal = 0
         total = 0
     context['sub_total'] = subtotal
