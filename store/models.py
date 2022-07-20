@@ -96,16 +96,16 @@ class OrderItem(models.Model):
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    firstname =         models.CharField(max_length=256, null=False, default="")
-    lastname =          models.CharField(max_length=256, null=False, default="")
-    email =             models.EmailField(max_length=128, unique=True, null=False, default="")
-    address1 =          models.CharField(max_length=512, null=False, default="")
-    address2 =          models.CharField(max_length=512, null=False, default="")
-    order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    country =           CountryField(max_length=256, null=False, default="")
-    city =              models.CharField(null=False, max_length=256, default="")
-    state =             models.CharField(null=False, max_length=256)
-    zipcode =           models.CharField(null=False, max_length=256)
+    firstname =         models.CharField(max_length=256, null=False, default="", blank=False)
+    lastname =          models.CharField(max_length=256, null=False, default="", blank=False)
+    email =             models.EmailField(max_length=128, unique=True, null=False, default="", blank=False)
+    address1 =          models.CharField(max_length=512, null=False, default="", blank=False)
+    address2 =          models.CharField(max_length=512, null=False, default="", blank=False)
+    order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=False)
+    country =           CountryField(max_length=256, null=False, default="", blank=False)
+    city =              models.CharField(null=False, max_length=256, default="", blank=False)
+    state =             models.CharField(null=False, max_length=256, blank=False)
+    zipcode =           models.CharField(null=False, max_length=256, blank=False)
     date_added =        models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
