@@ -170,6 +170,7 @@ def checkout(request):
         order = {'get_cart_items': 0, 'get_cart_total': 0}
         subtotal = 0
         total = 0
+        return HttpResponse('You must be authentiated to visit this page.')
     context['sub_total'] = subtotal
     context['total'] = total
     context['billing_form'] = billing_form
