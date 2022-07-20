@@ -144,17 +144,29 @@ def delete_order_item(request, item_id):
 
     return render(request, 'ore/cart.html', {'sub_total':subtotal, 'total':total})
 
-def checkout(request):
+def checkout(request, transaction_id):
     context = {}
     user = request.user
-    
+
+    if request.method == 'POST':
+        billing_form = BillingForm(request.POST)
+        if billing_form.is_valid():
+            obj = billing_form.save(commit=False)
+            obj.customer = Customer.objects.get(username=request.user.username)
+            obj.order = Order.objects.get(transaction_id=transaction_id)
+            order.complete = True
+            billing_form= obj.save()
+    else:
+        billing_form = BillingForm()    
 
     if user.is_authenticated:
-        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        order = Order.objects.get(transaction_id=transaction_id)
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
-        order.complete = True
-        order.save()
+        if request.method == 'POST':
+            billing_form = BillingForm(request.POST)
+            if billing_form.is_valid():
+                order.save()
         subtotal = order.get_cart_total
         total = order.total_order_price
     else:
@@ -164,15 +176,6 @@ def checkout(request):
         total = 0
         return HttpResponse('You must be authentiated to visit this page.')
 
-    if request.method == 'POST':
-        billing_form = BillingForm(request.POST)
-        if billing_form.is_valid():
-            obj = billing_form.save(commit=False)
-            obj.customer = Customer.objects.get(username=request.user.username)
-            obj.order = Order.objects.get(customer=user)
-            billing_form= obj.save()
-    else:
-        billing_form = BillingForm()
     context['sub_total'] = subtotal
     context['total'] = total
     context['billing_form'] = billing_form
