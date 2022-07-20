@@ -96,15 +96,15 @@ class OrderItem(models.Model):
 
 
 class BillingAddress(models.Model):
-    customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
-    firstname =         models.CharField(max_length=256, null=False, default="", blank=False)
-    lastname =          models.CharField(max_length=256, null=False, default="", blank=False)
-    phone_num1 =        PhoneNumberField(null=True, blank=False, unique=True, verbose_name="Phone No 1")
-    phone_num2 =        PhoneNumberField(null=True, blank=False, unique=True, verbose_name= "Phone No 2")
+    customer =          models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    firstname =         models.CharField(max_length=256, null=False, default="", blank=True)
+    lastname =          models.CharField(max_length=256, null=False, default="", blank=True)
+    phone_num1 =        PhoneNumberField(null=True, blank=True, unique=True, verbose_name="Phone No 1")
+    phone_num2 =        PhoneNumberField(null=True, blank=True, unique=True, verbose_name= "Phone No 2")
     email =             models.EmailField(max_length=128, unique=True, null=False, default="", blank=False)
-    address1 =          models.CharField(max_length=512, null=False, default="", blank=False)
+    address1 =          models.CharField(max_length=512, null=False, default="", blank=True)
     address2 =          models.CharField(max_length=512, null=False, default="", blank=False)
-    order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=False)
+    order =             models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
     country =           CountryField(max_length=256, null=False, blank=False)
     city =              models.CharField(null=False, max_length=256, default="", blank=False)
     state =             models.CharField(null=False, max_length=256, blank=False)
