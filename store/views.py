@@ -150,6 +150,8 @@ def checkout(request):
     if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
+            billing_form.customer = user
+            billing_form.order = Order.objets.get(customer=user)
             billing_form.save()
     else:
         billing_form = BillingForm()
