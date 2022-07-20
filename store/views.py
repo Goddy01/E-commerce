@@ -85,19 +85,18 @@ def cart(request):
         user = request.user
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
+        order.total_order_price = order.get_cart_total + 10
+        subtotal = order.get_cart_total
+        order.total_order_price += 10
+        order.save()
+        total = order.total_order_price - 10
+
+        context['sub_total'] = subtotal
+        context['total'] = total
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-    order.total_order_price = order.get_cart_total + 10
-    order.save()
 
-    subtotal = order.get_cart_total
-    order.total_order_price += 10
-    order.save()
-
-    total = order.total_order_price - 10
-    context['sub_total'] = subtotal
-    context['total'] = total
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
@@ -157,12 +156,13 @@ def checkout(request):
     if user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
+        order.total_order_price = order.get_cart_total + 10
+        order.save()
     else:
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         items = []    
 
-    order.total_order_price = order.get_cart_total + 10
-    order.save()
+    
     context['billing_form'] = billing_form
     context['order'] = order
     context['items'] = items
