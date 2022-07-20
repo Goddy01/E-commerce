@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm,BillingForm
-from Accounts.models import Vendor
+from Accounts.models import Vendor, User
 from store.models import Product, Order, OrderItem
 # Create your views here.
 # class HomeView(TemplateView):
@@ -150,9 +150,10 @@ def checkout(request):
     if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
-            billing_form.customer = user
-            billing_form.order = Order.objects.get(customer=user)
-            billing_form.save()
+            obj = billing_form.save(commit=False)
+            obj.customer = User.objects.filter(username=request.user.username)
+            obj.order = Order.objects.get(customer=user)
+            billing_form= obj.save()
     else:
         billing_form = BillingForm()
 
