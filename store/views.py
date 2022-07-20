@@ -147,21 +147,13 @@ def delete_order_item(request, item_id):
 def checkout(request):
     context = {}
     user = request.user
-    if request.method == 'POST':
-        billing_form = BillingForm(request.POST)
-        if billing_form.is_valid():
-            obj = billing_form.save(commit=False)
-            obj.customer = Customer.objects.get(username=request.user.username)
-            obj.order = Order.objects.get(customer=user)
-            billing_form= obj.save()
-    else:
-        billing_form = BillingForm()
-
+    
 
     if user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=user, complete=False)
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
+        order.complete = True
         order.save()
         subtotal = order.get_cart_total
         total = order.total_order_price
@@ -171,6 +163,16 @@ def checkout(request):
         subtotal = 0
         total = 0
         return HttpResponse('You must be authentiated to visit this page.')
+
+    if request.method == 'POST':
+        billing_form = BillingForm(request.POST)
+        if billing_form.is_valid():
+            obj = billing_form.save(commit=False)
+            obj.customer = Customer.objects.get(username=request.user.username)
+            obj.order = Order.objects.get(customer=user)
+            billing_form= obj.save()
+    else:
+        billing_form = BillingForm()
     context['sub_total'] = subtotal
     context['total'] = total
     context['billing_form'] = billing_form
