@@ -145,6 +145,12 @@
     </div>
     <!-- Checkout End -->
 
+    {% for field in billing_form %}
+    {% for error in field.errors %}
+        <p style="color: red;">{{field.label_tag}}  {{ error }}</p>
+    {% endfor %}
+    {% endfor %}
+
     <script>
         document.getElementById('make-payment').addEventListener('click', function(e) {
             submitFormData()
