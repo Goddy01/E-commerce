@@ -144,7 +144,7 @@ def delete_order_item(request, item_id):
 
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
-def checkout(request, transaction_id):
+def checkout(request):
     context = {}
     user = request.user
 
@@ -154,7 +154,10 @@ def checkout(request, transaction_id):
             obj = billing_form.save(commit=False)
             obj.customer = Customer.objects.get(username=request.user.username)
             obj.order = Order.objects.filter(customer=user).order_by('-id').first()
+            order = Order.objects.filter(customer=user).order_by('-id').first()
+            # order.save(commit=False)
             order.complete = True
+            order.save()
             billing_form= obj.save()
     else:
         billing_form = BillingForm()    
@@ -181,6 +184,9 @@ def checkout(request, transaction_id):
     context['billing_form'] = billing_form
     context['order'] = order
     context['items'] = items
+
+    i = 0 
+    if i == 0
     return render(request, 'store/checkout.html', context)
 
 
