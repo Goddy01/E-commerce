@@ -142,7 +142,7 @@ def delete_order_item(request, item_id):
     if i == 1:
         return redirect('cart')
 
-    return render(request, 'ore/cart.html', {'sub_total':subtotal, 'total':total})
+    return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
 def checkout(request, transaction_id):
     context = {}
@@ -153,14 +153,14 @@ def checkout(request, transaction_id):
         if billing_form.is_valid():
             obj = billing_form.save(commit=False)
             obj.customer = Customer.objects.get(username=request.user.username)
-            obj.order = Order.objects.get(transaction_id=transaction_id)
+            obj.order = Order.objects.filter(customer=user).order_by('-id').first()
             order.complete = True
             billing_form= obj.save()
     else:
         billing_form = BillingForm()    
 
     if user.is_authenticated:
-        order = Order.objects.get(transaction_id=transaction_id)
+        order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
         if request.method == 'POST':
