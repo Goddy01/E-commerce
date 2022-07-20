@@ -151,8 +151,8 @@ def checkout(request):
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
             obj = billing_form.save(commit=False)
-            obj.customer = Customer.objects.filter(username=request.user.username)
-            obj.order = Order.objects.filter(customer=user)
+            obj.customer = Customer.objects.get(username=request.user.username)
+            obj.order = Order.objects.get(customer=user)
             billing_form= obj.save()
     else:
         billing_form = BillingForm()
