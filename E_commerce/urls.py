@@ -38,7 +38,7 @@ urlpatterns = [
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
     path('cart/<item_id>/decrement/', quantity_decrement, name='q_decr'),
     path('cart/<item_id>/delete/', delete_order_item, name='del_item'),
-    path('checkout/', checkout, name='checkout'),
+    path('checkout/<transaction_id>/', checkout, name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
     path('vendors/', include('Accounts.urls')),
