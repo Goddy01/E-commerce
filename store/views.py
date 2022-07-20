@@ -161,6 +161,8 @@ def checkout(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}
         items = []    
 
+    order.total_order_price = order.get_cart_total + 10
+    order.save()
     context['billing_form'] = billing_form
     context['order'] = order
     context['items'] = items
