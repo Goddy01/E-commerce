@@ -96,6 +96,8 @@ def cart(request):
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
+        context['sub_total'] = 0
+        context['total'] = 10
 
     context['order'] = order
     context['items'] = items
