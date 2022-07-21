@@ -155,9 +155,9 @@ def checkout(request):
             obj.order.save()
             obj.save()
 
-            product = OrderItem.objects.filter(order=obj.order)
-            product.number_available -= 1
-            product.save()
+            item = OrderItem.objects.filter(order=obj.order)
+            item.product.number_available -= 1
+            item.save()
             billing_form= obj
 
             i = 0 
