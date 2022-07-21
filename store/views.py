@@ -8,8 +8,6 @@ from .forms import AddProductForm,BillingForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 # Create your views here.
-# class HomeView(TemplateView):
-#     template_name = 'store/index.html'
 
 def store(request):
     if request.user.is_authenticated:
@@ -29,14 +27,8 @@ class ShopView(TemplateView):
 class ShopDetailView(TemplateView):
     template_name = 'detail.html'
 
-# class CheckoutView(TemplateView):
-#     template_name = 'checkout.html'
-
 class ContactView(TemplateView):
     template_name = 'contact.html'
-
-# class AddProductView(TemplateView):
-#     template_name = 'create_product.html'
 
 def add_product_view(request):
     """The view for vendors to add products to the store"""
@@ -85,14 +77,12 @@ def cart(request):
         user = request.user
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
-        # print(len(order))
         print(len(items))
         if len(items) == 0:
             return HttpResponse('Your cart is empty.')
         else:
             order.total_order_price = order.get_cart_total + 10
             subtotal = order.get_cart_total
-            # order.total_order_price += 10
             order.save()
             total = order.total_order_price
 
@@ -142,7 +132,6 @@ def delete_order_item(request, item_id):
     subtotal = order_item.order.get_cart_total - order_item.get_items_price
     total = subtotal + 10
     order_item.delete()
-    # order_item.save()
     i = 1
     if i == 1:
         return redirect('cart')
@@ -154,21 +143,14 @@ def checkout(request):
     user = request.user
 
     if not user.is_authenticated:
-        # items = []
-        # order = {'get_cart_items': 0, 'get_cart_total': 0}
-        # subtotal = 0
-        # total = 0
         return HttpResponse('You must be authentiated to visit this page.')
-        
+
     if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
             obj = billing_form.save(commit=False)
             obj.customer = Customer.objects.get(username=request.user.username)
             obj.order = Order.objects.filter(customer=user).order_by('-id').first()
-            # order = Order.objects.filter(customer=user).order_by('-id').first()
-            # order.save(commit=False)
-            # obj.order.save(commit=False)
             obj.order.complete = True
             obj.order.save()
             obj.save()
@@ -180,17 +162,10 @@ def checkout(request):
     else:
         billing_form = BillingForm()
 
-    # if user.is_authenticated:
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
     if len(items) == 0:
         return HttpResponse('Your cart is empty. Nothing to checkout here.')
-    # order.total_order_price = order.get_cart_total + 10
-    # order.complete = True
-    # if request.method == 'POST':
-    #     billing_form = BillingForm(request.POST)
-    #     if billing_form.is_valid():
-    # order.save()
     else:
         subtotal = order.get_cart_total
         total = order.total_order_price
