@@ -101,7 +101,7 @@ def cart(request):
 
 def quantity_increment(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
-    if order_item.quantity <= order_item.product.number_available:
+    if order_item.quantity < order_item.product.number_available:
         order_item.quantity += 1
         
     else:
