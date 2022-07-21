@@ -83,7 +83,7 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        order, created = Order.objects.filter(customer=user).order_by('-id').first()
+        order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
         subtotal = order.get_cart_total
@@ -157,7 +157,7 @@ def checkout(request):
             # order = Order.objects.filter(customer=user).order_by('-id').first()
             # order.save(commit=False)
             obj.order.complete = True
-            obj.order.save()
+            obj.save()
             billing_form= obj
 
             i = 0 
@@ -170,7 +170,7 @@ def checkout(request):
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
     order.total_order_price = order.get_cart_total + 10
-    order.complete = True
+    # order.compl ete = True
     # if request.method == 'POST':
     #     billing_form = BillingForm(request.POST)
     #     if billing_form.is_valid():
