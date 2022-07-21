@@ -156,7 +156,9 @@ def checkout(request):
             obj.order = Order.objects.filter(customer=user).order_by('-id').first()
             # order = Order.objects.filter(customer=user).order_by('-id').first()
             # order.save(commit=False)
-            # obj.order.complete = True
+            # obj.order.save(commit=False)
+            obj.order.complete = True
+            obj.order.save()
             obj.save()
             billing_form= obj
 
@@ -170,11 +172,11 @@ def checkout(request):
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
     # order.total_order_price = order.get_cart_total + 10
-    order.complete = True
+    # order.complete = True
     # if request.method == 'POST':
     #     billing_form = BillingForm(request.POST)
     #     if billing_form.is_valid():
-    order.save()
+    # order.save()
     subtotal = order.get_cart_total
     total = order.total_order_price
     if not user.is_authenticated:
