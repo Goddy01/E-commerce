@@ -83,7 +83,7 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        order, created = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
         subtotal = order.get_cart_total
@@ -178,10 +178,10 @@ def checkout(request):
     subtotal = order.get_cart_total
     total = order.total_order_price
     if not user.is_authenticated:
-        items = []
-        order = {'get_cart_items': 0, 'get_cart_total': 0}
-        subtotal = 0
-        total = 0
+        # items = []
+        # order = {'get_cart_items': 0, 'get_cart_total': 0}
+        # subtotal = 0
+        # total = 0
         return HttpResponse('You must be authentiated to visit this page.')
 
     context['sub_total'] = subtotal
