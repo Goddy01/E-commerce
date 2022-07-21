@@ -76,8 +76,8 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         print(Order.objects.filter(customer=user).order_by('-id').first().complete)
-        if Order.objects.filter(customer=user).order_by('-id').first().complete == True or Order.objects.filter(customer=user).order_by('-id').first().total_order_price == 10:
-            return HttpResponse('Your cart is empty.')
+        # if Order.objects.filter(customer=user).order_by('-id').first().total_order_price == 10:
+        #     return HttpResponse('Your cart is empty.')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         print(len(items))
@@ -121,15 +121,15 @@ def quantity_increment(request, item_id):
 def quantity_decrement(request, item_id):
 
     order_item = OrderItem.objects.get(item_id=item_id)
-    if order_item.quantity <=  0:
-        order_item.delete()
-        return HttpResponse('Your cart is empty.')
-    else:
-        order_item.quantity -= 1
-        order_item.save()
-        i = 1
-        if i == 1:
-            return redirect('cart')
+    # if order_item.quantity <=  0:
+    #     order_item.delete()
+    #     return HttpResponse('Your cart is empty.')
+    # else:
+    order_item.quantity -= 1
+    order_item.save()
+    i = 1
+    if i == 1:
+        return redirect('cart')
     subtotal = order_item.order.get_cart_total
     total = subtotal + 10
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
@@ -153,6 +153,8 @@ def checkout(request):
     if not user.is_authenticated:
         return HttpResponse('You must be authentiated to visit this page.')
 
+    # if Order.objects.filter(customer=user).order_by('-id').first().complete == True or Order.objects.filter(customer=user).order_by('-id').first().total_order_price == 10:
+    #     return HttpResponse('Your cart is empty.')
     if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
@@ -222,7 +224,6 @@ def updateItem(request):
         orderItem.quantity -= 1
     orderItem.save()
 
-    
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
