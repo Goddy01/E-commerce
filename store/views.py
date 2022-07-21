@@ -101,7 +101,11 @@ def cart(request):
 
 def quantity_increment(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
-    order_item.quantity += 1
+    if order_item.quantity <= order_item.product.number_available:
+        order_item.quantity += 1
+        
+    else:
+        order_item.quantity = order_item.product.number_available
     order_item.save()
     subtotal = order_item.order.get_cart_total
     total = subtotal + 10
