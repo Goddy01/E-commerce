@@ -157,8 +157,8 @@ def checkout(request):
             # order = Order.objects.filter(customer=user).order_by('-id').first()
             # order.save(commit=False)
             obj.order.complete = True
-            order.save()
-            billing_form= obj.save()
+            obj.order.save()
+            billing_form= obj
 
             i = 0 
             if i == 0:
