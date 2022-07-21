@@ -85,14 +85,19 @@ def cart(request):
         user = request.user
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
-        order.total_order_price = order.get_cart_total + 10
-        subtotal = order.get_cart_total
-        # order.total_order_price += 10
-        order.save()
-        total = order.total_order_price
+        # print(len(order))
+        print(len(items))
+        if len(items) == 0:
+            return HttpResponse('Your cart is empty.')
+        else:
+            order.total_order_price = order.get_cart_total + 10
+            subtotal = order.get_cart_total
+            # order.total_order_price += 10
+            order.save()
+            total = order.total_order_price
 
-        context['sub_total'] = subtotal
-        context['total'] = total
+            context['sub_total'] = subtotal
+            context['total'] = total
     else:
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
@@ -148,6 +153,13 @@ def checkout(request):
     context = {}
     user = request.user
 
+    if not user.is_authenticated:
+        # items = []
+        # order = {'get_cart_items': 0, 'get_cart_total': 0}
+        # subtotal = 0
+        # total = 0
+        return HttpResponse('You must be authentiated to visit this page.')
+        
     if request.method == 'POST':
         billing_form = BillingForm(request.POST)
         if billing_form.is_valid():
@@ -171,20 +183,18 @@ def checkout(request):
     # if user.is_authenticated:
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
+    if len(items) == 0:
+        return HttpResponse('Your cart is empty. Nothing to checkout here.')
     # order.total_order_price = order.get_cart_total + 10
     # order.complete = True
     # if request.method == 'POST':
     #     billing_form = BillingForm(request.POST)
     #     if billing_form.is_valid():
     # order.save()
-    subtotal = order.get_cart_total
-    total = order.total_order_price
-    if not user.is_authenticated:
-        # items = []
-        # order = {'get_cart_items': 0, 'get_cart_total': 0}
-        # subtotal = 0
-        # total = 0
-        return HttpResponse('You must be authentiated to visit this page.')
+    else:
+        subtotal = order.get_cart_total
+        total = order.total_order_price
+    
 
     context['sub_total'] = subtotal
     context['total'] = total
