@@ -59,7 +59,7 @@ def user_login_view(request):
                 login(request, user)
                 # print(user.type)
                 if user.type == "CUSTOMER":
-                    return redirect('checkout')
+                    return redirect('home')
                 elif user.type == "VENDOR":
                     return redirect('add-product')
                 # return redirect('checkout')

@@ -158,36 +158,37 @@ def checkout(request):
             # order.save(commit=False)
             obj.order.complete = True
             obj.order.save()
-            subtotal = obj.order.get_cart_total
-            total = obj.order.total_order_price
             billing_form= obj
 
             i = 0 
             if i == 0:
                 return redirect('home')
     else:
-        billing_form = BillingForm()    
+        billing_form = BillingForm()
 
     # if user.is_authenticated:
-    #     order = Order.objects.filter(customer=user).order_by('-id').first()
-    #     items = order.orderitem_set.all()
-    #     order.total_order_price = order.get_cart_total + 10
-    #     # if request.method == 'POST':
-    #     #     billing_form = BillingForm(request.POST)
-    #     #     if billing_form.is_valid():
-    #     order.save()
-    if !user.is_authenticated:
-        # items = []
-        # order = {'get_cart_items': 0, 'get_cart_total': 0}
-        # subtotal = 0
-        # total = 0
+    order = Order.objects.filter(customer=user).order_by('-id').first()
+    items = order.orderitem_set.all()
+    order.total_order_price = order.get_cart_total + 10
+    order.complete = True
+    # if request.method == 'POST':
+    #     billing_form = BillingForm(request.POST)
+    #     if billing_form.is_valid():
+    order.save()
+    subtotal = order.get_cart_total
+    total = order.total_order_price
+    if not user.is_authenticated:
+        items = []
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
+        subtotal = 0
+        total = 0
         return HttpResponse('You must be authentiated to visit this page.')
 
     context['sub_total'] = subtotal
     context['total'] = total
     context['billing_form'] = billing_form
-    # context['order'] = order
-    # context['items'] = items
+    context['order'] = order
+    context['items'] = items
 
     
     return render(request, 'store/checkout.html', context)
