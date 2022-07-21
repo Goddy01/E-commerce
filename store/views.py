@@ -84,6 +84,9 @@ def cart(request):
             order.total_order_price = order.get_cart_total + 10
             subtotal = order.get_cart_total
             order.save()
+            for item in items:
+                if item.quantity <= 0 :
+                    item.delete()
             total = order.total_order_price
 
             context['sub_total'] = subtotal
