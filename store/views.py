@@ -87,9 +87,9 @@ def cart(request):
         items = order.orderitem_set.all()
         order.total_order_price = order.get_cart_total + 10
         subtotal = order.get_cart_total
-        order.total_order_price += 10
+        # order.total_order_price += 10
         order.save()
-        total = order.total_order_price - 10
+        total = order.total_order_price
 
         context['sub_total'] = subtotal
         context['total'] = total
