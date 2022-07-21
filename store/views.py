@@ -154,6 +154,10 @@ def checkout(request):
             obj.order.complete = True
             obj.order.save()
             obj.save()
+
+            product = OrderItem.objects.filter(order=obj.order)
+            product.number_available -= 1
+            product.save()
             billing_form= obj
 
             i = 0 
@@ -164,6 +168,8 @@ def checkout(request):
 
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
+    
+    
     if len(items) == 0:
         return HttpResponse('Your cart is empty. Nothing to checkout here.')
     else:
