@@ -162,7 +162,7 @@ def checkout(request):
         return HttpResponse('You must be authentiated to visit this page.')
 
     if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
-        return HttpResponse('Your cart is empty. Nothing to checkout here.')
+        return redirect('no_checkout')
     else:
         if request.method == 'POST':
             billing_form = BillingForm(request.POST)
@@ -191,7 +191,7 @@ def checkout(request):
         
         
         if len(items) == 0:
-            return HttpResponse('Your cart is empty. Nothing to checkout here.')
+            return redirect('no_checkout')
         else:
             subtotal = order.get_cart_total
             total = order.total_order_price
