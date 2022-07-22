@@ -54,7 +54,7 @@
                 {% for field in form %}
                     <p>
                     {% for error in field.errors %}
-                        <p style="color: rgb(175, 23, 23);">{{error}}</p>
+                        <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
                     {% endfor %}
                     </p>
                 {% endfor %}
