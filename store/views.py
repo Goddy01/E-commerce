@@ -240,3 +240,6 @@ def updateItem(request):
 
 def no_cart(request):
     return render(request, 'store/no_cart.html')
+
+def no_checkout(request):
+    return render(request, 'store/no_checkout.html')
