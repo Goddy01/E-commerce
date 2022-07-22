@@ -9,4 +9,5 @@ urlpatterns = [
     # path('v_login/', vendor_login_view, name='v_login'),
     path('login/', user_login_view, name="login"),
     path('logout/', user_logout_view, name='logout'),
+    path('must_auth/', )
 ]

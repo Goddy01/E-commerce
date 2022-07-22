@@ -102,3 +102,6 @@ def user_login_view(request):
 def user_logout_view(request):
     logout(request)
     return redirect('home')
+
+def must_auth(request):
+    return render(request, 'Accounts/must_auth.html')
