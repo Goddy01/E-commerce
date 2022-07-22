@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Must be Authenticated{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column">
+            <p class="mx-auto">Must be authenticated to view this page</p>
+            <p class="mx-auto">
+                <a href="{% url 'c_reg' %}">Customer Reg/</a><a href="{% url 'v_reg' %}">Vendor Reg/</a> or
+                <a href="{% url 'login' %}">Login</a>
+            </p>
+        </div>
+    </div>
+
+
+{% endblock content %}
