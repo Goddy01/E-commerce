@@ -153,46 +153,47 @@ def checkout(request):
     if not user.is_authenticated:
         return HttpResponse('You must be authentiated to visit this page.')
 
-    # if Order.objects.filter(customer=user).order_by('-id').first().complete == True or Order.objects.filter(customer=user).order_by('-id').first().total_order_price == 10:
-    #     return HttpResponse('Your cart is empty.')
-    if request.method == 'POST':
-        billing_form = BillingForm(request.POST)
-        if billing_form.is_valid():
-            obj = billing_form.save(commit=False)
-            obj.customer = Customer.objects.get(username=request.user.username)
-            obj.order = Order.objects.filter(customer=user).order_by('-id').first()
-            obj.order.complete = True
-            obj.order.save()
-            obj.save()
-
-            items = OrderItem.objects.filter(order=obj.order)
-            for item in items:
-                item.product.number_available -= item.quantity
-                item.product.save()
-            billing_form= obj
-
-            i = 0 
-            if i == 0:
-                return redirect('home')
-    else:
-        billing_form = BillingForm()
-
-    order = Order.objects.filter(customer=user).order_by('-id').first()
-    items = order.orderitem_set.all()
-    
-    
-    if len(items) == 0:
+    if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
         return HttpResponse('Your cart is empty. Nothing to checkout here.')
     else:
-        subtotal = order.get_cart_total
-        total = order.total_order_price
+        if request.method == 'POST':
+            billing_form = BillingForm(request.POST)
+            if billing_form.is_valid():
+                obj = billing_form.save(commit=False)
+                obj.customer = Customer.objects.get(username=request.user.username)
+                obj.order = Order.objects.filter(customer=user).order_by('-id').first()
+                obj.order.complete = True
+                obj.order.save()
+                obj.save()
+
+                items = OrderItem.objects.filter(order=obj.order)
+                for item in items:
+                    item.product.number_available -= item.quantity
+                    item.product.save()
+                billing_form= obj
+
+                i = 0 
+                if i == 0:
+                    return redirect('home')
+        else:
+            billing_form = BillingForm()
+
+        order = Order.objects.filter(customer=user).order_by('-id').first()
+        items = order.orderitem_set.all()
+        
+        
+        if len(items) == 0:
+            return HttpResponse('Your cart is empty. Nothing to checkout here.')
+        else:
+            subtotal = order.get_cart_total
+            total = order.total_order_price
     
 
-    context['sub_total'] = subtotal
-    context['total'] = total
-    context['billing_form'] = billing_form
-    context['order'] = order
-    context['items'] = items
+        context['sub_total'] = subtotal
+        context['total'] = total
+        context['billing_form'] = billing_form
+        context['order'] = order
+        context['items'] = items
 
     
     return render(request, 'store/checkout.html', context)
