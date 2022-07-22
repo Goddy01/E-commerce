@@ -76,8 +76,8 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         print(Order.objects.filter(customer=user).order_by('-id').first().complete)
-        # if Order.objects.filter(customer=user).order_by('-id').first().total_order_price == 10:
-        #     return HttpResponse('Your cart is empty.')
+        if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
+            return HttpResponse('Your cart is empty.')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         print(len(items))
