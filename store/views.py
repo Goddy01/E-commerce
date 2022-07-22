@@ -86,7 +86,7 @@ def cart(request):
                 item.delete()
         print(len(items))
         if len(items) == 0:
-            return HttpResponse('Your cart is empty.')
+            return redirect('no_cart')
         else:
             order.total_order_price = order.get_cart_total + 10
             subtotal = order.get_cart_total
