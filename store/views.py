@@ -159,7 +159,7 @@ def checkout(request):
     user = request.user
 
     if not user.is_authenticated:
-        return HttpResponse('You must be authentiated to visit this page.')
+        return redirect('user:must_auth')
 
     if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
         return redirect('no_checkout')
