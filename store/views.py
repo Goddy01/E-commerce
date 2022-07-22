@@ -81,6 +81,9 @@ def cart(request):
             return HttpResponse('Your cart is empty.')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
+        for item in items:
+            if item.quantity <= 0:
+                item.delete()
         print(len(items))
         if len(items) == 0:
             return HttpResponse('Your cart is empty.')
@@ -124,7 +127,8 @@ def quantity_decrement(request, item_id):
     try:
         order_item = OrderItem.objects.get(item_id=item_id)
     except ObjectDoesNotExist:
-        order_item.delete()
+        # order_item.delete()
+        return redirect('cart')
     else:
         if order_item.quantity <=  0:
             order_item.delete()
