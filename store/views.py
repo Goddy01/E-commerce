@@ -236,3 +236,7 @@ def updateItem(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
+
+
+def no_cart(request):
+    return render(request, 'store/no_cart.html')
