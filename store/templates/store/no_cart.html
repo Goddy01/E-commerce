@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}No Cart{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column">
+            <p class="mx-auto">Your cart is empty!</p>
+            <p class="mx-auto">
+                <a href="{% url 'home' %}">
+                    <button class="btn" style="color: #C17A74;">Start Shopping</button>
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+{% endblock content %}
