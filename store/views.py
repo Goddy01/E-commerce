@@ -1,4 +1,5 @@
 import json
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -120,18 +121,21 @@ def quantity_increment(request, item_id):
 
 def quantity_decrement(request, item_id):
 
-    order_item = OrderItem.objects.get(item_id=item_id)
-    # if order_item.quantity <=  0:
-    #     order_item.delete()
-    #     return HttpResponse('Your cart is empty.')
-    # else:
-    order_item.quantity -= 1
-    order_item.save()
-    i = 1
-    if i == 1:
-        return redirect('cart')
-    subtotal = order_item.order.get_cart_total
-    total = subtotal + 10
+    try:
+        order_item = OrderItem.objects.get(item_id=item_id)
+    except ObjectDoesNotExist:
+        order_item.delete()
+    else:
+        if order_item.quantity <=  0:
+            order_item.delete()
+        else:
+            order_item.quantity -= 1
+            order_item.save()
+        i = 1
+        if i == 1:
+            return redirect('cart')
+        subtotal = order_item.order.get_cart_total
+        total = subtotal + 10
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
 
