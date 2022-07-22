@@ -78,7 +78,7 @@ def cart(request):
         user = request.user
         print(Order.objects.filter(customer=user).order_by('-id').first().complete)
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
-            return HttpResponse('Your cart is empty.')
+            return redirect('no_cart')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         for item in items:
