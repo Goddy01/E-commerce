@@ -20,7 +20,7 @@ class Product(models.Model):
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE, null=True, blank=True)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
-    product_price =             models.IntegerField(verbose_name="product's price", null=False, blank=False)
+    product_price =             models.DecimalField(max_digits=10, decimal_places=2, verbose_name="product's price", null=False, blank=False)
     product_sizes =             models.CharField(max_length=256, null=False, blank=False, verbose_name="product sizes")
     number_available =          models.IntegerField(verbose_name='number available', blank=False, null=False)
     product_colors =            models.CharField(max_length=256,verbose_name="product's colors", blank=False, null=False)
