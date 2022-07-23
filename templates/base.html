@@ -386,4 +386,25 @@
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+<script type="text/javascript">
+    function getCookie(name) {
+        // Split cookie string and get all individual name=value pairs in an array
+        var cookieArr = document.cookie.split(';');
+
+        // Loop through the array elements
+        for (i=0; i<cookieArr.length; i++){
+            var cookiePair = cookieArr[0].split('=')
+
+            // Removing whitespace from the cookie name and comparing it with the given string
+            if (name == cookiePair[1].trim()) {
+                // Decode the cookie value and return it
+                return decodeURIComponent(cookiePair[1])
+            }
+        }
+        // Return null if not found
+        return null;
+    }
+    var cart = JSON.parse(getCookie('cart'))
+</script>
 </html>
