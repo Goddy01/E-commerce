@@ -8,7 +8,7 @@ for (var i = 0; i < updateBtns.length; i++){
         console.log('produtId: ', productId, 'action: ', action)
         console.log('USER: ', user)
         if (user === 'AnonymousUser') {
-            addCookieItem()
+            addCookieItem(productId, action)
         }
         else{
             updateUserOrder(productId, action)
@@ -18,6 +18,14 @@ for (var i = 0; i < updateBtns.length; i++){
 
 function addCookieItem(productId, action) {
     console.log('No logged in...')
+    if (action == 'add') {
+        if (cart[productId] == undefined) {
+            cart[productId] = {'quantity':1}
+        }
+        else {
+            cart[productId]['quantity'] += 1
+        }
+    }
 }
 
 function updateUserOrder(productId, action) {
