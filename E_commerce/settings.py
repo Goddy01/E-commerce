@@ -176,3 +176,8 @@ if DEBUG:
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # DEFAULT_FROM_EMAIL = 'Bloggie <noreply@bloggie-blogapp.com>'
 # SERVER_EMAIL = 'bloggie.blogapp@gmail.com'
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
