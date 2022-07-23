@@ -26,6 +26,16 @@ function addCookieItem(productId, action) {
             cart[productId]['quantity'] += 1
         }
     }
+    
+    if (action == 'remove') {
+        if (cart[productId]['quantity'] < 1) {
+            console.log('Remove Item')
+            delete cart[productId]
+        }
+        else {
+            cart[productId]['quantity'] -= 1
+        }
+    }
 }
 
 function updateUserOrder(productId, action) {
