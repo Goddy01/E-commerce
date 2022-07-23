@@ -16,9 +16,15 @@ def store(request):
         items = order.orderitem_set.all()
         cart_items = order.get_cart_items
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except KeyError:
+            cart = {}
         order = {'get_cart_total':0, 'get_cart_items':0}
         items = []
         cart_items = order['get_cart_items']
+        for item in cart:
+            cartItems += cart[item]['quantity']
     context = {'items':items, 'cart_items':cart_items}
     return render(request, 'base.html', context)
 
@@ -81,6 +87,7 @@ def cart(request):
             return redirect('no_cart')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
         for item in items:
             if item.quantity <= 0:
                 item.delete()
@@ -103,9 +110,14 @@ def cart(request):
         print('Cart: ', cart)
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
+        cartItems = order['get_cart_items']
+
+        for item in cart:
+            cartItems += cart[item]['quantity']
         context['sub_total'] = 0
         context['total'] = 10
 
+    context['cartItems'] = cartItems
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
