@@ -96,6 +96,8 @@ def cart(request):
             context['sub_total'] = subtotal
             context['total'] = total
     else:
+        cart = json.loads(request.COOKIES['cart'])
+        print('Cart: ', cart)
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
         context['sub_total'] = 0
