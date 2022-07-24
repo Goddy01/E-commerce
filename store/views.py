@@ -1,4 +1,4 @@
-import json
+import json, uuid
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -13,12 +13,14 @@ from store.models import Product, Order, OrderItem
 def store(request):
     if request.user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=request.user, complete=False)
-        items = order.orderitem_set.all()
-        cart_items = order.get_cart_items
     else:
-        order = {'get_cart_total':0, 'get_cart_items':0}
-        items = []
-        cart_items = order['get_cart_items']
+        request.session['nonuser'] = uuid.uuid4
+        order = Order.objects.create(session_id=request.session['nonuser'], complete=False)
+        # order = {'get_cart_total':0, 'get_cart_items':0}
+        # items = []
+        # cart_items = order.get_cart_items
+    items = order.orderitem_set.all()
+    cart_items = order.get_cart_items
     context = {'items':items, 'cart_items':cart_items}
     return render(request, 'base.html', context)
 

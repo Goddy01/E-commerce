@@ -388,36 +388,36 @@
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
 <script type="text/javascript">
-    function getCookie(name) {
-        // Split cookie string and get all individual name=value pairs in an array
-        var cookieArr = document.cookie.split(';');
+    // function getCookie(name) {
+    //     // Split cookie string and get all individual name=value pairs in an array
+    //     var cookieArr = document.cookie.split(';');
 
-        // Loop through the array elements
-        for (i=0; i<cookieArr.length; i++){
-            var cookiePair = cookieArr[0].split('=')
+    //     // Loop through the array elements
+    //     for (i=0; i<cookieArr.length; i++){
+    //         var cookiePair = cookieArr[0].split('=')
 
-            // Removing whitespace from the cookie name and comparing it with the given string
-            if (cookiePair[1] == undefined) {
-                cookiePair[1] = ''
-            }
-            else {
-                cookiePair[1] = cookiePair[1]
-            }
+    //         // Removing whitespace from the cookie name and comparing it with the given string
+    //         if (cookiePair[1] == undefined) {
+    //             cookiePair[1] = ''
+    //         }
+    //         else {
+    //             cookiePair[1] = cookiePair[1]
+    //         }
 
-            if (name == cookiePair[1].trim()) {
-                    // Decode the cookie value and return it
-                    return decodeURIComponent(cookiePair[1])
-                }
-        }
-        // Return null if not found
-        return null;
-    }
-    var cart = JSON.parse(getCookie('cart'))
-    if (cart == undefined) {
-        cart = {}
-        console.log('Cart was created.')
-        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-    }
-    console.log('Cart: ', cart)
+    //         if (name == cookiePair[1].trim()) {
+    //                 // Decode the cookie value and return it
+    //                 return decodeURIComponent(cookiePair[1])
+    //             }
+    //     }
+    //     // Return null if not found
+    //     return null;
+    // }
+    // var cart = JSON.parse(getCookie('cart'))
+    // if (cart == undefined) {
+    //     cart = {}
+    //     console.log('Cart was created.')
+    //     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    // }
+    // console.log('Cart: ', cart)
 </script>
 </html>
