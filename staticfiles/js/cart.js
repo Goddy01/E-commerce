@@ -17,7 +17,7 @@ for (var i = 0; i < updateBtns.length; i++){
 }
 
 function addCookieItem(productId, action) {
-    console.log('No logged in...')
+    console.log('Not logged in...')
     if (action == 'add') {
         if (cart[productId] == undefined) {
             cart[productId] = {'quantity':1}
@@ -38,7 +38,7 @@ function addCookieItem(productId, action) {
     }
     console.log('Cart: ', cart)
     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-    location.reload()
+    // location.reload()
 }
 
 function updateUserOrder(productId, action) {

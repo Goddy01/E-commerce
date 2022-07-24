@@ -16,15 +16,9 @@ def store(request):
         items = order.orderitem_set.all()
         cart_items = order.get_cart_items
     else:
-        try:
-            cart = json.loads(request.COOKIES['cart'])
-        except KeyError:
-            cart = {}
         order = {'get_cart_total':0, 'get_cart_items':0}
         items = []
         cart_items = order['get_cart_items']
-        for item in cart:
-            cartItems += cart[item]['quantity']
     context = {'items':items, 'cart_items':cart_items}
     return render(request, 'base.html', context)
 
@@ -103,15 +97,9 @@ def cart(request):
             context['sub_total'] = subtotal
             context['total'] = total
     else:
-        try:
-            cart = json.loads(request.COOKIES['cart'])
-        except KeyError:
-            cart = {}
-        print('Cart: ', cart)
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
         cartItems = order['get_cart_items']
-
         for item in cart:
             cartItems += cart[item]['quantity']
         context['sub_total'] = 0
