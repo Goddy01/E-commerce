@@ -17,6 +17,7 @@ def store(request):
         cart_items = order.get_cart_items
     else:
         # order = {'get_cart_total':0, 'get_cart_items':0}
+        request.session['nonuser'] = str()
         order = Order.objects.create(session_id=request.session['nonuser'], complete=False)
         items = []
         cart_items = order['get_cart_items']
