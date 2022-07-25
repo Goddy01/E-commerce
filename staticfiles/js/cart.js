@@ -42,7 +42,7 @@ function addCookieItem(productId, action) {
     // document.cookie = 'cart=' + JSON.stringify(cart); expires='+a.toGMTString()+';'; 
     // document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
     document.cookie = 'cart=' + JSON.stringify(cart) + ";expires=Thu, 18 Dec 2100 12:00:00 UTC;" + ";domain=;path=/"
-    // location.reload()
+    location.reload()
 }
 
 function updateUserOrder(productId, action) {
