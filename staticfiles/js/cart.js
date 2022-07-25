@@ -18,6 +18,7 @@ for (var i = 0; i < updateBtns.length; i++){
 
 function addCookieItem(productId, action) {
     console.log('Not logged in...')
+    // console.log(session_id)
     if (action == 'add') {
         if (cart[productId] == undefined) {
             cart[productId] = {'quantity':1}
@@ -37,7 +38,10 @@ function addCookieItem(productId, action) {
         }
     }
     console.log('Cart: ', cart)
+    a = new Date(new Date().getTime() +1000*60*60*24*365);
+    // document.cookie = 'cart=' + JSON.stringify(cart); expires='+a.toGMTString()+';'; 
     // document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";expires=Thu, 18 Dec 2100 12:00:00 UTC;" + ";domain=;path=/"
     // location.reload()
 }
 

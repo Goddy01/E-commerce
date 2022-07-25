@@ -1,4 +1,4 @@
-import json, uuid
+import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -13,14 +13,18 @@ from store.models import Product, Order, OrderItem
 def store(request):
     if request.user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=request.user, complete=False)
+        items = order.orderitem_set.all()
+        cart_items = order.get_cart_items
     else:
-        request.session['nonuser'] = uuid.uuid4
-        order = Order.objects.create(session_id=request.session['nonuser'], complete=False)
-        # order = {'get_cart_total':0, 'get_cart_items':0}
-        # items = []
-        # cart_items = order.get_cart_items
-    items = order.orderitem_set.all()
-    cart_items = order.get_cart_items
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except KeyError:
+            cart = {}
+        order = {'get_cart_total':0, 'get_cart_items':0}
+        items = []
+        cart_items = order['get_cart_items']
+        for item in cart:
+            cart_items += cart[item]['quantity']
     context = {'items':items, 'cart_items':cart_items}
     return render(request, 'base.html', context)
 
@@ -83,7 +87,6 @@ def cart(request):
             return redirect('no_cart')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
         for item in items:
             if item.quantity <= 0:
                 item.delete()
@@ -101,13 +104,9 @@ def cart(request):
     else:
         items = []
         order = {'get_cart_items': 0, 'get_cart_total': 0}
-        cartItems = order['get_cart_items']
-        for item in cart:
-            cartItems += cart[item]['quantity']
         context['sub_total'] = 0
         context['total'] = 10
 
-    context['cartItems'] = cartItems
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
