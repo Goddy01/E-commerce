@@ -102,10 +102,32 @@ def cart(request):
             context['sub_total'] = subtotal
             context['total'] = total
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except KeyError:
+            cart = {}
+        order = {'get_cart_total':0, 'get_cart_items':0}
         items = []
-        order = {'get_cart_items': 0, 'get_cart_total': 0}
-        context['sub_total'] = 0
-        context['total'] = 10
+        cart_items = order['get_cart_items']
+        for item in cart:
+            cart_items += cart[item]['quantity']
+
+            product = Product.objects.get(product_id=item)
+            order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
+            order['get_cart_items'] += cart[item]['quantity']
+
+            item = {
+                'product':{
+                    'product_id': product.product_id,
+                    'product_name': product.product_name,
+                    'product_image1': product.product_image1,
+                    'product_price': product.product_price,
+                },
+                'quantity': cart[item]['quantity'],
+                'get_items_price': cart[item]['quantity'] * product.product_price,
+            }
+            items.append(item)
+        print(items)
 
     context['order'] = order
     context['items'] = items

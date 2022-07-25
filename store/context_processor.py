@@ -26,7 +26,11 @@ def website_content(request):
 
             item = {
                 'product':{
-                        'product': product},
+                    'product_id': product.product_id,
+                    'product_name': product.product_name,
+                    'product_image1': product.product_image1,
+                    'product_price': product.product_price,
+                },
                 'quantity': cart[item]['quantity'],
                 'get_items_price': cart[item]['quantity'] * product.product_price,
             }
