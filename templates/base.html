@@ -40,7 +40,7 @@
 
 </head>
 
-<body onload="getCookie()">
+<body>
     <script type="text/javascript">
         var user = '{{ request.user }}'
 
@@ -70,12 +70,6 @@
                 var cookiePair = cookieArr[i].split('=')
 
                 // Removing whitespace from the cookie name and comparing it with the given string
-                // if (cookiePair[1] == undefined) {
-                //     cookiePair[1] = ''
-                // }
-                // else {
-                //     cookiePair[1] = cookiePair[1]
-                // }
                 if (name == cookiePair[0].trim()) {
                     // Decode the cookie value and return it
                     return decodeURIComponent(cookiePair[1])
