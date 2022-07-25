@@ -44,17 +44,34 @@
                                 <td class="align-middle">${{item.product.product_price}}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button data-productNum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
-                                        <div class="input-group-btn">
-                                            <button data-productNum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                        {% if not request.user.is_authenticated %}
+                                            <div class="input-group-btn">
+                                                <button data-productNum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
+                                            <div class="input-group-btn">
+                                                <button data-productNum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <div class="input-group-btn">
+                                                <a href="{% url 'q_decr' item.item_id %}" class="text-dark"></a>
+                                                    <button class="btn btn-sm btn-primary btn-plus" name="q_decr" {% if item.quantity < 1 %}disabled{% endif %} >
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
+                                            <div class="input-group-btn">
+                                                <a href="{% url 'q_incr' item.item_id %}" class="text-dark"></a>
+                                                <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </td>
                                 <td class="align-middle">$
