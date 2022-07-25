@@ -30,7 +30,7 @@
                                     <p>Female Children's Wears</p>
                                 {% endif %}
                             </span>
-                            <button data-product={{ product.product_id }} data-action="add" class="update-cart btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;">
+                            <button data-productNum={{ product.number_available }} data-product={{ product.product_id }} data-action="add" class="update-cart btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;">
                                 <i class="fas fa-shopping-cart text-white mr-1"></i>
                                 Add To Cart
                             </button>
@@ -286,7 +286,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                            <button data-product={{ l_product.product_id }} data-action="add" class="update-cart btn btn-sm text-dark p-0">
+                            <button data-productNum={{ l_product.number_available }} data-product={{ l_product.product_id }} data-action="add" class="update-cart btn btn-sm text-dark p-0">
                                 <i class="fas fa-shopping-cart text-primary mr-1"></i>
                                 Add To Cart
                             </button>

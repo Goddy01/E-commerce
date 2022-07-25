@@ -128,7 +128,7 @@ def cart(request):
             items.append(item)
             subtotal = order['get_cart_total']
             total = subtotal+10
-        print(items)
+        # print(items)
 
     context['sub_total'] = subtotal
     context['total'] = total
@@ -262,6 +262,8 @@ def updateItem(request):
         orderItem.quantity += 1
     elif action == 'remove':
         orderItem.quantity -= 1
+    elif action == 'del':
+        orderItem.delete()
     orderItem.save()
 
     if orderItem.quantity <= 0:

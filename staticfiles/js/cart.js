@@ -2,11 +2,11 @@ var updateBtns = document.getElementsByClassName('update-cart')
 
 for (var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function() {
-        var prouct = this.dataset.product
-        var productId = this.dataset.product.product_id
+        var productId = this.dataset.product
         var action = this.dataset.action
+        var productNum = this.dataset.productNum
 
-        console.log('produtId: ', productId, 'action: ', action)
+        console.log('produtId: ', productId, 'action: ', action, 'num: ', productNum)
         console.log('USER: ', user)
         if (user === 'AnonymousUser') {
             addCookieItem(productId, action)
@@ -17,7 +17,7 @@ for (var i = 0; i < updateBtns.length; i++){
     })
 }
 
-function addCookieItem(product, productId, action) {
+function addCookieItem(productId, action, productNum) {
     console.log('Not logged in...')
     // console.log(session_id)
     if (action == 'add') {
@@ -25,12 +25,9 @@ function addCookieItem(product, productId, action) {
             cart[productId] = {'quantity':1}
         }
         else {
-            if (cart[productId]['quantity'] < product.number_available) {
+            // if (cart[productId]['quantity'] < product) {
             cart[productId]['quantity'] += 1
-            }
-            else {
-                cart[productId]['quantity'] = product.number_available
-            }
+            // }
         }
     }
     
@@ -43,6 +40,10 @@ function addCookieItem(product, productId, action) {
             cart[productId]['quantity'] -= 1
         }
     }
+
+    if (action == 'del') {
+        delete cart[productId]
+    }
     console.log('Cart: ', cart)
     a = new Date(new Date().getTime() +1000*60*60*24*365);
     // document.cookie = 'cart=' + JSON.stringify(cart); expires='+a.toGMTString()+';'; 
@@ -51,7 +52,7 @@ function addCookieItem(product, productId, action) {
     location.reload()
 }
 
-function updateUserOrder(productId, action) {
+function updateUserOrder(productId, action, productNum) {
     console.log('User is logged in, sending data.')
 
     var url = '/update_item/'
@@ -62,7 +63,7 @@ function updateUserOrder(productId, action) {
             'Content-Type':'application/json',
             'X-CSRFToken':csrftoken,
         },
-        body:JSON.stringify({productId:productId, action:action})
+        body:JSON.stringify({productId:productId, action:action, productNum:productNum})
     })
     .then((response) =>{
         return response.json()
