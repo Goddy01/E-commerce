@@ -4,9 +4,8 @@ for (var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function() {
         var productId = this.dataset.product
         var action = this.dataset.action
-        var productNum = this.dataset.productNum
 
-        console.log('produtId: ', productId, 'action: ', action, 'num: ', productNum)
+        console.log('produtId: ', productId, 'action: ', action)
         console.log('USER: ', user)
         if (user === 'AnonymousUser') {
             addCookieItem(productId, action)
@@ -17,7 +16,7 @@ for (var i = 0; i < updateBtns.length; i++){
     })
 }
 
-function addCookieItem(productId, action, productNum) {
+function addCookieItem(productId, action) {
     console.log('Not logged in...')
     // console.log(session_id)
     if (action == 'add') {
