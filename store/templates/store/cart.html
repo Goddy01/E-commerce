@@ -37,7 +37,7 @@
                         
                         {% for item in items %}
                         
-                        {% if item.order.customer.username == request.user.username and item.quantity != 0 %}
+                        {% if item.quantity != 0 %}
                             <tr>
                                 <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
                                     <p class="text-dark">{{item.product.product_name}}</p></td>
@@ -45,19 +45,19 @@
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <a href="{% url 'q_decr' item.item_id %}" class="text-dark">
-                                                <button class="btn btn-sm btn-primary btn-plus" name="q_decr" {% if item.quantity < 1 %}disabled{% endif %} >
+                                            
+                                                <button data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
                                                     <i class="fa fa-minus"></i>
                                                 </button>
-                                            </a>
+                                            
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
                                         <div class="input-group-btn">
-                                            <a href="{% url 'q_incr' item.item_id %}" class="text-dark">
-                                                <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                            
+                                                <button data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
                                                     <i class="fa fa-plus"></i>
                                                 </button>
-                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </td>
@@ -65,11 +65,12 @@
                                     {{ item.get_items_price }}
                                 </td>
                                 <td class="align-middle">
-                                    <a href="{% url 'del_item' item.item_id %}" class="text-dark">
-                                        <button class="btn btn-sm btn-primary">
+                                    
+                                        <button data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary">
                                             <i class="fa fa-times"></i>
-                                        </button></td>
-                                    </a>
+                                        </button>
+                                </td>
+                                    
                             </tr>
                         {% endif %}
                         {% endfor %}
