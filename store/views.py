@@ -99,8 +99,6 @@ def cart(request):
             order.save()
             total = order.total_order_price
 
-            context['sub_total'] = subtotal
-            context['total'] = total
     else:
         try:
             cart = json.loads(request.COOKIES['cart'])
@@ -127,8 +125,12 @@ def cart(request):
                 'get_items_price': cart[item]['quantity'] * product.product_price,
             }
             items.append(item)
+            subtotal = order['get_cart_total']
+            total = subtotal+10
         print(items)
 
+    context['sub_total'] = subtotal
+    context['total'] = total
     context['order'] = order
     context['items'] = items
     return render(request, 'store/cart.html', context)
