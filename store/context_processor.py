@@ -23,5 +23,13 @@ def website_content(request):
             product = Product.objects.get(product_id=item)
             order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
             order['get_cart_items'] += cart[item]['quantity']
+
+            item = {
+                'product':{
+                        'product': product},
+                'quantity': cart[item]['quantity'],
+                'get_items_price': cart[item]['quantity'] * product.product_price,
+            }
+            items.append(item)
     context = {'items':items, 'cart_items':cart_items}
     return context
