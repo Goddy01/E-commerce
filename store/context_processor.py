@@ -1,4 +1,5 @@
 import json
+from store.models import Product
 from django.shortcuts import render
 from .models import Order
 
@@ -6,6 +7,7 @@ def website_content(request):
     if request.user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=request.user, complete=False)
         items = order.orderitem_set.all()
+        subtotal = order.get_cart_total
         cart_items = order.get_cart_items
     else:
         try:
@@ -17,5 +19,9 @@ def website_content(request):
         cart_items = order['get_cart_items']
         for item in cart:
             cart_items += cart[item]['quantity']
+
+            product = Product.objects.get(product_id=item)
+            order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
+            order['get_cart_items'] += cart[item]['quantity']
     context = {'items':items, 'cart_items':cart_items}
     return context
