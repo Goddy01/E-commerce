@@ -120,6 +120,7 @@ def cart(request):
                     'product_name': product.product_name,
                     'product_image1': product.product_image1,
                     'product_price': product.product_price,
+                    'number_available': product.number_available,
                 },
                 'quantity': cart[item]['quantity'],
                 'get_items_price': cart[item]['quantity'] * product.product_price,
