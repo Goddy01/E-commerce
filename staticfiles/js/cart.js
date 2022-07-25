@@ -2,7 +2,8 @@ var updateBtns = document.getElementsByClassName('update-cart')
 
 for (var i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function() {
-        var productId = this.dataset.product
+        var prouct = this.dataset.product
+        var productId = this.dataset.product.product_id
         var action = this.dataset.action
 
         console.log('produtId: ', productId, 'action: ', action)
@@ -16,7 +17,7 @@ for (var i = 0; i < updateBtns.length; i++){
     })
 }
 
-function addCookieItem(productId, action) {
+function addCookieItem(product, productId, action) {
     console.log('Not logged in...')
     // console.log(session_id)
     if (action == 'add') {
@@ -24,7 +25,12 @@ function addCookieItem(productId, action) {
             cart[productId] = {'quantity':1}
         }
         else {
+            if (cart[productId]['quantity'] < product.number_available) {
             cart[productId]['quantity'] += 1
+            }
+            else {
+                cart[productId]['quantity'] = product.number_available
+            }
         }
     }
     
