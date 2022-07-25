@@ -46,13 +46,13 @@
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         {% if not request.user.is_authenticated %}
                                             <div class="input-group-btn">
-                                                <button data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
+                                                <button data-pronum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
                                             <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
                                             <div class="input-group-btn">
-                                                <button data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                                <button data-pronum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>

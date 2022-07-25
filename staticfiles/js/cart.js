@@ -1,12 +1,14 @@
-var updateBtns = document.getElementsByClassName('update-cart')
+let updateBtns = document.getElementsByClassName('update-cart')
 
-for (var i = 0; i < updateBtns.length; i++){
+for (let i = 0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function() {
-        var productId = this.dataset.product
-        var action = this.dataset.action
+        let productId = updateBtns[i].dataset.product
+        let action = updateBtns[i].dataset.action
+        let pronum = updateBtns[i].dataset.pronum
 
-        console.log('produtId: ', productId, 'action: ', action)
+        console.log('produtId: ', productId, 'action: ', action, 'pronum: ', pronum)
         console.log('USER: ', user)
+        console.log(pronum)
         if (user === 'AnonymousUser') {
             addCookieItem(productId, action)
         }
@@ -24,7 +26,7 @@ function addCookieItem(productId, action) {
             cart[productId] = {'quantity':1}
         }
         else {
-            // if (cart[productId]['quantity'] < product) {
+            // if (cart[productId]['quantity'] !> productId.) {
             cart[productId]['quantity'] += 1
             // }
         }
@@ -51,7 +53,7 @@ function addCookieItem(productId, action) {
     location.reload()
 }
 
-function updateUserOrder(productId, action, productNum) {
+function updateUserOrder(productId, action, pronum) {
     console.log('User is logged in, sending data.')
 
     var url = '/update_item/'
@@ -62,7 +64,7 @@ function updateUserOrder(productId, action, productNum) {
             'Content-Type':'application/json',
             'X-CSRFToken':csrftoken,
         },
-        body:JSON.stringify({productId:productId, action:action, productNum:productNum})
+        body:JSON.stringify({productId:productId, action:action, pronum:pronum})
     })
     .then((response) =>{
         return response.json()
