@@ -90,6 +90,8 @@ def cart(request):
         for item in items:
             if item.quantity <= 0 or item.product.number_available == 0:
                 item.delete()
+            if item.quantity > item.product.number_available:
+                item.quantity = item.product.number_available
         print(item)
         print(len(items))
         if len(items) == 0:
