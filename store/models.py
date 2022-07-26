@@ -68,6 +68,10 @@ class Order(models.Model):
         total =         sum([item.get_items_price for item in orderitems])
         return total
 
+    @get_cart_total.setter
+    def get_cart_total(self, value):
+        pass
+
     @property
     def get_cart_items(self):
         orderitems =          self.orderitem_set.all()

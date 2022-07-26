@@ -191,11 +191,9 @@ def quantity_decrement(request, item_id):
 
 def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
-    order_item.get_items_price = 0
-    order_item.save()
+    order_item.order.get_cart_total -= order_item.get_items_price
     order_item.order.save()
-    subtotal = order_item.order.get_cart_total
-    order_item.order.save()
+    subtotal = order_item.order.get_cart_total - order_item.get_items_price
     total = subtotal + 10
     order_item.delete()
 
