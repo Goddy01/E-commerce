@@ -9,6 +9,13 @@ def website_content(request):
         items = order.orderitem_set.all()
         subtotal = order.get_cart_total
         cart_items = order.get_cart_items
+        for item in items:
+            if item.product.number_available == 0:
+                cart_items -= item.quantity
+            if item.quantity > item.product.number_available:
+                cart_items -= item.quantity
+                cart_items += item.product.number_available
+        print('CartItems is ', cart_items)
     else:
         try:
             cart = json.loads(request.COOKIES['cart'])
