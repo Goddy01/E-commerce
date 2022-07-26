@@ -123,24 +123,27 @@ def cart(request):
         for item in cart:
             cart_items += cart[item]['quantity']
 
-            product = Product.objects.get(product_id=item)
-            order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
-            order['get_cart_items'] += cart[item]['quantity']
+            try:
+                product = Product.objects.get(product_id=item)
+                order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
+                order['get_cart_items'] += cart[item]['quantity']
 
-            item = {
-                'product':{
-                    'product_id': product.product_id,
-                    'product_name': product.product_name,
-                    'product_image1': product.product_image1,
-                    'product_price': product.product_price,
-                    'number_available': product.number_available,
-                },
-                'quantity': cart[item]['quantity'],
-                'get_items_price': cart[item]['quantity'] * product.product_price,
-            }
-            items.append(item)
-            subtotal = order['get_cart_total']
-            total = subtotal+10
+                item = {
+                    'product':{
+                        'product_id': product.product_id,
+                        'product_name': product.product_name,
+                        'product_image1': product.product_image1,
+                        'product_price': product.product_price,
+                        'number_available': product.number_available,
+                    },
+                    'quantity': cart[item]['quantity'],
+                    'get_items_price': cart[item]['quantity'] * product.product_price,
+                }
+                items.append(item)
+                subtotal = order['get_cart_total']
+                total = subtotal+10
+            except:
+                pass
         # print(items)
         for item in items:
                 if item['product']['number_available'] == 0:

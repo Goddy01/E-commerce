@@ -7,15 +7,19 @@ def website_content(request):
     if request.user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=request.user, complete=False)
         items = order.orderitem_set.all()
-        subtotal = order.get_cart_total
-        cart_items = order.get_cart_items
-        for item in items:
-            if item.product.number_available == 0:
-                cart_items -= item.quantity
-            if item.quantity > item.product.number_available:
-                cart_items -= item.quantity
-                cart_items += item.product.number_available
-        print('CartItems is ', cart_items)
+        try:
+            subtotal = order.get_cart_total
+            cart_items = order.get_cart_items
+            for item in items:
+                if item.product.number_available == 0:
+                    cart_items -= item.quantity
+                if item.quantity > item.product.number_available:
+                    cart_items -= item.quantity
+                    cart_items += item.product.number_available
+            print('CartItems is ', cart_items)
+        except AttributeError:
+            subtotal = 0
+            cart_items = 0
     else:
         try:
             cart = json.loads(request.COOKIES['cart'])
