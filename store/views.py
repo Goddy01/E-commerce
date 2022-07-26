@@ -89,14 +89,21 @@ def cart(request):
         items = order.orderitem_set.all()
         for item in items:
             if item.quantity <= 0 or item.product.number_available == 0:
+                order.get_cart_total -= item.get_items_price
+                order.save()
                 item.delete()
             if item.quantity > item.product.number_available:
                 item.quantity = item.product.number_available
         print(item)
         print(len(items))
         if len(items) == 0:
+            order.save(commit=False)
+            order.total_order_price = 10
+            order.save()
+            print('Get Total1: ', order.total_order_price)
             return redirect('no_cart')
         else:
+            print('Get Total2: ', order.total_order_price)
             order.total_order_price = order.get_cart_total + 10
             subtotal = order.get_cart_total
             order.save()
@@ -184,9 +191,16 @@ def quantity_decrement(request, item_id):
 
 def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
-    subtotal = order_item.order.get_cart_total - order_item.get_items_price
+    order_item.get_items_price = 0
+    order_item.save()
+    order_item.order.save()
+    subtotal = order_item.order.get_cart_total
+    order_item.order.save()
     total = subtotal + 10
     order_item.delete()
+
+    print('Del total is: ', total)
+
     i = 1
     if i == 1:
         return redirect('cart')

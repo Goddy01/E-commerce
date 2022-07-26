@@ -96,6 +96,11 @@ class OrderItem(models.Model):
         total_item_price = self.quantity * self.product.product_price
         return total_item_price
 
+    @get_items_price.setter
+    def get_items_price(self, value):
+        # self._location = value
+        pass
+
 
 
 
