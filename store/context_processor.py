@@ -30,10 +30,15 @@ def website_content(request):
                     'product_name': product.product_name,
                     'product_image1': product.product_image1,
                     'product_price': product.product_price,
+                    'number_available': product.number_available,
                 },
                 'quantity': cart[item]['quantity'],
                 'get_items_price': cart[item]['quantity'] * product.product_price,
             }
             items.append(item)
+        for item in items:
+            if item['product']['number_available'] == 0:
+                items.remove(item)
+                cart_items -= item['quantity']
     context = {'items':items, 'cart_items':cart_items}
     return context
