@@ -78,6 +78,10 @@ class Order(models.Model):
     # def total_order_price(self):
     #     orderitems =    self.orderitem_set.all()
     #     total_order =   sum([]item.quantity)
+    @property
+    def shipping(self):
+        shipping = True
+        return shipping
 
 
 class OrderItem(models.Model):
