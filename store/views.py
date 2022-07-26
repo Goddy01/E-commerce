@@ -83,8 +83,11 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
+        # try:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
             return redirect('no_cart')
+        # except:
+            # return redirect('no_cart')
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         for item in items:
@@ -94,13 +97,13 @@ def cart(request):
                 item.delete()
             if item.quantity > item.product.number_available:
                 item.quantity = item.product.number_available
-        print(item)
-        print(len(items))
+        # print(item)
+        # print(len(items))
         if len(items) == 0:
             order.save(commit=False)
             order.total_order_price = 10
             order.save()
-            print('Get Total1: ', order.total_order_price)
+            # print('Get Total1: ', order.total_order_price)
             return redirect('no_cart')
         else:
             print('Get Total2: ', order.total_order_price)
@@ -144,11 +147,13 @@ def cart(request):
                     items.remove(item)
                 if item['product']['number_available'] < item['quantity']:
                     item['quantity'] = item['product']['number_available']
-
-    context['sub_total'] = subtotal
-    context['total'] = total
-    context['order'] = order
-    context['items'] = items
+    try:
+        context['sub_total'] = subtotal
+        context['total'] = total
+        context['order'] = order
+        context['items'] = items
+    except UnboundLocalError:
+        return redirect('no_cart')
     return render(request, 'store/cart.html', context)
 
 
@@ -192,26 +197,16 @@ def quantity_decrement(request, item_id):
 def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
     o = order_item
-    print('Length',len(order_item.order.orderitem_set.all()))
-    if len(order_item.order.orderitem_set.all()) == 1:
-        order_item.order.get_cart_total = 0
-        order_item.order.save()
-        order_item.save()
-    order_item.order.get_cart_total -= order_item.get_items_price
-    order_item.order.save()
-    order_item.save()
     subtotal = order_item.order.get_cart_total - order_item.get_items_price
     total = subtotal + 10
-    # order_item.delete()
-    Order.objects.filter(orderitem=o).delete()
-
-    print('Del total is: ', total)
-
+    order_item.delete()
     i = 1
     if i == 1:
         return redirect('cart')
 
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
+
+
 
 def checkout(request):
     context = {}
