@@ -82,7 +82,7 @@ def cart(request):
     context = {}
     if request.user.is_authenticated:
         user = request.user
-        print(Order.objects.filter(customer=user).order_by('-id').first().complete)
+        # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
             return redirect('no_cart')
         order = Order.objects.filter(customer=user).order_by('-id').first()
@@ -191,11 +191,19 @@ def quantity_decrement(request, item_id):
 
 def delete_order_item(request, item_id):
     order_item = OrderItem.objects.get(item_id=item_id)
+    o = order_item
+    print('Length',len(order_item.order.orderitem_set.all()))
+    if len(order_item.order.orderitem_set.all()) == 1:
+        order_item.order.get_cart_total = 0
+        order_item.order.save()
+        order_item.save()
     order_item.order.get_cart_total -= order_item.get_items_price
     order_item.order.save()
+    order_item.save()
     subtotal = order_item.order.get_cart_total - order_item.get_items_price
     total = subtotal + 10
-    order_item.delete()
+    # order_item.delete()
+    Order.objects.filter(orderitem=o).delete()
 
     print('Del total is: ', total)
 
