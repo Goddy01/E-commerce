@@ -57,7 +57,7 @@ class Order(models.Model):
     customer =              models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     date_ordered =          models.DateTimeField(auto_now_add=True)
     complete =              models.BooleanField(default=False)
-    total_order_price =     models.IntegerField(null=True)
+    total_order_price =     models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     def __str__(self):
         return str(self.transaction_id)
