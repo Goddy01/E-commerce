@@ -88,8 +88,9 @@ def cart(request):
         order = Order.objects.filter(customer=user).order_by('-id').first()
         items = order.orderitem_set.all()
         for item in items:
-            if item.quantity <= 0:
+            if item.quantity <= 0 or item.product.number_available == 0:
                 item.delete()
+        print(item)
         print(len(items))
         if len(items) == 0:
             return redirect('no_cart')
@@ -129,6 +130,9 @@ def cart(request):
             subtotal = order['get_cart_total']
             total = subtotal+10
         # print(items)
+        for item in items:
+                if item['product']['number_available'] == 0:
+                    items.remove(item)
 
     context['sub_total'] = subtotal
     context['total'] = total
