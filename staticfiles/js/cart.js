@@ -18,7 +18,7 @@ for (let i = 0; i < updateBtns.length; i++){
     })
 }
 
-function addCookieItem(productId, action) {
+function addCookieItem(productId, action, pronum) {
     console.log('Not logged in...')
     // console.log(session_id)
     if (action == 'add') {
@@ -26,9 +26,9 @@ function addCookieItem(productId, action) {
             cart[productId] = {'quantity':1}
         }
         else {
-            // if (cart[productId]['quantity'] !> productId.) {
-            cart[productId]['quantity'] += 1
-            // }
+            if (cart[productId]['quantity'] < pronum) {
+                cart[productId]['quantity'] += 1
+            }
         }
     }
     
