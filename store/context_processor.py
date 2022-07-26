@@ -40,5 +40,8 @@ def website_content(request):
             if item['product']['number_available'] == 0:
                 items.remove(item)
                 cart_items -= item['quantity']
+            if item['product']['number_available'] < item['quantity']:
+                cart_items -= item['quantity']
+                cart_items += item['product']['number_available']
     context = {'items':items, 'cart_items':cart_items}
     return context

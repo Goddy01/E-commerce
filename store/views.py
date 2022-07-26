@@ -133,6 +133,8 @@ def cart(request):
         for item in items:
                 if item['product']['number_available'] == 0:
                     items.remove(item)
+                if item['product']['number_available'] < item['quantity']:
+                    item['quantity'] = item['product']['number_available']
 
     context['sub_total'] = subtotal
     context['total'] = total
