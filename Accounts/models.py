@@ -62,12 +62,13 @@ class User(AbstractBaseUser):
     # phone_regex =                   RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+123456789'. Up to 15 digits allowed.")
     first_phone_num =            PhoneNumberField(null=False, blank=False, unique=True, verbose_name="Phone No 1")
     second_phone_num =           PhoneNumberField(null=False, blank=False, unique=True, verbose_name= "Phone No 2")
-    date_joined             = models.DateTimeField(auto_now_add=True)
-    last_login              = models.DateTimeField(auto_now=True)
-    is_admin                = models.BooleanField(default=False)
-    is_staff                = models.BooleanField(default=False)
-    is_active               = models.BooleanField(default=True)
-    is_superuser            = models.BooleanField(default=False)
+    device =                        models.CharField(max_length=256, null=True, blank=True)
+    date_joined =                   models.DateTimeField(auto_now_add=True)
+    last_login =                    models.DateTimeField(auto_now=True)
+    is_admin =                      models.BooleanField(default=False)
+    is_staff =                      models.BooleanField(default=False)
+    is_active =                     models.BooleanField(default=True)
+    is_superuser =                  models.BooleanField(default=False)
     # is_vendor               = models.BooleanField(default=False)
     # is_customer             = models.BooleanField(default=False)
 
@@ -78,7 +79,11 @@ class User(AbstractBaseUser):
     objects = AccountManager()
 
     def __str__(self):
-        return self.username
+        if self.username:
+            name = self.username
+        else:
+            name = self.device
+        return str(name)
 
     def has_perm(self, perm, obj=None):
         """Checks if the user has any permissions"""
@@ -124,6 +129,3 @@ class Customer(User):
             # User.is_customer = True
             self.type = User.Types.CUSTOMER
         return super().save(*args, **kwargs)
-
-class CustomerDevice(Customer):
-    device =          models.CharField(max_length=256, null=True, blank=True)
