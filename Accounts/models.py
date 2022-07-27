@@ -116,13 +116,14 @@ class Vendor(User):
         return super().save(*args, **kwargs)
 
 class Customer(User):
-    # customer =          models.CharField(max_length=256, null=True)
     objects = CustomerManager()
     class Meta:
         proxy = True
-
     def save(self, *args, **kwargs):
         if not self.pk:
             # User.is_customer = True
             self.type = User.Types.CUSTOMER
         return super().save(*args, **kwargs)
+
+class CustomerDevice(Customer):
+    device =          models.CharField(max_length=256, null=True, blank=True)

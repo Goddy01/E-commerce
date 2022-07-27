@@ -45,6 +45,7 @@ def website_content(request):
                 }
                 items.append(item)
             except:
+                print(item)
                 pass
         for item in items:
             if item['product']['number_available'] == 0:
