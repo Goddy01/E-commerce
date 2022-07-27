@@ -10,10 +10,10 @@ for (let i = 0; i < updateBtns.length; i++){
         console.log('USER: ', user)
         console.log(pronum)
         if (user === 'AnonymousUser') {
-            addCookieItem(productId, action)
+            addCookieItem(productId, action, pronum)
         }
         else{
-            updateUserOrder(productId, action)
+            updateUserOrder(productId, action, pronum)
         }
     })
 }
