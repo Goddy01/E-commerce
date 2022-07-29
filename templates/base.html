@@ -92,6 +92,14 @@
 		    return v.toString(16);
 		  });
 		}
+
+        let device = getCookie('device')
+        if (device == null || device == undefined){
+			device = uuidv4()
+		}
+
+		document.cookie ='device=' + device + ";domain=;path=/"
+
     </script>
     <!-- <h1>{{ cart_items }}</h1> -->
     <!-- Topbar Start -->
