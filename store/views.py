@@ -217,47 +217,52 @@ def checkout(request):
     if not user.is_authenticated:
         return redirect('user:must_auth')
 
-    if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
-        return redirect('no_checkout')
-    else:
-        if request.method == 'POST':
-            billing_form = BillingForm(request.POST)
-            if billing_form.is_valid():
-                obj = billing_form.save(commit=False)
-                obj.customer = Customer.objects.get(username=request.user.username)
-                obj.order = Order.objects.filter(customer=user).order_by('-id').first()
-                obj.order.complete = True
-                obj.order.save()
-                obj.save()
-
-                items = OrderItem.objects.filter(order=obj.order)
-                for item in items:
-                    item.product.number_available -= item.quantity
-                    item.product.save()
-                billing_form= obj
-
-                i = 0 
-                if i == 0:
-                    return redirect('home')
-        else:
-            billing_form = BillingForm()
-
-        order = Order.objects.filter(customer=user).order_by('-id').first()
-        items = order.orderitem_set.all()
-        
-        
-        if len(items) == 0:
+    order = Order.objects.filter(customer=user).order_by('-id').first()
+    if order is not None:
+        if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
             return redirect('no_checkout')
         else:
-            subtotal = order.get_cart_total
-            total = order.total_order_price
-    
+            if request.method == 'POST':
+                billing_form = BillingForm(request.POST)
+                if billing_form.is_valid():
+                    obj = billing_form.save(commit=False)
+                    obj.customer = Customer.objects.get(username=request.user.username)
+                    obj.order = Order.objects.filter(customer=user).order_by('-id').first()
+                    obj.order.complete = True
+                    obj.order.save()
+                    obj.save()
 
-        context['sub_total'] = subtotal
-        context['total'] = total
-        context['billing_form'] = billing_form
-        context['order'] = order
-        context['items'] = items
+                    items = OrderItem.objects.filter(order=obj.order)
+                    for item in items:
+                        item.product.number_available -= item.quantity
+                        item.product.save()
+                    billing_form= obj
+
+                    i = 0 
+                    if i == 0:
+                        return redirect('home')
+            else:
+                billing_form = BillingForm()
+
+            order = Order.objects.filter(customer=user).order_by('-id').first()
+            items = order.orderitem_set.all()
+            
+            
+            if len(items) == 0:
+                return redirect('no_checkout')
+            else:
+                subtotal = order.get_cart_total
+                total = order.total_order_price
+        
+
+            context['sub_total'] = subtotal
+            context['total'] = total
+            context['billing_form'] = billing_form
+            context['order'] = order
+            context['items'] = items
+
+    else:
+        return redirect('no_checkout')
 
     
     return render(request, 'store/checkout.html', context)
