@@ -119,10 +119,10 @@ class Vendor(User):
             self.type = User.Types.VENDOR
         return super().save(*args, **kwargs)
 
-class AdditionalCustomer(User):
-    device =        models.CharField(max_length=256, null=True, blank=True)
+class AddCustomer(User):
+    device =                        models.CharField(max_length=256, null=True, blank=True)
 
-class Customer(AdditionalCustomer):
+class Customer(AddCustomer):
     objects = CustomerManager()
     class Meta:
         proxy = True
