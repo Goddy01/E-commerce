@@ -81,7 +81,11 @@ def home_page(request):
 def cart(request):
     context = {}
     if request.user.is_authenticated:
-        user = request.user
+        try:
+            user = request.user
+        except:
+            device = request.COOKIES['device']
+            user = Customer.objects.get_or_create(device=device)
         # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
         # try:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
@@ -111,51 +115,26 @@ def cart(request):
             order.save()
             total = order.total_order_price
 
-    else:
-        try:
-            cart = json.loads(request.COOKIES['cart'])
-        except KeyError:
-            cart = {}
-        order = {'get_cart_total':0, 'get_cart_items':0}
-        items = []
-        cart_items = order['get_cart_items']
-        for item in cart:
-            cart_items += cart[item]['quantity']
+    # else:
+    #     try:
+    #         cart = json.loads(request.COOKIES['device'])
+    #     except KeyError:
+    #         cart = {}
+    #     print(cart)
 
-            try:
-                product = Product.objects.get(product_id=item)
-                order['get_cart_total'] += (product.product_price * cart[item]['quantity'])
-                order['get_cart_items'] += cart[item]['quantity']
-
-                item = {
-                    'product':{
-                        'product_id': product.product_id,
-                        'product_name': product.product_name,
-                        'product_image1': product.product_image1,
-                        'product_price': product.product_price,
-                        'number_available': product.number_available,
-                    },
-                    'quantity': cart[item]['quantity'],
-                    'get_items_price': cart[item]['quantity'] * product.product_price,
-                }
-                items.append(item)
-                subtotal = order['get_cart_total']
-                total = subtotal+10
-            except:
-                pass
-        # print(items)
-        for item in items:
-                if item['product']['number_available'] == 0:
-                    items.remove(item)
-                if item['product']['number_available'] < item['quantity']:
-                    item['quantity'] = item['product']['number_available']
-    try:
-        context['sub_total'] = subtotal
-        context['total'] = total
-        context['order'] = order
-        context['items'] = items
+    #     # print(items)
+    #     for item in items:
+    #             if item['product']['number_available'] == 0:
+    #                 items.remove(item)
+    #             if item['product']['number_available'] < item['quantity']:
+                    # item['quantity'] = item['product']['number_available']
+    # try:
+    context['sub_total'] = subtotal
+    context['total'] = total
+    context['order'] = order
+    context['items'] = items
     except UnboundLocalError:
-        return redirect('no_cart')
+        # return redirect('no_cart')
     return render(request, 'store/cart.html', context)
 
 
