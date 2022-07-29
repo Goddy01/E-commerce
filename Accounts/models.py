@@ -62,7 +62,6 @@ class User(AbstractBaseUser):
     # phone_regex =                   RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+123456789'. Up to 15 digits allowed.")
     first_phone_num =            PhoneNumberField(null=False, blank=False, unique=True, verbose_name="Phone No 1")
     second_phone_num =           PhoneNumberField(null=False, blank=False, unique=True, verbose_name= "Phone No 2")
-    device =                        models.CharField(max_length=256, null=True, blank=True)
     date_joined =                   models.DateTimeField(auto_now_add=True)
     last_login =                    models.DateTimeField(auto_now=True)
     is_admin =                      models.BooleanField(default=False)
@@ -120,7 +119,10 @@ class Vendor(User):
             self.type = User.Types.VENDOR
         return super().save(*args, **kwargs)
 
-class Customer(User):
+class AdditionalCustomer(User):
+    device =        models.CharField(max_length=256, null=True, blank=True)
+
+class Customer(AdditionalCustomer):
     objects = CustomerManager()
     class Meta:
         proxy = True
