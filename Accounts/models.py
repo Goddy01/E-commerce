@@ -9,41 +9,41 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class AccountManager(BaseUserManager):
     """Creates and saves a user with the given details"""
-    def create_user(self, email, username, fullname, address, first_phone_num, second_phone_num, password=None):
+    def create_user(self, email, username, password=None):
         if not email:
             raise ValueError("The user must provide an email")
         if not username:
             raise ValueError("The user must provide a username")
-        if not fullname:
-            raise ValueError("The user must provide their fullname")
-        if not address:
-            raise ValueError("The user must provide an address")
-        if not first_phone_num:
-            raise ValueError("The user must provide their first telephone number")
-        if not second_phone_num:
-            raise ValueError("The user must provide their second telephone number")
+        # if not fullname:
+        #     raise ValueError("The user must provide their fullname")
+        # if not address:
+        #     raise ValueError("The user must provide an address")
+        # if not first_phone_num:
+        #     raise ValueError("The user must provide their first telephone number")
+        # if not second_phone_num:
+        #     raise ValueError("The user must provide their second telephone number")
 
         user = self.model(
             email=self.normalize_email(email),
             username=username,
-            fullname=fullname,
-            address=address,
-            first_phone_num=first_phone_num,
-            second_phone_num=second_phone_num,
+            # fullname=fullname,
+            # address=address,
+            # first_phone_num=first_phone_num,
+            # second_phone_num=second_phone_num,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, fullname, address, first_phone_num, second_phone_num, password):
+    def create_superuser(self, email, username, password):
         """Creates and saves a superuser with the given details"""
         user = self.create_user(
             email=email,
             username=username,
-            fullname=fullname,
-            address=address,
-            first_phone_num=first_phone_num,
-            second_phone_num=second_phone_num,
+            # fullname=fullname,
+            # address=address,
+            # first_phone_num=first_phone_num,
+            # second_phone_num=second_phone_num,
             password=password
         )
 
@@ -62,6 +62,7 @@ class User(AbstractBaseUser):
     # phone_regex =                   RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+123456789'. Up to 15 digits allowed.")
     first_phone_num =            PhoneNumberField(null=False, blank=False, unique=True, verbose_name="Phone No 1")
     second_phone_num =           PhoneNumberField(null=False, blank=False, unique=True, verbose_name= "Phone No 2")
+    device =                        models.CharField(max_length=256, null=True, blank=True)
     date_joined =                   models.DateTimeField(auto_now_add=True)
     last_login =                    models.DateTimeField(auto_now=True)
     is_admin =                      models.BooleanField(default=False)
@@ -73,7 +74,7 @@ class User(AbstractBaseUser):
 
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', ]
+    REQUIRED_FIELDS = ['username', ]
 
     objects = AccountManager()
 
@@ -119,10 +120,10 @@ class Vendor(User):
             self.type = User.Types.VENDOR
         return super().save(*args, **kwargs)
 
-class AddCustomer(User):
-    device =                        models.CharField(max_length=256, null=True, blank=True)
+# class AddCustomer(User):
+    
 
-class Customer(AddCustomer):
+class Customer(User):
     objects = CustomerManager()
     class Meta:
         proxy = True
