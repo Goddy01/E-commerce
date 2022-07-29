@@ -133,7 +133,7 @@ def cart(request):
     context['total'] = total
     context['order'] = order
     context['items'] = items
-    except UnboundLocalError:
+    # except UnboundLocalError:
         # return redirect('no_cart')
     return render(request, 'store/cart.html', context)
 

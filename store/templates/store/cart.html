@@ -44,51 +44,31 @@
                                 <td class="align-middle">${{item.product.product_price}}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        {% if not request.user.is_authenticated %}
-                                            <div class="input-group-btn">
-                                                <button data-pronum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="remove" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity < 1 %}disabled{% endif %} >
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
-                                            <div class="input-group-btn">
-                                                <button data-pronum={{ item.product.number_available }} data-product={{ item.product.product_id }} data-action="add" class="update-cart btn btn-sm btn-primary btn-plus" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        {% else %}
-                                            <div class="input-group-btn">
-                                                <a href="{% url 'q_decr' item.item_id %}" class="text-dark">
-                                                    <button class="btn btn-sm btn-primary btn-plus" name="q_decr" {% if item.quantity < 1 %}disabled{% endif %} >
-                                                        <i class="fa fa-minus"></i>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
-                                            <div class="input-group-btn">
-                                                <a href="{% url 'q_incr' item.item_id %}" class="text-dark">
-                                                    <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        {% endif %}
+                                    <div class="input-group-btn">
+                                        <a href="{% url 'q_decr' item.item_id %}" class="text-dark">
+                                            <button class="btn btn-sm btn-primary btn-plus" name="q_decr" {% if item.quantity < 1 %}disabled{% endif %} >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm bg-secondary text-center" value="{{item.quantity}}">
+                                    <div class="input-group-btn">
+                                        <a href="{% url 'q_incr' item.item_id %}" class="text-dark">
+                                            <button class="btn btn-sm btn-primary btn-plus" name="q_incr" {% if item.quantity == item.product.number_available %}disabled{% endif %}>
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </a>
+                                    </div>
                                     </div>
                                 </td>
                                 <td class="align-middle">$
                                     {{ item.get_items_price }}
                                 </td>
                                 <td class="align-middle">
-                                        {% if not request.user.is_authenticated %}
-                                            <button data-product={{ item.product.product_id }} data-action="del" class="update-cart btn btn-sm btn-primary">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        {% else %}
-                                            <a href="{% url 'del_item' item.item_id %}" class="text-dark"
-                                            <button class="btn btn-sm btn-primary">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        {% endif %}
+                                    <a href="{% url 'del_item' item.item_id %}" class="text-dark"
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </td>
                                     
                             </tr>
