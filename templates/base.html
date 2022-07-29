@@ -42,49 +42,24 @@
 
 <body>
     <script type="text/javascript">
-        var user = '{{ request.user }}'
 
-        function getToken(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-        }
-        const csrftoken = getToken('csrftoken');
         function getCookie(name) {
-            
-        // Split cookie string and get all individual name=value pairs in an array
-            var cookieArr = document.cookie.split(';');
-
-        // Loop through the array elements
-            for (var i=0; i<cookieArr.length; i++) {
-                var cookiePair = cookieArr[i].split('=')
-
-                // Removing whitespace from the cookie name and comparing it with the given string
-                if (name == cookiePair[0].trim()) {
-                    // Decode the cookie value and return it
-                    return decodeURIComponent(cookiePair[1])
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
             }
-            // Return null if not found
-            return null;
+            return cookieValue;
         }
-        var cart = JSON.parse(getCookie('cart'))
-        if (cart == undefined) {
-            cart = {}
-            console.log('Cart was created.')
-            document.cookie = 'cart=' + JSON.stringify(cart) + ";expires=Thu, 18 Dec 2100 12:00:00 UTC;" + ";domain=;path=/"
-        }
-        console.log('Cart: ', cart)
+        const csrftoken = getCookie('csrftoken');
+        
 
         function uuidv4() {
 		  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
