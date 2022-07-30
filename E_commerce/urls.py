@@ -33,7 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('django.contrib.auth.urls')),
     path('', home_page, name='home'),
-    path('add_to_cart', add_to_cart, name='add_to_cart'),
+    path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
     path('shop/', ShopDetailView.as_view(), name='shop'),
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', cart, name='cart'),
