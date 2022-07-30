@@ -78,42 +78,64 @@ def home_page(request):
     return render(request, 'store/index.html', context)
 
 
+def add_to_cart(request, product_id):
+    product = Product.objects.get(product_id=product_id)
+
+    try:
+        customer = request.user
+    except:
+        device = request.COOKIES['device']
+        customer, created = Customer.objects.get_or_create(device=device)
+
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    # orderitems = order.orderitem_set.all()
+    item, created = OrderItem.objects.create(product=product, order=order)
+    if item.quantity <= 0 or item.product.number_available == 0:
+            order.get_cart_total -= item.get_items_price
+            order.save()
+            item.delete()
+        if item.quantity > item.product.number_available:
+            item.quantity = item.product.number_available
+    return render(request, 'store/index.html')
+
 def cart(request):
     context = {}
-    if request.user.is_authenticated:
-        try:
-            user = request.user
-        except:
-            device = request.COOKIES['device']
-            user = Customer.objects.get_or_create(device=device)
-        # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
-        # try:
+    # if request.user.is_authenticated:
+    try:
+        user = request.user
+    except:
+        device = request.COOKIES['device']
+        print('Device is: ', device)
+        user = Customer.objects.get_or_create(device=device)
+    # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
+    try:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
             return redirect('no_cart')
-            # return redirect('no_cart')
-        order = Order.objects.filter(customer=user).order_by('-id').first()
-        items = order.orderitem_set.all()
-        for item in items:
-            if item.quantity <= 0 or item.product.number_available == 0:
-                order.get_cart_total -= item.get_items_price
-                order.save()
-                item.delete()
-            if item.quantity > item.product.number_available:
-                item.quantity = item.product.number_available
-        # print(item)
-        # print(len(items))
-        if len(items) == 0:
-            order.save(commit=False)
-            order.total_order_price = 10
+    except TypeError:
+        return redirect('no_cart')
+    order = Order.objects.filter(customer=user).order_by('-id').first()
+    items = order.orderitem_set.all()
+    for item in items:
+        if item.quantity <= 0 or item.product.number_available == 0:
+            order.get_cart_total -= item.get_items_price
             order.save()
-            # print('Get Total1: ', order.total_order_price)
-            return redirect('no_cart')
-        else:
-            print('Get Total2: ', order.total_order_price)
-            order.total_order_price = order.get_cart_total + 10
-            subtotal = order.get_cart_total
-            order.save()
-            total = order.total_order_price
+            item.delete()
+        if item.quantity > item.product.number_available:
+            item.quantity = item.product.number_available
+    # print(item)
+    # print(len(items))
+    if len(items) == 0:
+        order.save(commit=False)
+        order.total_order_price = 10
+        order.save()
+        # print('Get Total1: ', order.total_order_price)
+        return redirect('no_cart')
+    else:
+        print('Get Total2: ', order.total_order_price)
+        order.total_order_price = order.get_cart_total + 10
+        subtotal = order.get_cart_total
+        order.save()
+        total = order.total_order_price
 
     # else:
     #     try:
