@@ -30,10 +30,12 @@
                                     <p>Female Children's Wears</p>
                                 {% endif %}
                             </span>
-                            <button data-pronum={{ product.number_available }} data-product={{ product.product_id }} data-action="add" class="update-cart btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;">
-                                <i class="fas fa-shopping-cart text-white mr-1"></i>
-                                Add To Cart
-                            </button>
+                            <a href="{% url 'add_to_cart' product.product_id %}">
+                                <button class="btn btn-sm text-light p-2" style="margin-left: auto; background-color: #C5837C;">
+                                    <i class="fas fa-shopping-cart text-white mr-1"></i>
+                                    Add To Cart
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
