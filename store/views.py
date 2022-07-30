@@ -81,21 +81,23 @@ def home_page(request):
 def add_to_cart(request, product_id):
     product = Product.objects.get(product_id=product_id)
 
-    try:
+    if request.user.is_authenticated:
         customer = request.user
-    except:
+    else:
         device = request.COOKIES['device']
         customer, created = Customer.objects.get_or_create(device=device)
 
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     # orderitems = order.orderitem_set.all()
-    item, created = OrderItem.objects.create(product=product, order=order)
-    if item.quantity <= 0 or item.product.number_available == 0:
-        order.get_cart_total -= item.get_items_price
+    orderitem, created = OrderItem.objects.create(product=product, order=order)
+    if orderitem.quantity <= 0 or orderitem.product.number_available == 0:
+        order.get_cart_total -= orderitem.get_items_price
         order.save()
-        item.delete()
-        if item.quantity > item.product.number_available:
-            item.quantity = item.product.number_available
+        orderitem.delete()
+        if orderitem.quantity > orderitem.product.number_available:
+            orderitem.quantity = orderitem.product.number_available
+
+    # return redirect('home')
     return render(request, 'store/index.html')
 
 def cart(request):
