@@ -91,9 +91,9 @@ def add_to_cart(request, product_id):
     # orderitems = order.orderitem_set.all()
     item, created = OrderItem.objects.create(product=product, order=order)
     if item.quantity <= 0 or item.product.number_available == 0:
-            order.get_cart_total -= item.get_items_price
-            order.save()
-            item.delete()
+        order.get_cart_total -= item.get_items_price
+        order.save()
+        item.delete()
         if item.quantity > item.product.number_available:
             item.quantity = item.product.number_available
     return render(request, 'store/index.html')
