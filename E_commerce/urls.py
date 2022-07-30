@@ -27,12 +27,13 @@ from store.views import (
     quantity_decrement, delete_order_item,
     # load_cities,
     updateItem, no_cart,
-    no_checkout
+    no_checkout, add_to_cart
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('django.contrib.auth.urls')),
     path('', home_page, name='home'),
+    path('add_to_cart', add_to_cart, name='add_to_cart'),
     path('shop/', ShopDetailView.as_view(), name='shop'),
     path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
     path('cart/', cart, name='cart'),
