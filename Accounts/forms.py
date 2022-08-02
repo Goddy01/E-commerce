@@ -11,7 +11,7 @@ class CustomerRegForm(UserCreationForm):
     email = forms.EmailField(max_length=128, help_text="Provide a valid email address.")
     class Meta:
         model = Customer
-        fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
+        fields = ['fullname', 'username', 'address', 'first_phone_num', 'email','password1', 'password2']
     
     # def clean(self):
     #     if self.is_valid():
@@ -30,7 +30,7 @@ class VendorRegForm(UserCreationForm):
     email = forms.EmailField(max_length=128, help_text="Provide a valid email address.")
     class Meta:
         model = Vendor
-        fields = ['fullname', 'username', 'address', 'first_phone_num', 'second_phone_num', 'email','password1', 'password2']
+        fields = ['fullname', 'username', 'address', 'first_phone_num', 'email','password1', 'password2']
 
 
 class UserLoginForm(forms.ModelForm):

@@ -27,7 +27,7 @@ from store.views import (
     quantity_decrement, delete_order_item,
     # load_cities,
     updateItem, no_cart,
-    no_checkout, add_to_cart
+    no_checkout, add_to_cart,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),

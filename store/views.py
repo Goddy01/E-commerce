@@ -65,6 +65,14 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
+
+    try:
+        customer = request.user
+    except:
+        device = request.COOKIES.get('device')
+        customer = Customer.objects.get_or_create(device=device)
+        customer.save()
+    # customer = Customer.objects.get_or_create()
     products = Product.objects.all().order_by('?').distinct()[:6]
     latest_products = Product.objects.all().order_by('-product_id')[:9]
     # f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
@@ -84,20 +92,25 @@ def add_to_cart(request, product_id):
     if request.user.is_authenticated:
         customer = request.user
     else:
-        device = request.COOKIES['device']
-        customer, created = Customer.objects.get_or_create(device=device)
-
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        device = request.COOKIES.get('device')
+        print('DEVICE IS: ', device)
+        customer = Customer.objects.get_or_create(device=device)
+        customer.save()
+    # print(device)
+    print('CUSTOMER IS: ', customer)
+    order = Order.objects.get_or_create(customer__device=customer, complete=False)
+    print(order)
     # orderitems = order.orderitem_set.all()
-    orderitem, created = OrderItem.objects.create(product=product, order=order)
-    if orderitem.quantity <= 0 or orderitem.product.number_available == 0:
-        order.get_cart_total -= orderitem.get_items_price
-        order.save()
-        orderitem.delete()
-        if orderitem.quantity > orderitem.product.number_available:
-            orderitem.quantity = orderitem.product.number_available
-
+    orderitem, created = OrderItem.objects.create(order=order, product=product)
+    orderitem.quantity += 1
+    orderitem.save()
+    if orderitem.quantity > orderitem.product.number_available:
+        orderitem.quantity = orderitem.product.number_available
+        orderitem.save()
     # return redirect('home')
+    # i = 1
+    # if i==1:
+    #     return redirect('home')
     return render(request, 'store/index.html')
 
 def cart(request):
@@ -106,7 +119,7 @@ def cart(request):
     try:
         user = request.user
     except:
-        device = request.COOKIES['device']
+        device = request.COOKIES.get('device')
         print('Device is: ', device)
         user = Customer.objects.get_or_create(device=device)
     # print(Order.objects.filter(customer=user).order_by('-id').first().complete)
