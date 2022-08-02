@@ -119,8 +119,12 @@ def add_to_cart(request, product_id):
     customer = Customer.objects.get(device=user.device)
     product = Product.objects.get(product_id=product_id)
     print('DEVICE IS: ', request.session['nonuser'])
-    order = Order.objects.get_or_create(customer=customer)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    # orderitems = []
     orderitem = OrderItem.objects.create(product=product, order=order)
+    # orderitems.append(orderitem)
+    if True:
+        return redirect('home')
     return render(request, 'store/index.html')
 
 def cart(request):
