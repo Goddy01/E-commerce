@@ -26,7 +26,7 @@ from store.views import (
     add_product_view, quantity_increment,
     quantity_decrement, delete_order_item,
     # load_cities,
-    updateItem, no_cart,
+    no_cart,
     no_checkout, add_to_cart,
     )
 urlpatterns = [
@@ -44,7 +44,7 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
     path('vendors/', include('Accounts.urls')),
-    re_path(r'^update_item/$', updateItem, name='update_item'),
+    # re_path(r'^update_item/$', updateItem, name='update_item'),
     path('no_cart/', no_cart, name='no_cart'),
     path('no_checkout', no_checkout, name='no_checkout'),
     # path('ajax/load-cities/', load_cities, name='ajax_load_cities'),

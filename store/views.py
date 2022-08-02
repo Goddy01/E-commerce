@@ -1,4 +1,4 @@
-import json
+import json, uuid
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -10,6 +10,19 @@ from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 # Create your views here.
 
+import phonenumbers
+from faker.providers.phone_number.en_US import Provider
+
+class CustomPhoneProvider(Provider):
+    def phone_number(self):
+        while True:
+            phone_number = self.numerify(self.random_element(self.formats))
+            parsed_number = phonenumbers.parse(phone_number, 'US')
+            if phonenumbers.is_valid_number(parsed_number):
+                return phonenumbers.format_number(
+                    parsed_number,
+                    phonenumbers.PhoneNumberFormat.E164
+                )
 # def store(request):
 #     if request.user.is_authenticated:
 #         order, created = Order.objects.get_or_create(customer=request.user, complete=False)
@@ -65,12 +78,25 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
+    try:
+        user = User.objects.get(device=request.session['nonuser'])
+    except:
+        request.session['nonuser'] = str(uuid.uuid4())
+        user = User.objects.create(
+            fullname=request.session['nonuser'],
+            username=request.session['nonuser'],
+            email=request.session['nonuser'] + '@gmail.com',
+            address=request.session['nonuser'],
+            first_phone_num=CustomPhoneProvider(),
+            device=request.session['nonuser'],
 
-    if not request.user.is_authenticated:
-        device = request.COOKIES.get('device')
-        request.session['']
-        customer = Customer.objects.create(device=device)
-        customer.save()
+            )
+
+    # if not request.user.is_authenticated:
+    #     device = request.COOKIES.get('device')
+    #     request.session['']
+    #     customer = Customer.objects.create(device=device)
+    #     customer.save()
     # customer = Customer.objects.get_or_create()
     products = Product.objects.all().order_by('?').distinct()[:6]
     latest_products = Product.objects.all().order_by('-product_id')[:9]
@@ -84,32 +110,16 @@ def home_page(request):
     # context['fc_products'] = fc_products
     return render(request, 'store/index.html', context)
 
-
 def add_to_cart(request, product_id):
-    product = Product.objects.get(product_id=product_id)
-
-    if request.user.is_authenticated:
-        customer = request.user
-    if True:
-        device = request.COOKIES['device']
-        print('DEVICE IS: ', device)
-        customer, created = Customer.objects.get_or_create(fullname="", device=device)
-        customer.save()
-    # print(device)
-    print('CUSTOMER IS: ', customer)
-    order, created = Order.objects.get_or_create(customer=customer)
-    print(order)
-    # orderitems = order.orderitem_set.all()
-    orderitem = OrderItem.objects.create(order=order, product=product)
-    orderitem.quantity += 1
-    orderitem.save()
-    if orderitem.quantity > orderitem.product.number_available:
-        orderitem.quantity = orderitem.product.number_available
-        orderitem.save()
-    return redirect('home')
-    i = 1
-    if i==1:
-        return redirect('home')
+    # try:
+    #     customer = Customer.objects.get(device=request.session['nonuser'])
+    # except:
+    #     request.session['nonuser'] = str(uuid.uuid4())
+    #     customer = Customer.objects.create(device=request.session['nonuser'])
+    # product = Product.objects.get(product_id=product_id)
+    # print('DEVICE IS: ', request.session['nonuser'])
+    # order = Order.objects.get_or_create(customer=customer)
+    # orderitem = OrderItem.objects.create(product=product, order=order)
     return render(request, 'store/index.html')
 
 def cart(request):
@@ -288,33 +298,33 @@ def checkout(request):
 #     cities = City.objects.filter(country_id=country_id).order_by('name')
 #     return render(request, 'store/checkout.html', {'cities': cities})
 
-@csrf_exempt
-def updateItem(request):
-    data = json.loads(request.body)
-    print(data)
-    productId = data['productId']
-    action = data['action']
+# @csrf_exempt
+# def updateItem(request):
+#     data = json.loads(request.body)
+#     print(data)
+#     productId = data['productId']
+#     action = data['action']
 
-    print('ProuctId:', productId)
-    print('Action:', action)
+#     print('ProuctId:', productId)
+#     print('Action:', action)
 
-    customer = request.user
-    product = Product.objects.get(product_id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+#     customer = request.user
+#     product = Product.objects.get(product_id=productId)
+#     order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
-    if action == 'add':
-        if orderItem.quantity < product.number_available:
-            orderItem.quantity += 1
-    elif action == 'remove':
-        orderItem.quantity -= 1
-    elif action == 'del':
-        orderItem.delete()
-    orderItem.save()
+#     if action == 'add':
+#         if orderItem.quantity < product.number_available:
+#             orderItem.quantity += 1
+#     elif action == 'remove':
+#         orderItem.quantity -= 1
+#     elif action == 'del':
+#         orderItem.delete()
+#     orderItem.save()
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-    return JsonResponse('Item was added', safe=False)
+#     if orderItem.quantity <= 0:
+#         orderItem.delete()
+#     return JsonResponse('Item was added', safe=False)
 
 
 def no_cart(request):
