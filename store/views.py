@@ -122,6 +122,13 @@ def add_to_cart(request, product_id):
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     # orderitems = []
     orderitem = OrderItem.objects.create(product=product, order=order)
+    if orderitem.quantity <= 0:
+        orderitem.quantity = 0
+    if orderitem.quantity > product.number_available:
+        orderitem.quantity = product.number_available
+    if orderitem.quantity < product.number_available:
+        orderitem.quantity += 1
+    orderitem.save()
     # orderitems.append(orderitem)
     if True:
         return redirect('home')
