@@ -66,11 +66,10 @@ def add_product_view(request):
 def home_page(request):
     context = {}
 
-    try:
-        customer = request.user
-    except:
+    if not request.user.is_authenticated:
         device = request.COOKIES.get('device')
-        customer = Customer.objects.get_or_create(device=device)
+        request.session['']
+        customer = Customer.objects.create(device=device)
         customer.save()
     # customer = Customer.objects.get_or_create()
     products = Product.objects.all().order_by('?').distinct()[:6]
@@ -91,26 +90,26 @@ def add_to_cart(request, product_id):
 
     if request.user.is_authenticated:
         customer = request.user
-    else:
-        device = request.COOKIES.get('device')
+    if True:
+        device = request.COOKIES['device']
         print('DEVICE IS: ', device)
-        customer = Customer.objects.get_or_create(device=device)
+        customer, created = Customer.objects.get_or_create(fullname="", device=device)
         customer.save()
     # print(device)
     print('CUSTOMER IS: ', customer)
-    order = Order.objects.get_or_create(customer__device=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer)
     print(order)
     # orderitems = order.orderitem_set.all()
-    orderitem, created = OrderItem.objects.create(order=order, product=product)
+    orderitem = OrderItem.objects.create(order=order, product=product)
     orderitem.quantity += 1
     orderitem.save()
     if orderitem.quantity > orderitem.product.number_available:
         orderitem.quantity = orderitem.product.number_available
         orderitem.save()
-    # return redirect('home')
-    # i = 1
-    # if i==1:
-    #     return redirect('home')
+    return redirect('home')
+    i = 1
+    if i==1:
+        return redirect('home')
     return render(request, 'store/index.html')
 
 def cart(request):
