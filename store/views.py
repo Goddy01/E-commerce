@@ -78,19 +78,6 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
-    try:
-        user = User.objects.get(device=request.session['nonuser'])
-    except:
-        request.session['nonuser'] = str(uuid.uuid4())
-        user = User.objects.create(
-            fullname=request.session['nonuser'],
-            username=request.session['nonuser'],
-            email=request.session['nonuser'] + '@gmail.com',
-            address=request.session['nonuser'],
-            first_phone_num=CustomPhoneProvider(),
-            device=request.session['nonuser'],
-
-            )
 
     # if not request.user.is_authenticated:
     #     device = request.COOKIES.get('device')
@@ -116,10 +103,24 @@ def add_to_cart(request, product_id):
     # except:
     #     request.session['nonuser'] = str(uuid.uuid4())
     #     customer = Customer.objects.create(device=request.session['nonuser'])
-    # product = Product.objects.get(product_id=product_id)
-    # print('DEVICE IS: ', request.session['nonuser'])
-    # order = Order.objects.get_or_create(customer=customer)
-    # orderitem = OrderItem.objects.create(product=product, order=order)
+    try:
+        user = User.objects.get(device=request.session['nonuser'])
+    except:
+        request.session['nonuser'] = str(uuid.uuid4())
+        user = User.objects.create(
+            fullname=request.session['nonuser'],
+            username=request.session['nonuser'],
+            email=request.session['nonuser'] + '@gmail.com',
+            address=request.session['nonuser'],
+            first_phone_num='1',
+            device=request.session['nonuser'],
+
+            )
+    customer = Customer.objects.get(device=user.device)
+    product = Product.objects.get(product_id=product_id)
+    print('DEVICE IS: ', request.session['nonuser'])
+    order = Order.objects.get_or_create(customer=customer)
+    orderitem = OrderItem.objects.create(product=product, order=order)
     return render(request, 'store/index.html')
 
 def cart(request):
