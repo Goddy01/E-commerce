@@ -27,6 +27,7 @@ def customer_reg_view(request):
             raw_user.first_phone_num=phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
             raw_user.email=obj.email
             raw_user.device=obj.device
+            raw_user.set_password(request.POST['password1'])
             raw_user.save()
             print('Orders', raw_user_orders)
             for raw_user_order in raw_user_orders:
@@ -44,13 +45,13 @@ def customer_reg_view(request):
             # for order in raw_user_orders:
                 # order.save()
             # raw_user_orders.save()
-            raw_user.delete()
+            # raw_user.delete()
             # form.save(commit=False)
             form.device = request.session.get('device')
             print('Form Device is: ', form.device)
-            user = form.save()
+            # user = form.save()
             msg = 'Account created successfully'
-            login(request, user)
+            login(request, raw_user)
             request.session['device'] = []
             return redirect('checkout')
         else:
