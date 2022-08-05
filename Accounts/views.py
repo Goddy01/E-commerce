@@ -13,6 +13,8 @@ def customer_reg_view(request):
     if request.method == 'POST':
         form = CustomerRegForm(request.POST)
         if form.is_valid():
+            form.save(commit=False)
+            form.device = request.session.get('device')
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
@@ -32,6 +34,8 @@ def vendor_reg_view(request):
     if request.method == 'POST':
         form = VendorRegForm(request.POST)
         if form.is_valid():
+            form.save(commit=False)
+            form.device = request.session.get('device')
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
