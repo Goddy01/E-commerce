@@ -93,23 +93,10 @@ def home_page(request):
             device=request.session['device'],
 
             )
-    # order = Order.objects.create(customer=user)
-    # if not request.user.is_authenticated:
-    #     device = request.session.get('device')
-    #     request.session['']
-    #     customer = Customer.objects.create(device=device)
-    #     customer.save()
-    # customer = Customer.objects.get_or_create()
     products = Product.objects.all().order_by('?').distinct()[:6]
     latest_products = Product.objects.all().order_by('-product_id')[:9]
-    # f_products = Product.objects.all().filter(product_categories='W').order_by('?')[:1]
-    # mc_products = Product.objects.all().filter(product_categories='MC').order_by('?')[:1]
-    # fc_products = Product.objects.all().filter(product_categories='FC').order_by('?')[:1]
     context['products'] = products
     context['latest_products'] = latest_products
-    # context['f_products'] = f_products
-    # context['mc_products'] = mc_products
-    # context['fc_products'] = fc_products
     return render(request, 'store/index.html', context)
 
 def add_to_cart(request, product_id):

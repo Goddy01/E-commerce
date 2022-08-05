@@ -17,7 +17,7 @@ def customer_reg_view(request):
         form = CustomerRegForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-            print('Tephone: ', form.cleaned_data['first_phone_num'])
+            # print('Tephone: ', form.cleaned_data['first_phone_num'])
             raw_user = User.objects.get(device=request.session.get('device'))
             raw_user_orders = Order.objects.filter(customer=raw_user)
             raw_user.fullname=obj.fullname
@@ -31,7 +31,6 @@ def customer_reg_view(request):
             raw_user.save()
             print('Orders', raw_user_orders)
             for raw_user_order in raw_user_orders:
-                # raw_user_order.save(commit=False)
                 raw_user_order.customer.fullname=obj.fullname
                 raw_user_order.customer.username=obj.username
                 raw_user_order.customer.address=obj.address
@@ -40,16 +39,8 @@ def customer_reg_view(request):
                 raw_user_order.customer.email=obj.email
                 raw_user_order.customer.device=obj.device
                 raw_user_order.save()
-            # regd_user_orders = Order.objects.filter(customer__fullname=form.cleaned_data['fullname'])
-            # regd_user_orders = raw_user_orders
-            # for order in raw_user_orders:
-                # order.save()
-            # raw_user_orders.save()
-            # raw_user.delete()
-            # form.save(commit=False)
             form.device = request.session.get('device')
-            print('Form Device is: ', form.device)
-            # user = form.save()
+            # print('Form Device is: ', form.device)
             msg = 'Account created successfully'
             login(request, raw_user)
             request.session['device'] = []
