@@ -93,7 +93,7 @@ def home_page(request):
             device=request.session['device'],
 
             )
-
+    order = Order.objects.create(customer=user)
     # if not request.user.is_authenticated:
     #     device = request.session.get('device')
     #     request.session['']

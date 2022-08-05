@@ -12,9 +12,11 @@ def customer_reg_view(request):
     request.user.type = "CUSTOMER"
     if request.method == 'POST':
         form = CustomerRegForm(request.POST)
+        form.save(commit=False)
+        form.device = request.session.get('device')
+        form.save()
+        print('Form Device is: ', form.device)
         if form.is_valid():
-            form.save(commit=False)
-            form.device = request.session.get('device')
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
@@ -33,9 +35,10 @@ def vendor_reg_view(request):
     request.user.type = "VENDOR"
     if request.method == 'POST':
         form = VendorRegForm(request.POST)
+        form.save(commit=False)
+        form.device = request.session.get('device')
+        form.save()
         if form.is_valid():
-            form.save(commit=False)
-            form.device = request.session.get('device')
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
