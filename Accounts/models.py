@@ -63,7 +63,7 @@ class User(AbstractBaseUser):
     # phone_regex =                   RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+123456789'. Up to 15 digits allowed.")
     first_phone_num =            PhoneNumberField(null=False, blank=True, verbose_name="Phone No 1", unique=True)
     # second_phone_num =           PhoneNumberField(null=False, blank=True, unique=True, verbose_name= "Phone No 2")
-    device =                        models.CharField(max_length=256, null=True, blank=True)
+    device =                        models.CharField(max_length=256, null=False, blank=False)
     date_joined =                   models.DateTimeField(auto_now_add=True)
     last_login =                    models.DateTimeField(auto_now=True)
     is_admin =                      models.BooleanField(default=False)
