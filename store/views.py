@@ -30,7 +30,7 @@ class CustomPhoneProvider(Provider):
 #         cart_items = order.get_cart_items
 #     else:
 #         try:
-#             cart = json.loads(request.COOKIES['cart'])
+#             cart = json.loads(request.session['cart'])
 #         except KeyError:
 #             cart = {}
 #         order = {'get_cart_total':0, 'get_cart_items':0}
@@ -78,10 +78,25 @@ def add_product_view(request):
 
 def home_page(request):
     context = {}
+    try:
+        user = User.objects.get(device=request.session['device'])
+    except:
+        # if not request.user.is_authenticated:
+        device = str(uuid.uuid4())
+        request.session['device'] = device
+        user = User.objects.create(
+            fullname=request.session['device'],
+            username=request.session['device'],
+            email=request.session['device'] + '@gmail.com',
+            address=request.session['device'],
+            first_phone_num='1',
+            device=request.session['device'],
+
+            )
 
     # if not request.user.is_authenticated:
-    #     device = request.COOKIES.get('device')
-    #     request.COOKIES['']
+    #     device = request.session.get('device')
+    #     request.session['']
     #     customer = Customer.objects.create(device=device)
     #     customer.save()
     # customer = Customer.objects.get_or_create()
@@ -99,26 +114,26 @@ def home_page(request):
 
 def add_to_cart(request, product_id):
     # try:
-    #     customer = Customer.objects.get(device=request.COOKIES['device'])
+    #     customer = Customer.objects.get(device=request.session['device'])
     # except:
-    #     request.COOKIES['device'] = str(uuid.uuid4())
-    #     customer = Customer.objects.create(device=request.COOKIES['device'])
-    try:
-        user = User.objects.get(device=request.COOKIES['device'])
-    except:
-        # request.COOKIES['device'] = str(uuid.uuid4())
-        user = User.objects.create(
-            fullname=request.COOKIES['device'],
-            username=request.COOKIES['device'],
-            email=request.COOKIES['device'] + '@gmail.com',
-            address=request.COOKIES['device'],
-            first_phone_num='1',
-            device=request.COOKIES['device'],
+    #     request.session['device'] = str(uuid.uuid4())
+    #     customer = Customer.objects.create(device=request.session['device'])
+    # try:
+    user = User.objects.get(device=request.session.get('device'))
+    # except:
+    #     request.session['device'] = str(uuid.uuid4())
+    #     user = User.objects.create(
+    #         fullname=request.session['device'],
+    #         username=request.session['device'],
+    #         email=request.session['device'] + '@gmail.com',
+    #         address=request.session['device'],
+    #         first_phone_num='1',
+    #         device=request.session['device'],
 
-            )
+    #         )
     customer = Customer.objects.get(device=user.device)
     product = Product.objects.get(product_id=product_id)
-    print('DEVICE IS: ', request.COOKIES['device'])
+    print('DEVICE IS: ', request.session['device'])
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
@@ -137,17 +152,17 @@ def add_to_cart(request, product_id):
 def cart(request):
     context = {}
     # if request.user.is_authenticated:
-    # print('Mr User',request.COOKIES['device'])
+    # print('Mr User',request.session['device'])
     if request.user.is_authenticated:
         user = request.user
     else:
-        user = Customer.objects.get(device=request.COOKIES.get('device'))
+        user = Customer.objects.get(device=request.session.get('device'))
     # try:
     if Order.objects.filter(customer=user).order_by('-id').first() is not None:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
             return redirect('no_cart')
     else:
-        return redirect('no_cart')
+        return redirect('home')
     order = Order.objects.filter(customer=user).order_by('-id').first()
     items = order.orderitem_set.all()
     for item in items:
@@ -174,7 +189,7 @@ def cart(request):
 
     # else:
     #     try:
-    #         cart = json.loads(request.COOKIES['device'])
+    #         cart = json.loads(request.session['device'])
     #     except KeyError:
     #         cart = {}
     #     print(cart)

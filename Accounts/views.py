@@ -81,7 +81,6 @@ def user_login_view(request):
 #         if form.is_valid():
 #             email = form.cleaned_data.get('email')
 #             password = form.cleaned_data.get('password')
-
 #             user = authenticate(email=email, password=password)
 
 #             if user is not None:
@@ -89,7 +88,7 @@ def user_login_view(request):
 #                 return redirect('add product')
 #             # if user.type != "VENDORR":
 #             #     return HttpResponse('Sorry you do not have a Vendor account with us.')
-#             else:
+#             else:[[[[[[[[[[
 #                 msg = 'User does not exist.'
 #         else:
 #             msg = 'Validation Error'
@@ -102,6 +101,5 @@ def user_login_view(request):
 def user_logout_view(request):
     logout(request)
     return redirect('home')
-
 def must_auth(request):
     return render(request, 'Accounts/must_auth.html')
