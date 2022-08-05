@@ -43,6 +43,7 @@ def customer_reg_view(request):
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
+            request.session.get('device') = ''
             return redirect('checkout')
         else:
             msg = 'Form is Invalid!'
