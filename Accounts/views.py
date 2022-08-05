@@ -20,6 +20,14 @@ def customer_reg_view(request):
             print('Tephone: ', form.cleaned_data['first_phone_num'])
             raw_user = User.objects.get(device=request.session.get('device'))
             raw_user_orders = Order.objects.filter(customer=raw_user)
+            raw_user.fullname=obj.fullname
+            raw_user.username=obj.username
+            raw_user.address=obj.address
+            x = phonenumbers.parse(f"{obj.first_phone_num}", None)
+            raw_user.first_phone_num=phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+            raw_user.email=obj.email
+            raw_user.device=obj.device
+            raw_user.save()
             print('Orders', raw_user_orders)
             for raw_user_order in raw_user_orders:
                 # raw_user_order.save(commit=False)
