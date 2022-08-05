@@ -16,20 +16,20 @@ def customer_reg_view(request):
     if request.method == 'POST':
         form = CustomerRegForm(request.POST)
         if form.is_valid():
-            form.save(commit=False)
+            obj = form.save(commit=False)
             print('Tephone: ', form.cleaned_data['first_phone_num'])
             raw_user = User.objects.get(device=request.session.get('device'))
             raw_user_orders = Order.objects.filter(customer=raw_user)
+            print('Orders', raw_user_orders)
             for raw_user_order in raw_user_orders:
-                raw_user_order.customer.fullname=form.cleaned_data['fullname']
-                raw_user_order.customer.username=form.cleaned_data['username']
-                raw_user_order.customer.address=form.cleaned_data['address']
-                x = phonenumbers.parse(f"{form.cleaned_data['first_phone_num']}", None)
+                # raw_user_order.save(commit=False)
+                raw_user_order.customer.fullname=obj.fullname
+                raw_user_order.customer.username=obj.username
+                raw_user_order.customer.address=obj.address
+                x = phonenumbers.parse(f"{obj.first_phone_num}", None)
                 raw_user_order.customer.first_phone_num=phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
-                raw_user_order.customer.email=form.cleaned_data['email']
-                raw_user_order.customer.password1=form.cleaned_data['password1']
-                raw_user_order.customer.password2=form.cleaned_data['password2']
-                raw_user_order.customer.device=form.cleaned_data['device']
+                raw_user_order.customer.email=obj.email
+                raw_user_order.customer.device=obj.device
                 raw_user_order.save()
             # regd_user_orders = Order.objects.filter(customer__fullname=form.cleaned_data['fullname'])
             # regd_user_orders = raw_user_orders
@@ -43,7 +43,7 @@ def customer_reg_view(request):
             user = form.save()
             msg = 'Account created successfully'
             login(request, user)
-            request.session.get('device') = ''
+            request.session['device'] = []
             return redirect('checkout')
         else:
             msg = 'Form is Invalid!'

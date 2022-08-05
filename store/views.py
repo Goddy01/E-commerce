@@ -81,18 +81,18 @@ def home_page(request):
     try:
         user = User.objects.get(device=request.session['device'])
     except:
-        if request.session.get('device') != '':
-            device = str(uuid.uuid4())
-            request.session['device'] = device
-            user = User.objects.create(
-                fullname=request.session['device'],
-                username=request.session['device'],
-                email=request.session['device'] + '@gmail.com',
-                address=request.session['device'],
-                first_phone_num='1',
-                device=request.session['device'],
+        # if request.session.get('device') == []:
+        device = str(uuid.uuid4())
+        request.session['device'] = device
+        user = User.objects.create(
+            fullname=request.session['device'],
+            username=request.session['device'],
+            email=request.session['device'] + '@gmail.com',
+            address=request.session['device'],
+            first_phone_num='1',
+            device=request.session['device'],
 
-                )
+            )
     # order = Order.objects.create(customer=user)
     # if not request.user.is_authenticated:
     #     device = request.session.get('device')
@@ -121,7 +121,8 @@ def add_to_cart(request, product_id):
     # try:
     user = User.objects.get(device=request.session.get('device'))
     # except:
-    #     request.session['device'] = str(uuid.uuid4())
+    #     device = str(uuid.uuid4())
+    #     request.session['device'] = device
     #     user = User.objects.create(
     #         fullname=request.session['device'],
     #         username=request.session['device'],
