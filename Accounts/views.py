@@ -5,7 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import (
     CustomerRegForm, UserLoginForm, 
     VendorRegForm)
-
+from .models import User
+from store.models import Order
+from phonenumber_field.phonenumber import PhoneNumber
+import phonenumbers
 # Create your views here.
 def customer_reg_view(request):
     msg = None
@@ -14,6 +17,27 @@ def customer_reg_view(request):
         form = CustomerRegForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
+            print('Tephone: ', form.cleaned_data['first_phone_num'])
+            raw_user = User.objects.get(device=request.session.get('device'))
+            raw_user_orders = Order.objects.filter(customer=raw_user)
+            for raw_user_order in raw_user_orders:
+                raw_user_order.customer.fullname=form.cleaned_data['fullname']
+                raw_user_order.customer.username=form.cleaned_data['username']
+                raw_user_order.customer.address=form.cleaned_data['address']
+                x = phonenumbers.parse(f"{form.cleaned_data['first_phone_num']}", None)
+                raw_user_order.customer.first_phone_num=phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+                raw_user_order.customer.email=form.cleaned_data['email']
+                raw_user_order.customer.password1=form.cleaned_data['password1']
+                raw_user_order.customer.password2=form.cleaned_data['password2']
+                raw_user_order.customer.device=form.cleaned_data['device']
+                raw_user_order.save()
+            # regd_user_orders = Order.objects.filter(customer__fullname=form.cleaned_data['fullname'])
+            # regd_user_orders = raw_user_orders
+            # for order in raw_user_orders:
+                # order.save()
+            # raw_user_orders.save()
+            raw_user.delete()
+            # form.save(commit=False)
             form.device = request.session.get('device')
             print('Form Device is: ', form.device)
             user = form.save()
