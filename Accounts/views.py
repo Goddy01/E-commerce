@@ -109,10 +109,10 @@ def user_login_view(request):
                         else:
                             if cookie_order:
                                 print('notedey')
-                                for cookie_orderitem in cookie_orderitems:
-                                    user_order.orderitem_set+=cookie_orderitem
-                                    user_order.orderitem.save()
-                        cookie_order.delete()
+                                customer = User.objects.get(email=email)
+                                cookie_order.customer = customer
+                                cookie_order.save()
+                        # cookie_order.delete()
                         return redirect('home')
                     return redirect('home')
                 elif user.type == "VENDOR":
