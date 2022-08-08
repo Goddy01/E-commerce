@@ -105,24 +105,17 @@ def add_to_cart(request, product_id):
     # except:
     #     request.session['device'] = str(uuid.uuid4())
     #     customer = Customer.objects.create(device=request.session['device'])
-    # try:
-    user = User.objects.get(device=request.session.get('device'))
-    # except:
-    #     device = str(uuid.uuid4())
-    #     request.session['device'] = device
-    #     user = User.objects.create(
-    #         fullname=request.session['device'],
-    #         username=request.session['device'],
-    #         email=request.session['device'] + '@gmail.com',
-    #         address=request.session['device'],
-    #         first_phone_num='1',
-    #         device=request.session['device'],
-
-    #         )
-    customer = Customer.objects.get(device=user.device)
+    if not request.user.is_authenticated:
+        user = User.objects.get(device=request.session.get('device'))
+        customer = Customer.objects.get(device=user.device)
+    else:
+        customer = Customer.objects.get(username=request.user.username)
     product = Product.objects.get(product_id=product_id)
     print('DEVICE IS: ', request.session['device'])
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    try:    
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    except:
+        order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
     if orderitem.quantity <= 0:
