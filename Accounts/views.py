@@ -82,6 +82,7 @@ def user_login_view(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
+            # username=form.cleaned_data.get('username')
 
             user = authenticate(email=email, password=password)
 
@@ -94,15 +95,23 @@ def user_login_view(request):
                     except:
                         pass
                     else:
-                        user_order = Order.objects.get(customer__email=email)
+                        user_order, created = Order.objects.get_or_create(customer__email=email)
+                        # if len(user_order) > 0:
                         cookie_orderitems = cookie_order.orderitem_set.all()
                         user_orderitems = user_order.orderitem_set.all()
-                        for cookie_orderitem in cookie_orderitems:
-                            for user_orderitem in user_orderitems:
-                                if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
-                                    user_orderitem.quantity += cookie_orderitem.quantity
-                                    print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
-                                    user_orderitem.save()
+                        if len(user_orderitems) > 0:
+                            for cookie_orderitem in cookie_orderitems:
+                                for user_orderitem in user_orderitems:
+                                    if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
+                                        user_orderitem.quantity += cookie_orderitem.quantity
+                                        print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
+                                        user_orderitem.save()
+                        else:
+                            if cookie_order:
+                                print('notedey')
+                                for cookie_orderitem in cookie_orderitems:
+                                    user_order.orderitem_set+=cookie_orderitem
+                                    user_order.orderitem.save()
                         cookie_order.delete()
                         return redirect('home')
                     return redirect('home')
