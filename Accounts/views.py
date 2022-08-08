@@ -95,12 +95,15 @@ def user_login_view(request):
                         pass
                     else:
                         user_order = Order.objects.get(customer__email=email)
-                        cookie_orderitems = cookie_order.orderitems_set.all()
-                        user_orderitems = user_order.orderitems_set.all()
+                        cookie_orderitems = cookie_order.orderitem_set.all()
+                        user_orderitems = user_order.orderitem_set.all()
                         for cookie_orderitem in cookie_orderitems:
                             for user_orderitem in user_orderitems:
                                 if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
                                     user_orderitem.quantity += cookie_orderitem.quantity
+                                    print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
+                                    user_orderitem.save()
+                        cookie_order.delete()
                         return redirect('home')
                     return redirect('home')
                 elif user.type == "VENDOR":
