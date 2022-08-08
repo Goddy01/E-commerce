@@ -89,6 +89,19 @@ def user_login_view(request):
                 login(request, user)
                 # print(user.type)
                 if user.type == "CUSTOMER":
+                    try:    
+                        cookie_order = Order.objects.get(customer__device=request.session.get('device'))
+                    except:
+                        pass
+                    else:
+                        user_order = Order.objects.get(customer__email=email)
+                        cookie_orderitems = cookie_order.orderitems_set.all()
+                        user_orderitems = user_order.orderitems_set.all()
+                        for cookie_orderitem in cookie_orderitems:
+                            for user_orderitem in user_orderitems:
+                                if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
+                                    user_orderitem.quantity += cookie_orderitem.quantity
+                        return redirect('home')
                     return redirect('home')
                 elif user.type == "VENDOR":
                     return redirect('add-product')
