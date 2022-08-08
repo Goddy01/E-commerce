@@ -95,7 +95,10 @@ def user_login_view(request):
                     except:
                         pass
                     else:
-                        user_order, created = Order.objects.get_or_create(customer__email=email)
+                        try:
+                            user_order, created = Order.objects.get_or_create(customer__email=email)
+                        except:
+                            user_order = Order.objects.filter(customer__email=email).order_by('-id').first()
                         # if len(user_order) > 0:
                         cookie_orderitems = cookie_order.orderitem_set.all()
                         user_orderitems = user_order.orderitem_set.all()
@@ -106,13 +109,13 @@ def user_login_view(request):
                                         user_orderitem.quantity += cookie_orderitem.quantity
                                         print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
                                         user_orderitem.save()
+                            cookie_order.delete()
                         else:
                             if cookie_order:
                                 print('notedey')
                                 customer = User.objects.get(email=email)
                                 cookie_order.customer = customer
                                 cookie_order.save()
-                        # cookie_order.delete()
                         return redirect('home')
                     return redirect('home')
                 elif user.type == "VENDOR":
