@@ -1,11 +1,16 @@
 from Accounts.models import Customer
 from .models import Order
+# from django.contrib.auth.decorators import login_required
 
+# @login_required
 def website_content(request):
-    if not request.user.is_authenticated:
-        customer = Customer.objects.get(device=request.session.get('device'))
-    else:
+    # if not request.user.is_authenticated:
+    # 
+    # else:
+    if request.user.is_authenticated:
         customer = Customer.objects.get(email=request.user.email)
+    if request.user.id == None:
+        customer = Customer.objects.get(device=request.session.get('device'))
     order = Order.objects.filter(customer=customer).order_by('-id').first()
     try:
         items = order.orderitem_set.all()
