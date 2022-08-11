@@ -112,7 +112,6 @@ class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     fullname =         models.CharField(max_length=256, null=False, default="", blank=True)
     phone_num1 =        PhoneNumberField(null=True, blank=True, verbose_name="Phone No 1")
-    phone_num2 =        PhoneNumberField(null=True, blank=True, verbose_name= "Phone No 2")
     email =             models.EmailField(max_length=128, null=False, default="", blank=False)
     address =          models.CharField(max_length=512, null=False, default="", blank=True)
     order =             models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)

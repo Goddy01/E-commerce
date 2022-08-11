@@ -6,7 +6,7 @@ from .models import Order
 def website_content(request):
     # if not request.user.is_authenticated:
     # 
-    # else:
+    # else:     
     if request.user.is_authenticated:
         customer = Customer.objects.get(email=request.user.email)
     if request.user.id == None:
