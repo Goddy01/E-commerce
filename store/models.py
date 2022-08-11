@@ -59,8 +59,6 @@ class Order(models.Model):
     complete =              models.BooleanField(default=False)
     total_order_price =     models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
-    def __str__(self):
-        return str(self.transaction_id)
 
     @property
     def get_cart_total(self):
@@ -86,6 +84,9 @@ class Order(models.Model):
     def shipping(self):
         shipping = True
         return shipping
+
+    def __str__(self):
+        return str(self.transaction_id)
 
 
 class OrderItem(models.Model):

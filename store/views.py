@@ -139,12 +139,24 @@ def cart(request):
     else:
         user = Customer.objects.get(device=request.session.get('device'))
     # try:
+    print('first', Order.objects.filter(customer=user).order_by('-date_ordered').first())
+    # print('1', Order.objects.filter(customer=user).order_by('-id')[1])
+    print('latest', Order.objects.filter(customer=user).order_by('-id').first())
+    print('latest2', Order.objects.filter(customer=user).order_by('-id').first())
     if Order.objects.filter(customer=user).order_by('-id').first() is not None:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
+            print('brozo')
             return redirect('no_cart')
     else:
         return redirect('home')
-    order = Order.objects.filter(customer=user).order_by('-id').first()
+    # order, created = Order.objects.get_or_create(customer=user, complete=False)
+    try:    
+        order, created = Order.objects.get_or_create(customer=user, complete=False)
+        print('order1:', order)
+    except:
+        order = Order.objects.filter(customer=user).order_by('-id').first()
+        print('order2:', order)
+    # if order.complete == False:
     items = order.orderitem_set.all()
     for item in items:
         if item.quantity <= 0 or item.product.number_available == 0:
@@ -153,13 +165,18 @@ def cart(request):
             item.delete()
         if item.quantity > item.product.number_available:
             item.quantity = item.product.number_available
+            item.save()
     # print(item)
     # print(len(items))
     if len(items) == 0:
-        order.save(commit=False)
+        # try:
+        #     order.save(commit=False)
+        # except TypeError:
+        #     order[1].save(commit=False)
         order.total_order_price = 10
         order.save()
         # print('Get Total1: ', order.total_order_price)
+        print('brozo1.0')
         return redirect('no_cart')
     else:
         print('Get Total2: ', order.total_order_price)
@@ -257,11 +274,14 @@ def checkout(request):
             if request.method == 'POST':
                 billing_form = BillingForm(request.POST)
                 if billing_form.is_valid():
+                    print('yooo')
                     obj = billing_form.save(commit=False)
                     obj.customer = Customer.objects.get(username=request.user.username)
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
                     obj.order.complete = True
                     obj.order.save()
+                    order.complete = True
+                    order.save()
                     obj.save()
 
                     items = OrderItem.objects.filter(order=obj.order)
@@ -270,13 +290,17 @@ def checkout(request):
                         item.product.save()
                     billing_form= obj
 
-                    i = 0 
+                    i = 0
                     if i == 0:
                         return redirect('home')
             else:
                 billing_form = BillingForm()
 
-            order = Order.objects.filter(customer=user).order_by('-id').first()
+            try:    
+                order, created = Order.objects.get_or_create(customer=user, complete=False)
+            except:
+                order = Order.objects.filter(customer=user).order_by('-id').first()
+            # order = Order.objects.filter(customer=user).order_by('-id').first()
             items = order.orderitem_set.all()
             
             
