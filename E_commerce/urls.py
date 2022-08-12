@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from store.views import (
     delete_order_item, home_page, ContactView,
-    ShopDetailView, ShopView,
+    ShopView, product_details,
     cart, checkout,
     add_product_view, quantity_increment,
     quantity_decrement, delete_order_item,
@@ -34,8 +34,8 @@ urlpatterns = [
     # path('', include('django.contrib.auth.urls')),
     path('', home_page, name='home'),
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
-    path('shop/', ShopDetailView.as_view(), name='shop'),
-    path('shop_details/', ShopDetailView.as_view(), name='shop detail'),
+    # path('shop/', ShopDetailView.as_view(), name='shop'),
+    path('product_details/', product_details, name='product_details'),
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
     path('cart/<item_id>/decrement/', quantity_decrement, name='q_decr'),

@@ -44,8 +44,8 @@ class CustomPhoneProvider(Provider):
 class ShopView(TemplateView):
     template_name = 'shop.html'
 
-class ShopDetailView(TemplateView):
-    template_name = 'detail.html'
+# class ShopDetailView(TemplateView):
+#     template_name = 'detail.html'
 
 class ContactView(TemplateView):
     template_name = 'contact.html'
@@ -363,3 +363,7 @@ def no_cart(request):
 
 def no_checkout(request):
     return render(request, 'store/no_checkout.html')
+
+
+def product_details(request):
+    return render(request, 'store/detail.html')
