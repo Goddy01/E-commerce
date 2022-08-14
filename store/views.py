@@ -367,7 +367,12 @@ def no_checkout(request):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
+    product_sizes = product.product_sizes.split(',')
+    product_colors = product.product_colors.split(',')
     context = {
         'product': product,
+        'product_sizes': product_sizes,
+        'product_colors': product_colors,
     }
+    # product_sizes = 
     return render(request, 'store/detail.html', context)
