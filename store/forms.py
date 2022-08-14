@@ -47,7 +47,7 @@ class BillingForm(forms.ModelForm):
         model = BillingAddress
         fields = '__all__'
 
-class Orderitem(forms.ModelForm):
+class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
         fields = ['quantity', 'ordered_product_color', 'ordered_product_size']

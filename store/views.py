@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm,BillingForm
+from .forms import AddProductForm, OrderItemForm, BillingForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 # Create your views here.
@@ -368,12 +368,22 @@ def no_checkout(request):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
+    if request.method == 'POST':
+        orderitemform = OrderItemForm(request.POST)
+        if orderitemform.is_valid():
+            obj = orderitemform.save(commit=False)
+            orderitemform.ordered_product_color = obj.ordered_product_color
+            orderitemform.ordered_product_size = obj.ordered_product_size
+            orderitemform.save()
+    else:
+        orderitemform = OrderItemForm()
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     context = {
         'product': product,
         'product_sizes': product_sizes,
         'product_colors': product_colors,
+        'orderitemform': orderitemform,
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)
