@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, BillingAddress
+from .models import Product, OrderItem, BillingAddress
 
 class AddProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
@@ -46,3 +46,8 @@ class BillingForm(forms.ModelForm):
     class Meta:
         model = BillingAddress
         fields = '__all__'
+
+class Orderitem(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['quantity', 'ordered_product_color', 'ordered_product_size']

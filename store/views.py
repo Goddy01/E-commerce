@@ -118,6 +118,7 @@ def add_to_cart(request, product_id):
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
+    # orderitem.ordered_product_color = 
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
     if orderitem.quantity > product.number_available:
