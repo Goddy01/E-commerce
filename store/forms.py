@@ -50,4 +50,4 @@ class BillingForm(forms.ModelForm):
 class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ['quantity', 'ordered_product_color', 'ordered_product_size']
+        fields = ('quantity', 'ordered_product_color', 'ordered_product_size')
