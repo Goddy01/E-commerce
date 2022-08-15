@@ -370,12 +370,17 @@ def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
     if request.method == 'POST':
         orderitemform = OrderItemForm(request.POST)
+        print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
         if orderitemform.is_valid():
+            print('VALID BRO')
             obj = orderitemform.save(commit=False)
             orderitemform.ordered_product_color = obj.ordered_product_color
+            print('color is: ', obj.ordered_product_color)
             orderitemform.ordered_product_size = obj.ordered_product_size
+            print('product_size is: ', obj.ordered_product_size)
             orderitemform.save()
     else:
+        print('NOT VALID')
         orderitemform = OrderItemForm()
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
