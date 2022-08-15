@@ -8,6 +8,7 @@
         <div class="row px-xl-5 pb-3">
             {% for product in products %}
             {% if product.number_available != 0 %}
+            <a href="{% url 'product_details' product.product_id %}">
                 <div class="col-lg-4 col-md-6 pb-1">
                     <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;background-color: #cfc5c4;">
                         <p class="text-right text-dark">{{ product.number_available }} Products</p>
@@ -37,6 +38,7 @@
                                 </button>
                             </a>
                         </div>
+                    </a>
                     </div>
                 </div>
                 {% endif %}

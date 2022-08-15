@@ -365,8 +365,8 @@ def no_checkout(request):
     return render(request, 'store/no_checkout.html')
 
 
-def product_details(request, slug):
-    product = get_object_or_404(Product, slug=slug)
+def product_details(request, product_id):
+    product = get_object_or_404(Product, product_id=product_id)
     context = {
         'product': product,
     }
