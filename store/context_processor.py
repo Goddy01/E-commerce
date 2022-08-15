@@ -8,7 +8,10 @@ def website_content(request):
     # 
     # else:     
     if request.user.is_authenticated:
-        customer = Customer.objects.get(email=request.user.email)
+        try:
+            customer = Customer.objects.get(username=request.user.username)
+        except:
+            customer = Customer.objects.get(device=request.session.get('device'))
     if request.user.id == None:
         customer = Customer.objects.get(device=request.session.get('device'))
     try:    

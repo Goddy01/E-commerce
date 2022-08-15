@@ -9,28 +9,28 @@ class AddProductForm(forms.ModelForm):
         ("FC", "FEMALE CHILDREN"),
     )
 
-    # SIZE_CHOICES = (
-    #     ("XS", "EXTRA SMALL"),
-    #     ("S", "SMALL"),
-    #     ("M", "MEDIUM"),
-    #     ("L", "LARGE"),
-    #     ("XL", "EXTRA LARGE"),
-    #     ("XXL", "EXTRA EXTRA LARGE"),
-    #     ("XXXL", "EXTRA EXTRA EXTRA LARGE"),
-    # )
+    SIZE_CHOICES = (
+        ("XS", "EXTRA SMALL"),
+        ("S", "SMALL"),
+        ("M", "MEDIUM"),
+        ("L", "LARGE"),
+        ("XL", "EXTRA LARGE"),
+        ("XXL", "EXTRA EXTRA LARGE"),
+        ("XXXL", "EXTRA EXTRA EXTRA LARGE"),
+    )
 
-    # COLOR_CHOICES = (
-    #     ("Green", "GREEN"),
-    #     ("Blue", "BLUE"),
-    #     ("Red", "RED"),
-    #     ("Orange", "ORANGE"),
-    #     ("Black", "BLACK"),
-    #     ("Yellow", "WHITE"),
-    #     ("Yellow", "YELLOW"),
-    #     ("Purple", "PURPLE"),
-    #     ("Brown", "BROWN"),
-    #     ("Pink", "PINK"),
-    # )
+    COLOR_CHOICES = (
+        ("Green", "GREEN"),
+        ("Blue", "BLUE"),
+        ("Red", "RED"),
+        ("Orange", "ORANGE"),
+        ("Black", "BLACK"),
+        ("Yellow", "WHITE"),
+        ("Yellow", "YELLOW"),
+        ("Purple", "PURPLE"),
+        ("Brown", "BROWN"),
+        ("Pink", "PINK"),
+    )
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
