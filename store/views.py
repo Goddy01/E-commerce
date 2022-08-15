@@ -2,7 +2,7 @@ import json, uuid
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm,BillingForm
@@ -365,5 +365,9 @@ def no_checkout(request):
     return render(request, 'store/no_checkout.html')
 
 
-def product_details(request):
-    return render(request, 'store/detail.html')
+def product_details(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    context = {
+        'product': product,
+    }
+    return render(request, 'store/detail.html', context)
