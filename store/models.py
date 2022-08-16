@@ -96,17 +96,23 @@ class OrderItem(models.Model):
     date_added =            models.DateTimeField(auto_now_add=True)
     quantity =              models.IntegerField(null=True, blank=True, default=0)
     
+    COLOR_CHOICES = ()
     @property
     def ordered_product_color(self):
         ordered_product_color = self.product.product_colors.split(',')
         return self.ordered_product_color
     # ordered_product_color = models.CharField(max_length=128, null=True, blank=False)
+    for color in ordered_product_color():
+        COLOR_CHOICES.append((color, color))
 
+    SIZE_CHOICES = ()
     @property
     def ordered_product_size(self):
         ordered_product_size = self.product.product_sizes.split(',')
-        return ordered_product_size
+        return self.ordered_product_size
     # ordered_product_size =  models.CharField(max_length=128, null=True, blank=False)
+    for size in ordered_product_size():
+        SIZE_CHOICES.append((size, size))
 
     @property
     def get_items_price(self):
