@@ -99,20 +99,14 @@ class OrderItem(models.Model):
     COLOR_CHOICES = ()
     @property
     def ordered_product_color(self):
-        ordered_product_color = self.product.product_colors.split(',')
-        return self.ordered_product_color
-    # ordered_product_color = models.CharField(max_length=128, null=True, blank=False)
-    for color in ordered_product_color():
-        COLOR_CHOICES.append((color, color))
+        return self.product.product_colors.split(',')
+    
 
     SIZE_CHOICES = ()
     @property
     def ordered_product_size(self):
-        ordered_product_size = self.product.product_sizes.split(',')
-        return self.ordered_product_size
-    # ordered_product_size =  models.CharField(max_length=128, null=True, blank=False)
-    for size in ordered_product_size():
-        SIZE_CHOICES.append((size, size))
+        return self.product.product_sizes.split(',')
+    
 
     @property
     def get_items_price(self):

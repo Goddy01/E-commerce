@@ -119,6 +119,7 @@ def add_to_cart(request, product_id):
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
     # orderitem.ordered_product_color = 
+    print('opc is: ', orderitem.ordered_product_color)
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
     if orderitem.quantity > product.number_available:
@@ -368,6 +369,7 @@ def no_checkout(request):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
+
     # if request.method == 'POST':
     #     orderitemform = OrderItemForm(request.POST)
     #     print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
