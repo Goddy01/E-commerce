@@ -120,6 +120,8 @@ def add_to_cart(request, product_id):
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
     # orderitem.ordered_product_color = 
     print('opc is: ', orderitem.ordered_product_color)
+    print('ops is: ', orderitem.ordered_product_size)
+    print('ops type is: ', tuple(orderitem.ordered_product_size))
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
     if orderitem.quantity > product.number_available:
@@ -369,28 +371,39 @@ def no_checkout(request):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
-
-    # if request.method == 'POST':
-    #     orderitemform = OrderItemForm(request.POST)
-    #     print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
-    #     if orderitemform.is_valid():
-    #         print('VALID BRO')
-    #         obj = orderitemform.save(commit=False)
-    #         orderitemform.ordered_product_color = obj.ordered_product_color
-    #         print('color is: ', obj.ordered_product_color)
-    #         orderitemform.ordered_product_size = obj.ordered_product_size
-    #         print('product_size is: ', obj.ordered_product_size)
-    #         orderitemform.save()
-    # else:
-    #     print('NOT VALID')
-    #     orderitemform = OrderItemForm()
-    # product_sizes = product.product_sizes.split(',')
-    # product_colors = product.product_colors.split(',')
-    # context = {
-    #     'product': product,
-    #     'product_sizes': product_sizes,
-    #     'product_colors': product_colors,
-    #     'orderitemform': orderitemform,
-    # }
+    try:
+        order_item = OrderItem.objects.get(product=product, order__customer__email=request.user.email)
+    except:
+        order_item = OrderItem.objects.get(product=product, order__customer__device=request.session.get('device'))
+    print('Na the orderitem be this: ', order_item)
+    product_sizes = product.product_sizes.split(',')
+    # print('s re: ', tuple(product_sizes))
+    print('def re: ', order_item.ordered_product_color)
+    for color in order_item.ordered_product_color:
+        order_item.SIZE_CHOICES.append((color, color))
+        order_item.save()
+    print('S_C: ', order_item.SIZE_CHOICES)
+    if request.method == 'POST':
+        orderitemform = OrderItemForm(request.POST)
+        print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
+        if orderitemform.is_valid():
+            print('VALID BRO')
+            obj = orderitemform.save(commit=False)
+            orderitemform.ordered_product_color = obj.ordered_product_color
+            print('color is: ', obj.ordered_product_color)
+            orderitemform.ordered_product_size = obj.ordered_product_size
+            print('product_size is: ', obj.ordered_product_size)
+            orderitemform.save()
+    else:
+        print('NOT VALID')
+        orderitemform = OrderItemForm()
+    product_sizes = product.product_sizes.split(',')
+    product_colors = product.product_colors.split(',')
+    context = {
+        'product': product,
+        'product_sizes': product_sizes,
+        'product_colors': product_colors,
+        'orderitemform': orderitemform,
+    }
     # product_sizes = 
     return render(request, 'store/detail.html', context)

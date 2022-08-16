@@ -35,8 +35,6 @@ class OrderItemForm(forms.ModelForm):
     # product_colors = Product.
     # product_sizes = 
     
-    # SIZE_CHOICES = ()
-    # COLOR_CHOICES = ()
 
     # for color in product_colors:
     #     COLOR_CHOICES.append((color, color))
@@ -47,4 +45,4 @@ class OrderItemForm(forms.ModelForm):
 
     class Meta:
         model = OrderItem
-        fields = ('quantity', )
+        fields = ('quantity', 'size', 'color')
