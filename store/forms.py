@@ -9,28 +9,7 @@ class AddProductForm(forms.ModelForm):
         ("FC", "FEMALE CHILDREN"),
     )
 
-    SIZE_CHOICES = (
-        ("XS", "EXTRA SMALL"),
-        ("S", "SMALL"),
-        ("M", "MEDIUM"),
-        ("L", "LARGE"),
-        ("XL", "EXTRA LARGE"),
-        ("XXL", "EXTRA EXTRA LARGE"),
-        ("XXXL", "EXTRA EXTRA EXTRA LARGE"),
-    )
 
-    COLOR_CHOICES = (
-        ("Green", "GREEN"),
-        ("Blue", "BLUE"),
-        ("Red", "RED"),
-        ("Orange", "ORANGE"),
-        ("Black", "BLACK"),
-        ("Yellow", "WHITE"),
-        ("Yellow", "YELLOW"),
-        ("Purple", "PURPLE"),
-        ("Brown", "BROWN"),
-        ("Pink", "PINK"),
-    )
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
@@ -47,7 +26,25 @@ class BillingForm(forms.ModelForm):
         model = BillingAddress
         fields = '__all__'
 
+
+
+# product_sizes = product.product_sizes.split(',')
+# product_colors = product.product_colors.split(',')
+
 class OrderItemForm(forms.ModelForm):
+    # product_colors = Product.
+    # product_sizes = 
+    
+    # SIZE_CHOICES = ()
+    # COLOR_CHOICES = ()
+
+    # for color in product_colors:
+    #     COLOR_CHOICES.append((color, color))
+    # for size in product_sizes:
+    #     SIZE_CHOICES.append((size, size))
+    # product_sizes= forms.CharField(label='Sizes: ', widget=forms.RadioSelect(choices=SIZE_CHOICES))
+    # product_colors= forms.CharField(label='Colors: ', widget=forms.RadioSelect(choices=COLOR_CHOICES))
+
     class Meta:
         model = OrderItem
         fields = ('quantity', 'ordered_product_color', 'ordered_product_size')
