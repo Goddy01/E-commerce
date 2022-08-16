@@ -95,8 +95,18 @@ class OrderItem(models.Model):
     product =               models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =            models.DateTimeField(auto_now_add=True)
     quantity =              models.IntegerField(null=True, blank=True, default=0)
-    ordered_product_color = models.CharField(max_length=128, null=True, blank=False)
-    ordered_product_size =  models.CharField(max_length=128, null=True, blank=False)
+    
+    @property
+    def ordered_product_color(self):
+        ordered_product_color = self.product.product_colors.split(',')
+        return self.ordered_product_color
+    # ordered_product_color = models.CharField(max_length=128, null=True, blank=False)
+
+    @property
+    def ordered_product_size(self):
+        ordered_product_size = self.product.product_sizes.split(',')
+        return ordered_product_size
+    # ordered_product_size =  models.CharField(max_length=128, null=True, blank=False)
 
     @property
     def get_items_price(self):
