@@ -95,14 +95,18 @@ class OrderItem(models.Model):
     product =               models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =            models.DateTimeField(auto_now_add=True)
     quantity =              models.IntegerField(null=True, blank=True, default=0)
-    SIZE_CHOICES = []
+    SIZE_CHOICES = [(1, 1), (2, 2)]
     COLOR_CHOICES = []
-    size =                 models.CharField(max_length=10,choices=SIZE_CHOICES, default='', null=True, blank=False)
-    color =                 models.CharField(max_length=10,choices=COLOR_CHOICES, default='', null=True, blank=False)
+    size =                 models.CharField(max_length=10,choices=SIZE_CHOICES, null=True, blank=False)
+    color =                 models.CharField(max_length=10,choices=COLOR_CHOICES, null=True, blank=False)
+    
     @property
     def ordered_product_color(self):
         return self.product.product_colors.split(',')
-    
+    # p = self.OrderItem()
+    # opc = p.ordered_product_color()
+    # for color in opc:
+    #     COLOR_CHOICES.append((color, color))
     @property
     def ordered_product_size(self):
         return self.product.product_sizes.split(',')

@@ -32,6 +32,10 @@ class BillingForm(forms.ModelForm):
 # product_colors = product.product_colors.split(',')
 
 class OrderItemForm(forms.ModelForm):
+    def __init__(self, size_choices, color_choices, *args, **kwargs):
+        super(OrderItemForm, self).__init__(*args, **kwargs)
+        self.fields['size'].choices = size_choices
+        self.fields['color'].choices = color_choices
     # product_colors = Product.
     # product_sizes = 
     
@@ -40,9 +44,10 @@ class OrderItemForm(forms.ModelForm):
     #     COLOR_CHOICES.append((color, color))
     # for size in product_sizes:
     #     SIZE_CHOICES.append((size, size))
-    # product_sizes= forms.CharField(label='Sizes: ', widget=forms.RadioSelect(choices=SIZE_CHOICES))
-    # product_colors= forms.CharField(label='Colors: ', widget=forms.RadioSelect(choices=COLOR_CHOICES))
+    size= forms.ChoiceField(label='Sizes: ', choices=(), required=True)
+    color= forms.ChoiceField(label='Colors: ', choices=(), required=True)
 
     class Meta:
+        # size = forms.CharField(label='Sizes: ', widget=forms.ChoiceField)
         model = OrderItem
         fields = ('quantity', 'size', 'color')

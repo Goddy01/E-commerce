@@ -37,6 +37,9 @@
                         {{ request.user.OrderItem }} -->
                         
                         {% for item in items %}
+                        browse
+                        {{ item.COLOR_CHOICES }}
+                        {{ item.SIZE_CHOICES }}
                         
                         {% if item.quantity != 0 %}
                             <tr>

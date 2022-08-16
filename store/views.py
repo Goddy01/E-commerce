@@ -70,6 +70,7 @@ def add_product_view(request):
             context['success'] = 'Product has been added.'
         # else:
         #     return HttpResponse('buggy')
+            
 
     else:
         add_form = AddProductForm()
@@ -372,19 +373,21 @@ def no_checkout(request):
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
     try:
-        order_item = OrderItem.objects.get(product=product, order__customer__email=request.user.email)
+        order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
     except:
-        order_item = OrderItem.objects.get(product=product, order__customer__device=request.session.get('device'))
-    print('Na the orderitem be this: ', order_item)
-    product_sizes = product.product_sizes.split(',')
-    # print('s re: ', tuple(product_sizes))
-    print('def re: ', order_item.ordered_product_color)
+        order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
+    # print('Na the orderitem be this: ', order_item)
+    # print('def re: ', order_item.ordered_product_color)
+    COLOR_CHOICES = []
+    SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
-        order_item.SIZE_CHOICES.append((color, color))
-        order_item.save()
-    print('S_C: ', order_item.SIZE_CHOICES)
+        COLOR_CHOICES.append((color, color))
+        # order_item.save()
+    for size in order_item.ordered_product_size:
+        SIZE_CHOICES.append((size, size))
+        
     if request.method == 'POST':
-        orderitemform = OrderItemForm(request.POST)
+        orderitemform = OrderItemForm(request.POST, SIZE_CHOICES, COLOR_CHOICES)
         print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
         if orderitemform.is_valid():
             print('VALID BRO')
@@ -396,7 +399,7 @@ def product_details(request, product_id):
             orderitemform.save()
     else:
         print('NOT VALID')
-        orderitemform = OrderItemForm()
+        orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     context = {
