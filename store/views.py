@@ -385,17 +385,11 @@ def product_details(request, product_id):
         # order_item.save()
     for size in order_item.ordered_product_size:
         SIZE_CHOICES.append((size, size))
-        
+
     if request.method == 'POST':
         orderitemform = OrderItemForm(request.POST, SIZE_CHOICES, COLOR_CHOICES)
-        print('color is: ', orderitemform.cleaned_data['ordered_product_color'])
         if orderitemform.is_valid():
             print('VALID BRO')
-            obj = orderitemform.save(commit=False)
-            orderitemform.ordered_product_color = obj.ordered_product_color
-            print('color is: ', obj.ordered_product_color)
-            orderitemform.ordered_product_size = obj.ordered_product_size
-            print('product_size is: ', obj.ordered_product_size)
             orderitemform.save()
     else:
         print('NOT VALID')

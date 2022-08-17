@@ -46,6 +46,7 @@ class OrderItemForm(forms.ModelForm):
     #     SIZE_CHOICES.append((size, size))
     size= forms.ChoiceField(label='Sizes: ', choices=(), required=True)
     color= forms.ChoiceField(label='Colors: ', choices=(), required=True)
+    quantity = forms.IntegerField(label='Quantity: ',required=True)
 
     class Meta:
         # size = forms.CharField(label='Sizes: ', widget=forms.ChoiceField)
