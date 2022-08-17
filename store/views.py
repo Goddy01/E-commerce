@@ -101,6 +101,7 @@ def home_page(request):
     return render(request, 'store/index.html', context)
 
 def add_to_cart(request, product_id):
+    # print(request.method)
     # try:
     #     customer = Customer.objects.get(device=request.session['device'])
     # except:
@@ -119,12 +120,16 @@ def add_to_cart(request, product_id):
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
+    
     if request.method == 'POST':
+        print('amazon')
         orderitemform = OrderItemForm(request.POST)
         if orderitemform.is_valid():
             print('yaga')
             obj = orderitemform.save(commit=False)
             orderitem.quantity = obj.quantity
+            orderitem.size = obj.size
+            orderitem.color = obj.color
             orderitem.save()
     # orderitem.ordered_product_color = 
     print('opc is: ', orderitem.ordered_product_color)
