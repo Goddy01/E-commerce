@@ -63,6 +63,7 @@
                 <p class="mb-4">{{ product.product_description }}</p>
                 <div class="d-flex mb-3">
                     <form method="POST" action="{% url 'product_details' product.product_id %}">
+                        {% csrf_token %}
                         <div class="custom-control custom-control-inline">
                             <p class="text-dark font-weight-medium">{{ orderitemform.size.label }}</p>
                             <p style="width: 10px;" class="ml-2">{{ orderitemform.size }}</p>

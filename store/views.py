@@ -119,10 +119,18 @@ def add_to_cart(request, product_id):
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
+    if request.method == 'POST':
+        orderitemform = OrderItemForm(request.POST)
+        if orderitemform.is_valid():
+            print('yaga')
+            obj = orderitemform.save(commit=False)
+            orderitem.quantity = obj.quantity
+            orderitem.save()
     # orderitem.ordered_product_color = 
     print('opc is: ', orderitem.ordered_product_color)
     print('ops is: ', orderitem.ordered_product_size)
     print('ops type is: ', tuple(orderitem.ordered_product_size))
+    print('qty is: ', orderitem.quantity)
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
     if orderitem.quantity > product.number_available:
@@ -133,7 +141,7 @@ def add_to_cart(request, product_id):
     # orderitems.append(orderitem)
     if True:
         return redirect('home')
-    return render(request, 'store/index.html')
+    return render(request, 'store/detail.html')
 
 def cart(request):
     context = {}
@@ -386,14 +394,7 @@ def product_details(request, product_id):
     for size in order_item.ordered_product_size:
         SIZE_CHOICES.append((size, size))
 
-    if request.method == 'POST':
-        orderitemform = OrderItemForm(request.POST, SIZE_CHOICES, COLOR_CHOICES)
-        if orderitemform.is_valid():
-            print('VALID BRO')
-            orderitemform.save()
-    else:
-        print('NOT VALID')
-        orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
+    orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     context = {
