@@ -120,10 +120,16 @@ def add_to_cart(request, product_id):
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
     orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
-    
+    COLOR_CHOICES = []
+    SIZE_CHOICES = []
+    for color in product.product_colors.split(','):
+        COLOR_CHOICES.append((color, color))
+        # order_item.save()
+    for size in product.product_sizes.split(','):
+        SIZE_CHOICES.append((size, size))
     if request.method == 'POST':
         print('amazon')
-        orderitemform = OrderItemForm(request.POST)
+        orderitemform = OrderItemForm(request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
         if orderitemform.is_valid():
             print('yaga')
             obj = orderitemform.save(commit=False)
