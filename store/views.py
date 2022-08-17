@@ -123,19 +123,23 @@ def add_to_cart(request, product_id):
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in product.product_colors.split(','):
+        color = color.strip()
         COLOR_CHOICES.append((color, color))
         # order_item.save()
     for size in product.product_sizes.split(','):
+        size = size.strip()
         SIZE_CHOICES.append((size, size))
     if request.method == 'POST':
         print('amazon')
         orderitemform = OrderItemForm(request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
+        print('bruv: ', orderitemform)
         if orderitemform.is_valid():
             print('yaga')
             obj = orderitemform.save(commit=False)
             orderitem.quantity = obj.quantity
             orderitem.size = obj.size
             orderitem.color = obj.color
+            print('color is na: ', orderitem.color)
             orderitem.save()
     # orderitem.ordered_product_color = 
     print('opc is: ', orderitem.ordered_product_color)
@@ -405,7 +409,7 @@ def product_details(request, product_id):
     for size in order_item.ordered_product_size:
         SIZE_CHOICES.append((size, size))
 
-    orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
+    orderitemform = OrderItemForm(request.POST, SIZE_CHOICES, COLOR_CHOICES)
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     context = {

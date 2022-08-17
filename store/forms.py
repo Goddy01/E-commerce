@@ -32,7 +32,8 @@ class BillingForm(forms.ModelForm):
 # product_colors = product.product_colors.split(',')
 
 class OrderItemForm(forms.ModelForm):
-    def __init__(self, size_choices, color_choices, *args, **kwargs):
+    def __init__(self, request, size_choices, color_choices, *args, **kwargs):
+        self.request = request
         super(OrderItemForm, self).__init__(*args, **kwargs)
         self.fields['size'].choices = size_choices
         self.fields['color'].choices = color_choices
