@@ -131,8 +131,13 @@ def add_to_cart(request, product_id):
         SIZE_CHOICES.append((size, size))
     if request.method == 'POST':
         print('amazon')
-        orderitemform = OrderItemForm(request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-        print('bruv: ', orderitemform)
+        orderitemform = OrderItemForm(data=request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
+        print('color: ', request.POST.get('color'))
+        print('size: ', request.POST.get('size'))
+        print('qty is: ', request.POST.get('quantity'))
+        print('form: ', orderitemform)
+        print(orderitemform.is_valid())
+        print(orderitemform.is_bound)
         if orderitemform.is_valid():
             print('yaga')
             obj = orderitemform.save(commit=False)
@@ -142,10 +147,10 @@ def add_to_cart(request, product_id):
             print('color is na: ', orderitem.color)
             orderitem.save()
     # orderitem.ordered_product_color = 
-    print('opc is: ', orderitem.ordered_product_color)
-    print('ops is: ', orderitem.ordered_product_size)
-    print('ops type is: ', tuple(orderitem.ordered_product_size))
-    print('qty is: ', orderitem.quantity)
+    # print('opc is: ', orderitem.ordered_product_color)
+    # print('ops is: ', orderitem.ordered_product_size)
+    # print('ops type is: ', tuple(orderitem.ordered_product_size))
+    # print('qty is: ', orderitem.quantity)
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
     if orderitem.quantity > product.number_available:
@@ -154,9 +159,12 @@ def add_to_cart(request, product_id):
         orderitem.quantity += 1
     orderitem.save()
     # orderitems.append(orderitem)
+    context = {
+        'product': product,
+    }
     if True:
         return redirect('home')
-    return render(request, 'store/detail.html')
+    return render(request, 'store/detail.html', context)
 
 def cart(request):
     context = {}
@@ -404,12 +412,14 @@ def product_details(request, product_id):
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
+        color = color.strip()
         COLOR_CHOICES.append((color, color))
         # order_item.save()
     for size in order_item.ordered_product_size:
+        size = size.strip()
         SIZE_CHOICES.append((size, size))
 
-    orderitemform = OrderItemForm(request.POST, SIZE_CHOICES, COLOR_CHOICES)
+    orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     context = {

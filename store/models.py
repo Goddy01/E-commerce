@@ -95,7 +95,7 @@ class OrderItem(models.Model):
     product =               models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =            models.DateTimeField(auto_now_add=True)
     quantity =              models.IntegerField(null=True, blank=True, default=0)
-    SIZE_CHOICES = [(1, 1), (2, 2)]
+    SIZE_CHOICES = []
     COLOR_CHOICES = []
     size =                 models.CharField(max_length=10,choices=SIZE_CHOICES, null=True, blank=False)
     color =                 models.CharField(max_length=10,choices=COLOR_CHOICES, null=True, blank=False)

@@ -18,7 +18,6 @@ class AddProductForm(forms.ModelForm):
         model = Product
         fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
         # fields = '__all__'
-    instance = ""
 
 
 class BillingForm(forms.ModelForm):
@@ -32,8 +31,8 @@ class BillingForm(forms.ModelForm):
 # product_colors = product.product_colors.split(',')
 
 class OrderItemForm(forms.ModelForm):
-    def __init__(self, request, size_choices, color_choices, *args, **kwargs):
-        self.request = request
+    def __init__(self, size_choices, color_choices, *args, **kwargs):
+        # self.request = request
         super(OrderItemForm, self).__init__(*args, **kwargs)
         self.fields['size'].choices = size_choices
         self.fields['color'].choices = color_choices
@@ -52,4 +51,4 @@ class OrderItemForm(forms.ModelForm):
     class Meta:
         # size = forms.CharField(label='Sizes: ', widget=forms.ChoiceField)
         model = OrderItem
-        fields = ('quantity', 'size', 'color')
+        fields = ('size', 'color', 'quantity')
