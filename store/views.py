@@ -166,8 +166,8 @@ def add_to_cart(request, product_id):
     context = {
         'product': product,
     }
-    # if True:
-    #     return redirect('home')
+    if True:
+        return redirect('home')
     return render(request, 'store/detail.html', context)
 
 def cart(request):

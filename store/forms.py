@@ -39,14 +39,13 @@ class OrderItemForm(forms.ModelForm):
     # product_colors = Product.
     # product_sizes = 
     
-
     # for color in product_colors:
     #     COLOR_CHOICES.append((color, color))
     # for size in product_sizes:
     #     SIZE_CHOICES.append((size, size))
     size= forms.ChoiceField(label='Sizes: ', choices=(), required=True)
     color= forms.ChoiceField(label='Colors: ', choices=(), required=True)
-    quantity = forms.IntegerField(label='Quantity: ',required=True)
+    # quantity = forms.IntegerField(label='Quantity: ',required=True)
 
     class Meta:
         # size = forms.CharField(label='Sizes: ', widget=forms.ChoiceField)
