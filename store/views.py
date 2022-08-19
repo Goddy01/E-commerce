@@ -151,9 +151,15 @@ def add_to_cart(request, product_id):
             if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available:
                 orderitem.quantity += 0
                 messages.error(request, 'Quantity more than available product.')
+                OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
             elif orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
                 orderitem.quantity += orderitemform.cleaned_data['quantity']
+            elif orderitemform.cleaned_data['quantity'] <= 0:
+                orderitem.quantity += 0
+                messages.error(request, 'You must add at least one item.')
             orderitem.save()
+    else:
+        orderitemform = OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
     # orderitem.ordered_product_color = 
     # print('opc is: ', orderitem.ordered_product_color)
     # print('ops is: ', orderitem.ordered_product_size)
