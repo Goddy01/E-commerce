@@ -157,10 +157,10 @@ def add_to_cart(request, product_id):
     # print('qty is: ', orderitem.quantity)
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
-    if orderitem.quantity > product.number_available:
+    elif orderitem.quantity > product.number_available:
         orderitem.quantity = product.number_available
-    if orderitem.quantity < product.number_available:
-        orderitem.quantity += 1
+    # elif orderitem.quantity < product.number_available:
+    #     orderitem.quantity += 1
     orderitem.save()
     # orderitems.append(orderitem)
     context = {
