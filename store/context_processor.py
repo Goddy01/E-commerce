@@ -34,7 +34,8 @@ def website_content(request):
                     cart_items -= item.quantity
                 if item.quantity > item.product.number_available:
                     cart_items -= item.quantity
-                    cart_items += item.product.number_available
+                    # cart_items += item.product.number_available
+                    cart_items += 0
     else:
         items=0
         cart_items=0

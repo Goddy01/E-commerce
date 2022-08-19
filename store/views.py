@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from .forms import AddProductForm, OrderItemForm, BillingForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
+from django.contrib import messages
 # Create your views here.
 
 import phonenumbers
@@ -144,11 +145,14 @@ def add_to_cart(request, product_id):
         print(orderitemform.is_bound)
         if orderitemform.is_valid():
             print('yaga')
-            obj = orderitemform.save(commit=False)
-            orderitem.quantity = obj.quantity
-            orderitem.size = obj.size
-            orderitem.color = obj.color
-            print('color is na: ', orderitem.color)
+            # obj = orderitemform.save(commit=False)
+            orderitem.size = orderitemform.cleaned_data['size']
+            orderitem.color = orderitemform.cleaned_data['color']
+            if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available:
+                orderitem.quantity += 0
+                messages.error(request, 'Quantity more than available product.')
+            elif orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
+                orderitem.quantity += orderitemform.cleaned_data['quantity']
             orderitem.save()
     # orderitem.ordered_product_color = 
     # print('opc is: ', orderitem.ordered_product_color)
@@ -157,8 +161,8 @@ def add_to_cart(request, product_id):
     # print('qty is: ', orderitem.quantity)
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
-    elif orderitem.quantity > product.number_available:
-        orderitem.quantity = product.number_available
+    # elif orderitem.quantity > product.number_available:
+    #     orderitem.quantity = product.number_available
     # elif orderitem.quantity < product.number_available:
     #     orderitem.quantity += 1
     orderitem.save()
@@ -166,8 +170,8 @@ def add_to_cart(request, product_id):
     context = {
         'product': product,
     }
-    if True:
-        return redirect('home')
+    # if True:
+    #     return redirect('home')
     return render(request, 'store/detail.html', context)
 
 def cart(request):
