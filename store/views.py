@@ -132,6 +132,10 @@ def add_to_cart(request, product_id):
     if request.method == 'POST':
         print('amazon')
         orderitemform = OrderItemForm(data=request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
+        # print('errors re: ', orderitemform.errors)
+        for field in orderitemform:
+            for error in field.errors:
+                print('ERROR: ', error)
         print('color: ', request.POST.get('color'))
         print('size: ', request.POST.get('size'))
         print('qty is: ', request.POST.get('quantity'))
@@ -162,8 +166,8 @@ def add_to_cart(request, product_id):
     context = {
         'product': product,
     }
-    if True:
-        return redirect('home')
+    # if True:
+    #     return redirect('home')
     return render(request, 'store/detail.html', context)
 
 def cart(request):

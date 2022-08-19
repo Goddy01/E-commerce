@@ -84,8 +84,12 @@
                             <!-- </a> -->
                         </div>
                     </form>
-                    {{ orderitemform.errors }}
-                    {{ orderitemform.non_field_errors }}
+                    
+                    {% for field in orderitemform %}
+                    {% for error in field.errors %}
+                    {{ error }}
+                    {% endfor %}
+                    {% endfor %}
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
