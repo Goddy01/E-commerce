@@ -134,15 +134,15 @@ def add_to_cart(request, product_id):
         print('amazon')
         orderitemform = OrderItemForm(data=request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
         # print('errors re: ', orderitemform.errors)
-        for field in orderitemform:
-            for error in field.errors:
-                print('ERROR: ', error)
-        print('color: ', request.POST.get('color'))
-        print('size: ', request.POST.get('size'))
-        print('qty is: ', request.POST.get('quantity'))
-        print('form: ', orderitemform)
-        print(orderitemform.is_valid())
-        print(orderitemform.is_bound)
+        # for field in orderitemform:
+        #     for error in field.errors:
+        #         print('ERROR: ', error)
+        # print('color: ', request.POST.get('color'))
+        # print('size: ', request.POST.get('size'))
+        # print('qty is: ', request.POST.get('quantity'))
+        # print('form: ', orderitemform)
+        # print(orderitemform.is_valid())
+        # print(orderitemform.is_bound)
         if orderitemform.is_valid():
             print('yaga')
             # obj = orderitemform.save(commit=False)
@@ -347,9 +347,12 @@ def checkout(request):
                         item.product.save()
                     billing_form= obj
 
-                    i = 0
-                    if i == 0:
-                        return redirect('home')
+                    messages.success(request, 'Your order has been made. Thank you for patronizing us!')
+                    # i = 0
+                    # if i == 0:
+                    #     return redirect('home')
+                else:
+                    messages.error(request, 'Unable to checkout.')
             else:
                 billing_form = BillingForm()
 
