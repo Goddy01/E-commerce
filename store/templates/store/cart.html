@@ -26,6 +26,8 @@
                         <tr>
                             <th>Products</th>
                             <th>Price</th>
+                            <th>Size</th>
+                            <th>Color</th>
                             <th>Quantity</th>
                             <th>Total</th>
                             <th>Remove</th>
@@ -37,7 +39,6 @@
                         {{ request.user.OrderItem }} -->
                         
                         {% for item in items %}
-                        browse
                         {{ item.COLOR_CHOICES }}
                         {{ item.SIZE_CHOICES }}
                         
@@ -46,6 +47,8 @@
                                 <td class="align-middle"><img src="{{ item.product.product_image1.url }}" alt="Product Image" style="width: 50px;">
                                     <p class="text-dark">{{item.product.product_name}}</p></td>
                                 <td class="align-middle">${{item.product.product_price}}</td>
+                                <td class="align-middle">{{item.size|upper}}</td>
+                                <td class="align-middle">{{item.color|upper}}</td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
