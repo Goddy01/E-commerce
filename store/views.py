@@ -398,8 +398,3 @@ def get_product_queryset(request):
             return render(request, 'store/index.html')
     else:
         return render(request, 'store/index.html')
-
-        # for product in products:
-        #     queryset.append(product)
-
-    # return list(set(queryset))
