@@ -469,6 +469,8 @@ def get_product_queryset(request):
                 Q(product_name__icontains=query) | Q(product_description__icontains=query)
             ).distinct()
 
+            if not products:
+                return HttpResponse('No search result for this query.')
             context = {
                 'results': products,
             }
