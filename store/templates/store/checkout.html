@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Checkout{% endblock title %}
 {% block content %}
-
+    {% include 'messages.html' %}
+    <div class="mx-3 ml-5">
+        {% for field in billing_form %}
+        {% for error in field.errors %}
+            <p style="color: red;">{{field.label_tag}}  {{ error }}</p>
+        {% endfor %}
+        {% endfor %}
+    </div>
     <div class="container-fluid bg-secondary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
@@ -132,13 +139,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="mx-5">
-            {% for field in billing_form %}
-            {% for error in field.errors %}
-                <p style="color: red;">{{field.label_tag}}  {{ error }}</p>
-            {% endfor %}
-            {% endfor %}
         </div>
     </div>
     <!-- Checkout End -->
