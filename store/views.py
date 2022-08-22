@@ -41,7 +41,7 @@ class CustomPhoneProvider(Provider):
 #         for item in cart:
 #             cart_items += cart[item]['quantity']
 #     context = {'items':items, 'cart_items':cart_items}
-    # return render(request, 'base.html', context)
+    # return render(request, 'store/index.html', context)
 
 class ShopView(TemplateView):
     template_name = 'shop.html'
@@ -456,16 +456,32 @@ def product_details(request, product_id):
     # product_sizes = 
     return render(request, 'store/detail.html', context)
 
-def get_product_queryset(query=None):
+def get_product_queryset(request):
     """The view that performs the search functionality"""
-    queryset = []
-    queries = query.split(" ") # To remove the whitespaces between queries
-    for query in queries:
-        products = Product.objects.filter(
-            Q(title__icontains=query) | Q(body__icontains=query)
-        ).distinct()
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        submit_button = request.GET.get('submit')
 
-        for product in products:
-            queryset.append(product)
+        if query is not None:
+    # queryset = []
+    # queries = query.split(" ") # To remove the whitespaces between queries
+    # for query in queries:
+            products = Product.objects.filter(
+                Q(product_name__icontains=query) | Q(product_description__icontains=query)
+            ).distinct()
 
-    return list(set(queryset))
+            context = {
+                'results': products,
+                'submitbuttomn': submit_button,
+            }
+
+            return render(request, 'store/index.html', context)
+        else:
+            return render(request, 'store/index.html')
+    else:
+        return render(request, 'store/index.html')
+
+        # for product in products:
+        #     queryset.append(product)
+
+    # return list(set(queryset))
