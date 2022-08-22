@@ -454,3 +454,17 @@ def product_details(request, product_id):
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)
+
+def get_product_queryset(query=None):
+    """The view that performs the search functionality"""
+    queryset = []
+    queries = query.split(" ") # To remove the whitespaces between queries
+    for query in queries:
+        products = Product.objects.filter(
+            Q(title__icontains=query) | Q(body__icontains=query)
+        ).distinct()
+
+        for product in products:
+            queryset.append(product)
+
+    return list(set(queryset))
