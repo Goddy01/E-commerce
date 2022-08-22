@@ -103,12 +103,6 @@ def home_page(request):
     return render(request, 'store/index.html', context)
 
 def add_to_cart(request, product_id):
-    # print(request.method)
-    # try:
-    #     customer = Customer.objects.get(device=request.session['device'])
-    # except:
-    #     request.session['device'] = str(uuid.uuid4())
-    #     customer = Customer.objects.create(device=request.session['device'])
     if not request.user.is_authenticated:
         user = User.objects.get(device=request.session.get('device'))
         customer = Customer.objects.get(device=user.device)
@@ -134,16 +128,7 @@ def add_to_cart(request, product_id):
     if request.method == 'POST':
         print('amazon')
         orderitemform = OrderItemForm(data=request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-        # print('errors re: ', orderitemform.errors)
-        # for field in orderitemform:
-        #     for error in field.errors:
-        #         print('ERROR: ', error)
-        # print('color: ', request.POST.get('color'))
-        # print('size: ', request.POST.get('size'))
-        # print('qty is: ', request.POST.get('quantity'))
-        # print('form: ', orderitemform)
-        # print(orderitemform.is_valid())
-        # print(orderitemform.is_bound)
+
         if orderitemform.is_valid():
             print('yaga')
             # obj = orderitemform.save(commit=False)
@@ -155,7 +140,7 @@ def add_to_cart(request, product_id):
                 orderitem.quantity += 0
                 messages.error(request, 'Quantity more than available product.')
                 OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-            elif orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
+            elif orderitemform.cleaned_data['quantity'] < orderitem.product.number_available and orderitemform.cleaned_data['quantity'] != 0:
                 if sum_qty <= orderitem.product.number_available:
                     orderitem.quantity += orderitemform.cleaned_data['quantity']
                     messages.success(request, 'Item has been added to Cart.')
@@ -167,19 +152,10 @@ def add_to_cart(request, product_id):
             orderitem.save()
     else:
         orderitemform = OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-    # orderitem.ordered_product_color = 
-    # print('opc is: ', orderitem.ordered_product_color)
-    # print('ops is: ', orderitem.ordered_product_size)
-    # print('ops type is: ', tuple(orderitem.ordered_product_size))
-    # print('qty is: ', orderitem.quantity)
+
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
-    # elif orderitem.quantity > product.number_available:
-    #     orderitem.quantity = product.number_available
-    # elif orderitem.quantity < product.number_available:
-    #     orderitem.quantity += 1
     orderitem.save()
-    # orderitems.append(orderitem)
     context = {
         'product': product,
         'orderitemform': orderitemform,
@@ -190,8 +166,7 @@ def add_to_cart(request, product_id):
 
 def cart(request):
     context = {}
-    # if request.user.is_authenticated:
-    # print('Mr User',request.session['device'])
+
     if request.user.is_authenticated:
         user = request.user
     else:
@@ -224,13 +199,9 @@ def cart(request):
         if item.quantity > item.product.number_available:
             item.quantity = item.product.number_available
             item.save()
-    # print(item)
-    # print(len(items))
+
     if len(items) == 0:
-        # try:
-        #     order.save(commit=False)
-        # except TypeError:
-        #     order[1].save(commit=False)
+        
         order.total_order_price = 10
         order.save()
         # print('Get Total1: ', order.total_order_price)
@@ -243,26 +214,11 @@ def cart(request):
         order.save()
         total = order.total_order_price
 
-    # else:
-    #     try:
-    #         cart = json.loads(request.session['device'])
-    #     except KeyError:
-    #         cart = {}
-    #     print(cart)
-
-    #     # print(items)
-    #     for item in items:
-    #             if item['product']['number_available'] == 0:
-    #                 items.remove(item)
-    #             if item['product']['number_available'] < item['quantity']:
-                    # item['quantity'] = item['product']['number_available']
-    # try:
     context['sub_total'] = subtotal
     context['total'] = total
     context['order'] = order
     context['items'] = items
-    # except UnboundLocalError:
-        # return redirect('no_cart')
+
     return render(request, 'store/cart.html', context)
 
 
@@ -385,40 +341,6 @@ def checkout(request):
     return render(request, 'store/checkout.html', context)
 
 
-# def load_cities(request):
-#     country_id = request.GET.get('country')
-#     cities = City.objects.filter(country_id=country_id).order_by('name')
-#     return render(request, 'store/checkout.html', {'cities': cities})
-
-# @csrf_exempt
-# def updateItem(request):
-#     data = json.loads(request.body)
-#     print(data)
-#     productId = data['productId']
-#     action = data['action']
-
-#     print('ProuctId:', productId)
-#     print('Action:', action)
-
-#     customer = request.user
-#     product = Product.objects.get(product_id=productId)
-#     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-#     if action == 'add':
-#         if orderItem.quantity < product.number_available:
-#             orderItem.quantity += 1
-#     elif action == 'remove':
-#         orderItem.quantity -= 1
-#     elif action == 'del':
-#         orderItem.delete()
-#     orderItem.save()
-
-#     if orderItem.quantity <= 0:
-#         orderItem.delete()
-#     return JsonResponse('Item was added', safe=False)
-
-
 def no_cart(request):
     return render(request, 'store/no_cart.html')
 
@@ -432,8 +354,7 @@ def product_details(request, product_id):
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
-    # print('Na the orderitem be this: ', order_item)
-    # print('def re: ', order_item.ordered_product_color)
+    
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
@@ -462,9 +383,6 @@ def get_product_queryset(request):
         query = request.GET.get('query')
 
         if query is not None:
-    # queryset = []
-    # queries = query.split(" ") # To remove the whitespaces between queries
-    # for query in queries:
             products = Product.objects.filter(
                 Q(product_name__icontains=query) | Q(product_description__icontains=query)
             ).distinct()
