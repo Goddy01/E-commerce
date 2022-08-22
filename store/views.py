@@ -460,7 +460,6 @@ def get_product_queryset(request):
     """The view that performs the search functionality"""
     if request.method == 'GET':
         query = request.GET.get('query')
-        submit_button = request.GET.get('submit')
 
         if query is not None:
     # queryset = []
@@ -472,7 +471,6 @@ def get_product_queryset(request):
 
             context = {
                 'results': products,
-                'submitbuttomn': submit_button,
             }
 
             return render(request, 'store/index.html', context)

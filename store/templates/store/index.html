@@ -47,7 +47,35 @@
     </div>
     <!-- Categories End -->
 
-
+    {% if request.GET.query != '' %}
+        {% if results %}
+        wqfwfq
+        {% for l_product in results %}
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" style="align-self: center;">
+                        <img class="img-fluid w-100" src="{{ l_product.product_image1.url }}" alt="" style="height: 20rem;">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">{{l_product.product_name}}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>${{l_product.product_price}}</h6><h6 class="text-muted ml-2"><del>${{l_product.product_price}}</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                        <button data-pronum={{ l_product.number_available }} data-product={{ l_product.product_id }} data-action="add" class="update-cart btn btn-sm text-dark p-0">
+                            <i class="fas fa-shopping-cart text-primary mr-1"></i>
+                            Add To Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+                No search results for this query
+        {% endif %}
+    {% endif %}
     <!-- Offer Start -->
     <div class="container-fluid offer pt-5">
         <div class="row px-xl-5">
