@@ -112,7 +112,8 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="get">
+                <form action="{% url 'search' %}" method="get">
+                    {% csrf_token %}
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for products" name="query" id="id_query" value="{{request.GET.query}}">
                         <div class="input-group-append">
@@ -122,6 +123,24 @@
                         </div>
                     </div>
                 </form>
+                {% if submitbutton == 'Search' and request.GET.query != '' %}
+                {% if results %}
+                <h1>Results for <b>{{ request.GET.q }}</b></h1>
+                <br/><br/>
+
+                {% for result in results %}
+
+                {{result.title}}
+                <br/>
+
+                {{result.content}}
+                <br/>
+
+                {% endfor %}
+                {% else %}
+                No search results for this query
+                {% endif %}
+                {% endif %}
             </div>
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">

@@ -28,6 +28,7 @@ from store.views import (
     # load_cities,
     no_cart,
     no_checkout, add_to_cart,
+    get_product_queryset,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
     # path('shop/', ShopDetailView.as_view(), name='shop'),
     path('<product_id>/product_details/', product_details, name='product_details'),
+    path('search/', get_product_queryset, name="search"),
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
     path('cart/<item_id>/decrement/', quantity_decrement, name='q_decr'),
