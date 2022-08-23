@@ -100,7 +100,18 @@ def home_page(request):
 
             )
     products = Product.objects.all().order_by('?').distinct()[:6]
-    latest_products = Product.objects.all().order_by('-product_id')[:9]
+    latest_products = Product.objects.all().order_by('-product_id')[:6]
+
+    products_list = Product.objects.all()
+    page_number = request.GET.get('page', 1)
+    products_paginator = Paginator(products_list, 6)
+    try:
+        productss = products_paginator.page(page_number)
+    except PageNotAnInteger:
+        productss = products_paginator.page(1)
+    except EmptyPage:
+        productss = products_paginator.page(products_paginator.num_pages)
+    context['p_products'] = productss
     context['products'] = products
     context['latest_products'] = latest_products
     return render(request, 'store/index.html', context)
@@ -402,14 +413,14 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
-def pagination(request):
-    products_list = Product.objects.all()
-    page_number =   request.GET.get('page', 1)
-    products_paginator = Paginator(products_list, 1)
-    try:
-        products = products_paginator.page(page_number)
-    except PageNotAnInteger:
-        products = products_paginator.page(1)
-    except EmptyPage:
-        products = products_paginator.page(products_paginator.num_pages)
-    return render(request, 'store/index.html', {'products': products})
+# def pagination(request):
+#     products_list = Product.objects.all()
+#     page_number =   request.GET.get('page', 1)
+#     products_paginator = Paginator(products_list, 6)
+#     try:
+#         products = products_paginator.page(page_number)
+#     except PageNotAnInteger:
+#         products = products_paginator.page(1)
+#     except EmptyPage:
+#         products = products_paginator.page(products_paginator.num_pages)
+#     return render(request, 'store/index.html', {'p_products': products})
