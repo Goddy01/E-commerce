@@ -11,6 +11,7 @@ from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from operator import attrgetter
 # Create your views here.
 
 import phonenumbers
@@ -100,11 +101,12 @@ def home_page(request):
 
             )
     products = Product.objects.all().order_by('?').distinct()[:6]
-    latest_products = Product.objects.all().order_by('-product_id')[:6]
+    latest_products = Product.objects.all().order_by('-product_id')
 
-    products_list = Product.objects.all()
+    # products1 = sorted(get_product_queryset(request), key=attrgetter('product_id'), reverse=True)
+    # products_list = Product.objects.all()
     page_number = request.GET.get('page', 1)
-    products_paginator = Paginator(products_list, 2)
+    products_paginator = Paginator(latest_products, 6)
     try:
         productss = products_paginator.page(page_number)
     except PageNotAnInteger:
@@ -113,7 +115,7 @@ def home_page(request):
         productss = products_paginator.page(products_paginator.num_pages)
     context['p_products'] = productss
     context['products'] = products
-    context['latest_products'] = latest_products
+    context['latest_products'] = productss
     return render(request, 'store/index.html', context)
 
 def add_to_cart(request, product_id):
@@ -398,13 +400,21 @@ def get_product_queryset(request):
 
         if query is not None:
             products = Product.objects.filter(
-                Q(product_name__icontains=query) | Q(product_description__icontains=query)
+                Q(product_name__icontains=query) | Q(product_description__icontains=query) | Q(product_categories__icontains=query)
             ).distinct()
-
+            
             if not products:
                 return HttpResponse('No search result for this query.')
+            page_number = request.GET.get('page', 1)
+            products_paginator = Paginator(products, 3)
+            try:
+                productss = products_paginator.page(page_number)
+            except PageNotAnInteger:
+                productss = products_paginator.page(1)
+            except EmptyPage:
+                productss = products_paginator.page(products_paginator.num_pages)
             context = {
-                'results': products,
+                'results': productss,
             }
 
             return render(request, 'store/index.html', context)

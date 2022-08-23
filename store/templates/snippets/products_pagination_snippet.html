@@ -3,7 +3,7 @@
     <ul class="pagination pg-grey justify-content-center">
         {% if p_products.has_previous %}
             <li class="page-item">
-              <a class="page-link" href="?{% if query %}query={{query}}&{% endif %}page={{p_products.previous_page_number}}">&laquo; Previous</a>
+              <a class="page-link" href="?page={{p_products.previous_page_number}}">&laquo; Previous</a>
             </li>
         {% endif %}
     
@@ -16,16 +16,16 @@
                     </span>
                 </a></li>
             {% else %}
-                <li class="page-item" ><a class="page-link" href="?{% if query %}query={{query}}&{% endif %}page={{ i }}">{{ i }}</a></li>
+                <li class="page-item" ><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
             {% endif %}
         {% endfor %}
         
         {% if p_products.has_next %}
             <li class="page-item">
-              <a class="page-link" href="?{% if query %}query={{query}}&{% endif %}page={{ p_products.next_page_number }}">Next</a>
+              <a class="page-link" href="?page={{ p_products.next_page_number }}">Next</a>
             </li>
             <li class="page-item">
-              <a class="page-link"  href="?{% if query %}query={{query}}&{% endif %}page={{ p_products.paginator.num_pages }}">Last &raquo;</a>
+              <a class="page-link"  href="?page={{ p_products.paginator.num_pages }}">Last &raquo;</a>
             </li>
         {% endif %}
     </ul>

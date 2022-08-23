@@ -50,8 +50,8 @@
         <div class="row px-xl-5 pb-3">
         {% for product in results %}
             {% include '../snippets/product_card.html' with l_product=product %}
-            {% include '../snippets/products_pagination_snippet.html' %}
         {% endfor %}
+        {% include '../snippets/products_pagination_snippet.html' with p_products=results%}
         </div>
         {% endif %}
     {% endif %}
