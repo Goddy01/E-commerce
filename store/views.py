@@ -54,7 +54,7 @@ class ShopView(TemplateView):
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
-def pagination(items_list, num_of_pages):
+def pagination(request, items_list, num_of_pages):
     page_number = request.GET.get('page', 1)
     products_paginator = Paginator(items_list, num_of_pages)
     try:
@@ -64,6 +64,7 @@ def pagination(items_list, num_of_pages):
     except EmptyPage:
         productss = products_paginator.page(products_paginator.num_pages)
     return productss
+
 
 def add_product_view(request):
     """The view for vendors to add products to the store"""
@@ -116,7 +117,7 @@ def home_page(request):
 
     # products1 = sorted(get_product_queryset(request), key=attrgetter('product_id'), reverse=True)
     # products_list = Product.objects.all()
-    
+    productss = pagination(request, latest_products, 3)
     context['p_products'] = productss
     context['products'] = products
     context['latest_products'] = productss
@@ -411,14 +412,7 @@ def get_product_queryset(request):
             if not products:
                 return HttpResponse('No search result for this query.')
             
-            page_number = request.GET.get('page', 1)
-            products_paginator = Paginator(products, 3)
-            try:
-                productss = products_paginator.page(page_number)
-            except PageNotAnInteger:
-                productss = products_paginator.page(1)
-            except EmptyPage:
-                productss = products_paginator.page(products_paginator.num_pages)
+            productss = pagination(request, products, 3)
             context = {
                 'results': productss,
                 'query': str(query)
