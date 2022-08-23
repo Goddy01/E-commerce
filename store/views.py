@@ -70,9 +70,11 @@ def add_product_view(request):
             # seller = Vendor.objects.filter(email=request.user.email).first()
             obj.seller = request.user
             obj.save()
-            context['success'] = 'Product has been added.'
+            messages.success(request, 'Product has been added to store.')
         # else:
         #     return HttpResponse('buggy')
+        else:
+            messages.error(request, 'Product was not added due to an error.')
             
 
     else:
