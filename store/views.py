@@ -104,7 +104,7 @@ def home_page(request):
 
     products_list = Product.objects.all()
     page_number = request.GET.get('page', 1)
-    products_paginator = Paginator(products_list, 6)
+    products_paginator = Paginator(products_list, 2)
     try:
         productss = products_paginator.page(page_number)
     except PageNotAnInteger:
