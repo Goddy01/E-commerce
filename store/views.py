@@ -106,7 +106,7 @@ def home_page(request):
     # products1 = sorted(get_product_queryset(request), key=attrgetter('product_id'), reverse=True)
     # products_list = Product.objects.all()
     page_number = request.GET.get('page', 1)
-    products_paginator = Paginator(latest_products, 6)
+    products_paginator = Paginator(latest_products, 3)
     try:
         productss = products_paginator.page(page_number)
     except PageNotAnInteger:
@@ -396,7 +396,8 @@ def product_details(request, product_id):
 def get_product_queryset(request):
     """The view that performs the search functionality"""
     if request.method == 'GET':
-        query = request.GET.get('query')
+        query = request.GET.get('query', '')
+        print('Q: ', query)
 
         if query is not None:
             products = Product.objects.filter(
@@ -405,6 +406,7 @@ def get_product_queryset(request):
             
             if not products:
                 return HttpResponse('No search result for this query.')
+            
             page_number = request.GET.get('page', 1)
             products_paginator = Paginator(products, 3)
             try:
@@ -415,6 +417,7 @@ def get_product_queryset(request):
                 productss = products_paginator.page(products_paginator.num_pages)
             context = {
                 'results': productss,
+                'query': str(query)
             }
 
             return render(request, 'store/index.html', context)
