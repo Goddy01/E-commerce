@@ -4,6 +4,21 @@
 
 {% block content %}
 {% include 'messages.html' %}
+<div class="errors" style="margin-left: 2rem;">
+    {% for field in add_product_form %}
+        <p>
+        {% for error in field.errors %}
+            <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
+        {% endfor %}
+        </p>
+    {% endfor %}
+
+    {% if add_product_form.non_field_errors %}
+        <div style="color: rgb(175, 23, 23);">
+            {{add_product_form.non_field_errors}}
+        </div>
+    {% endif %}
+</div>
 <link rel="stylesheet" href="{% static 'css/jupyter-pattern.css' %}">
 <div class="w-75 mx-auto bg-white" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ececec; padding: 4rem 2rem; border-radius: 20px;margin-top: 10rem;margin-bottom: 5rem;color: black;">
     <h4 style="text-align: center; margin-bottom: 2rem">Want to sell your product</h4>
@@ -12,11 +27,6 @@
         <div style="display: flex;">
             <label for="upload-image" class="m-auto shadow"><img src="{% static 'img/profile-image.png' %}" style="width: max-content; border-radius: 50%;"></label>
         </div>
-
-        <!-- <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
-            <label for="id_seller">Seller's name</label>
-            <input type="text" name="seller" id="id_seller">
-        </div> -->
 
         {{add_product_form.product_categories.label_tag}}
         {{add_product_form.product_categories}}
@@ -37,28 +47,6 @@
             <label for="">Size</label>
             <!-- <div style="margin-left: 1rem;"> -->
                 {{ add_product_form.product_sizes }}
-                <!-- <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="XS" id="" style="margin-right: 1rem;">XS
-                </span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="S" id="" style="margin-right: 1rem;">S
-                </span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="M" id="" style="margin-right: 1rem;">M
-</span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="L" id="" style="margin-right: 1rem;">L
-                </span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="XL" id="" style="margin-right: 1rem;">XL
-                </span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="XL" id="" style="margin-right: 1rem;">XXL
-                </span>
-                <span style="display: flex; align-items: center">
-                    <input type="checkbox" name="XL" id="" style="margin-right: 1rem;">XXXL
-                </span> -->
-            <!-- </div> -->
 
         </div>
 
@@ -70,45 +58,10 @@
         <div style="display: flex; flex-direction: column; margin-bottom: 3rem;">
             <!-- COLOR -->
             <label for="product-color">Color</label>
-            <!-- <select name="product-color" id="product-color">
-                <option value="red">red</option>
-                <option value="blue">blue</option>
-                <option value="green">green</option>
-                <option value="white">white</option>
-                <option value="black">black</option>
-            </select> -->
+            
+            </select>
             {{ add_product_form.product_colors }}
-            <!-- <input type="text" placeholder="Enter product colors, separated by comma."> -->
         </div>
-
-        <!-- <div style="display: flex; flex-direction: column; margin-bottom: 1rem;"> -->
-            <!-- Weight -->
-            <!-- <label for="product-weight">Weight</label>
-            <input type="number" name="product-weight" id="product-weight"> -->
-        <!-- </div> -->
-        <!-- <div style="display: flex; flex-direction: column; margin-bottom: 1rem;"> -->
-            <!-- Dimensions -->
-            <!-- <label for="product-dimensions">Dimensions</label>
-            <div style="display: flex">
-                <div style="display: flex">
-                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; width: 4rem"> x
-                </div>
-                <div style="display: flex">
-                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; 
-                    margin-left: .5rem;width: 4rem"> x
-                </div>
-                <div style="display: flex">
-                    <input type="number" name="product-dimensions" id="product-dimensions" style="margin-right: .5rem; 
-                    margin-left: .5rem;width: 4rem">
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div style="display: flex; flex-direction: column; margin-bottom: 1rem;"> -->
-            <!-- Product Materials -->
-            <!-- <label for="product-materials">Materials</label>
-            <input type="text" name="product-materials" id="product-materials">
-        </div> -->
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- Picture -->
@@ -133,19 +86,4 @@
         </button>
         <p style="color: green;text-align: center;" class="h5 mt-5">{{success}}</p>
     </form>
-    <div class="errors" style="margin-left: 2rem;">
-        {% for field in add_product_form %}
-            <p>
-            {% for error in field.errors %}
-                <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
-            {% endfor %}
-            </p>
-        {% endfor %}
-
-        {% if add_product_form.non_field_errors %}
-            <div style="color: rgb(175, 23, 23);">
-                {{add_product_form.non_field_errors}}
-            </div>
-        {% endif %}
-    </div>
 {% endblock content %}
