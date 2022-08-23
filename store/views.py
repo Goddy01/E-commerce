@@ -10,6 +10,7 @@ from .forms import AddProductForm, OrderItemForm, BillingForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 import phonenumbers
@@ -398,3 +399,15 @@ def get_product_queryset(request):
             return render(request, 'store/index.html')
     else:
         return render(request, 'store/index.html')
+
+def pagination(request):
+    products_list = Product.objects.all()
+    page_number =   request.GET.get('page', 1)
+    products_paginator = Paginator(products_list, 1)
+    try:
+        products = products_paginator.page(page_number)
+    except PageNotAnInteger:
+        products = products_paginator.page(1)
+    except EmptyPage:
+        products = products_paginator.page(products_paginator.num_pages)
+    return render(request, 'store/index.html', {'products': products})
