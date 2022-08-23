@@ -25,7 +25,7 @@
                                     <p>Men's Wears</p>
                                 {% elif 'W' in product.product_categories %}
                                     <p>Women's Wears</p>
-                                {% elif product.product_categories == 'male children' %}
+                                {% elif 'MC' in product.product_categories %}
                                     <p>Male Children's Wears</p>
                                 {% elif product.product_categories == 'female children' %}
                                     <p>Female Children's Wears</p>
@@ -88,14 +88,16 @@
         </div>
         <div class="row px-xl-5 pb-3">
             {% for l_product in latest_products %}
-            {% if l_product.number_available != 0 %}
-                {% include '../snippets/product_card.html' %}
+                {% if l_product.number_available != 0 %}
+                    {% include '../snippets/product_card.html' %}
                 {% endif %}
-                {% endfor %}
+            {% endfor %}
         </div>
     </div>
     <!-- Products End -->
 
+    <!-- Pagination -->
+    {% include '../snippets/products_pagination_snippet.html' %}
 
     <!-- Vendor Start -->
     <div class="container-fluid py-5 d-none">
