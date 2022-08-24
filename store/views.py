@@ -351,11 +351,12 @@ def no_cart(request):
 def no_checkout(request):
     return render(request, 'store/no_checkout.html')
 
-@login_required
+
 def review(request, product_id):
-    print('User', request.user.email)
     product = Product.objects.get(product_id=product_id)
-    # try:
+    if not request.user.is_authenticated:
+        print('HI')
+        return redirect('user:must_auth')
     customer = User.objects.get(email=request.user.email)
     # except ObjectDoesNotExist:
     #     return HttpResponse('You must be a customer to access this page')
