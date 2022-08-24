@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm
 from Accounts.models import Vendor, User, Customer
-from store.models import Product, Order, OrderItem
+from store.models import Product, Order, OrderItem, Review
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -408,6 +408,7 @@ def get_product_queryset(request):
 
 @login_required
 def review(request, product_id):
+    reviews = Review.objects.all()
     product = Product.objects.get(product_id=product_id)
     customer = Customer.objects.get(email=request.email)
     if request.method == 'POST':
@@ -423,4 +424,4 @@ def review(request, product_id):
             messages.error(request, 'An error was found in the form.')
     else:
         review_form = ReviewForm()
-    return render(request, 'store/detail.html', {'review_form': review_form})
+    return render(request, 'store/detail.html', {'review_form': review_form, 'reviews': reviews})
