@@ -90,6 +90,7 @@ class Order(models.Model):
 
 
 class Review(models.Model):
+    product =     models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     user =        models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     user_review = models.TextField(max_length=1000, blank=True, null=True)
 
@@ -105,7 +106,6 @@ class OrderItem(models.Model):
     quantity =              models.IntegerField(null=True, blank=True, default=0)
     size =                 models.CharField(max_length=10, null=True, blank=False)
     color =                 models.CharField(max_length=10, null=True, blank=False)
-    
     
     @property
     def ordered_product_color(self):
