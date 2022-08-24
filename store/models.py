@@ -34,7 +34,7 @@ class Product(models.Model):
     slug =                      models.SlugField(blank=True, unique=True, max_length=256)
 
     def __str__(self):
-        return self.product_name
+        return f'{self.seller}-{self.product_name}'
 
 
 def pre_save_product_receiver(sender, instance, **kwargs):
