@@ -354,6 +354,8 @@ def no_checkout(request):
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
+    reviews = product.review_set.all()
+    print('REVIEWS: ', reviews)
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
     except:
@@ -377,6 +379,7 @@ def product_details(request, product_id):
         'product_sizes': product_sizes,
         'product_colors': product_colors,
         'orderitemform': orderitemform,
+        'reviews': reviews,
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)
@@ -415,7 +418,7 @@ def review(request, product_id):
     customer = User.objects.get(email=request.user.email)
     # except ObjectDoesNotExist:
     #     return HttpResponse('You must be a customer to access this page')
-    reviews = product.review_set.all()
+    # reviews = product.review_set.all()
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
@@ -429,4 +432,4 @@ def review(request, product_id):
             messages.error(request, 'An error was found in the form.')
     else:
         review_form = ReviewForm()
-    return render(request, 'store/detail.html', {'review_form': review_form, 'reviews': reviews, 'product': product})
+    return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})

@@ -6,7 +6,7 @@ from .forms import (
     CustomerRegForm, UserLoginForm, 
     VendorRegForm)
 from .models import User
-from store.models import Order
+from store.models import Order, OrderItem
 from phonenumber_field.phonenumber import PhoneNumber
 import phonenumbers
 # Create your views here.
@@ -108,6 +108,18 @@ def user_login_view(request):
                                     if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
                                         user_orderitem.quantity += cookie_orderitem.quantity
                                         print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
+                                        user_orderitem.save()
+                                    if cookie_orderitem.product.product_name != user_orderitem.product.product_name:
+                                        print('Hin no dey')
+                                        # user_orderitem.append(cookie_orderitem)
+                                        a = OrderItem.objects.create(
+                                            order = user_order,
+                                            product = cookie_orderitem.product,
+                                            quantity = cookie_orderitem.quantity,
+                                            size = cookie_orderitem.size,
+                                            color = cookie_orderitem.color
+                                        )
+                                        print('color is: ', a.color)
                                         user_orderitem.save()
                             cookie_order.delete()
                         else:

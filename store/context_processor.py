@@ -1,4 +1,5 @@
-from Accounts.models import Customer
+import uuid
+from Accounts.models import Customer, User
 from .models import Order
 # from django.contrib.auth.decorators import login_required
 
@@ -7,6 +8,21 @@ def website_content(request):
     # if not request.user.is_authenticated:
     # 
     # else:     
+    try:
+        user = User.objects.get(device=request.session['device'])
+    except:
+        # if request.session.get('device') == []:
+        device = str(uuid.uuid4())
+        request.session['device'] = device
+        user = User.objects.create(
+            fullname=request.session['device'],
+            username=request.session['device'],
+            email=request.session['device'] + '@gmail.com',
+            address=request.session['device'],
+            first_phone_num='1',
+            device=request.session['device'],
+
+            )
     if request.user.is_authenticated:
         try:
             customer = Customer.objects.get(username=request.user.username)
