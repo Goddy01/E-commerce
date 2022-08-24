@@ -34,7 +34,7 @@ class Product(models.Model):
     slug =                      models.SlugField(blank=True, unique=True, max_length=256)
 
     def __str__(self):
-        return f'{self.seller}-{self.product_name}'
+        return self.product_name
 
 
 def pre_save_product_receiver(sender, instance, **kwargs):
@@ -91,7 +91,7 @@ class Order(models.Model):
 
 class Review(models.Model):
     product =     models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    user =        models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    user =        models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
     user_review = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):

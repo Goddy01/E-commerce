@@ -11,6 +11,7 @@ from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from operator import attrgetter
 # Create your views here.
@@ -408,8 +409,12 @@ def get_product_queryset(request):
 
 @login_required
 def review(request, product_id):
+    print('User', request.user.email)
     product = Product.objects.get(product_id=product_id)
-    customer = Customer.objects.get(email=request.email)
+    # try:
+    customer = User.objects.get(email=request.user.email)
+    # except ObjectDoesNotExist:
+    #     return HttpResponse('You must be a customer to access this page')
     reviews = product.review_set.all()
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
@@ -424,4 +429,4 @@ def review(request, product_id):
             messages.error(request, 'An error was found in the form.')
     else:
         review_form = ReviewForm()
-    return render(request, 'store/detail.html', {'review_form': review_form, 'reviews': reviews})
+    return render(request, 'store/detail.html', {'review_form': review_form, 'reviews': reviews, 'product': product})
