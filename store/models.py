@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
-from Accounts.models import Customer
+from Accounts.models import Customer, User
 from django_countries.fields import CountryField
 
 def upload_location(instance, filename):
@@ -89,6 +89,11 @@ class Order(models.Model):
         return str(self.transaction_id)
 
 
+class Reviews(models.Model):
+    user =        models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    user_review = models.TextField(max_length=1000, blank=True, null=True)
+
+
 class OrderItem(models.Model):
     item_id =               models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
     order =                 models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
@@ -97,6 +102,7 @@ class OrderItem(models.Model):
     quantity =              models.IntegerField(null=True, blank=True, default=0)
     size =                 models.CharField(max_length=10, null=True, blank=False)
     color =                 models.CharField(max_length=10, null=True, blank=False)
+    
     
     @property
     def ordered_product_color(self):
