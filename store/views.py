@@ -351,6 +351,29 @@ def no_cart(request):
 def no_checkout(request):
     return render(request, 'store/no_checkout.html')
 
+@login_required
+def review(request, product_id):
+    print('User', request.user.email)
+    product = Product.objects.get(product_id=product_id)
+    # try:
+    customer = User.objects.get(email=request.user.email)
+    # except ObjectDoesNotExist:
+    #     return HttpResponse('You must be a customer to access this page')
+    # reviews = product.review_set.all()
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            obj = review_form.save(commit=False)
+            obj.product = product
+            obj.user = customer
+            obj.save()
+            # messages.success(request, 'Your review has been posted.')
+            return redirect('product_details', product.product_id)
+        else:
+            messages.error(request, 'An error was found in the form.')
+    else:
+        review_form = ReviewForm()
+    return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
@@ -410,26 +433,3 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
-@login_required
-def review(request, product_id):
-    print('User', request.user.email)
-    product = Product.objects.get(product_id=product_id)
-    # try:
-    customer = User.objects.get(email=request.user.email)
-    # except ObjectDoesNotExist:
-    #     return HttpResponse('You must be a customer to access this page')
-    # reviews = product.review_set.all()
-    if request.method == 'POST':
-        review_form = ReviewForm(request.POST)
-        if review_form.is_valid():
-            obj = review_form.save(commit=False)
-            obj.product = product
-            obj.user = customer
-            obj.user_review = review_form.cleaned_data['user_review']
-            obj.save()
-            messages.success(request, 'Your review has been posted.')
-        else:
-            messages.error(request, 'An error was found in the form.')
-    else:
-        review_form = ReviewForm()
-    return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})
