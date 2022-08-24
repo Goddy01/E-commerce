@@ -408,9 +408,9 @@ def get_product_queryset(request):
 
 @login_required
 def review(request, product_id):
-    reviews = Review.objects.all()
     product = Product.objects.get(product_id=product_id)
     customer = Customer.objects.get(email=request.email)
+    reviews = product.review_set.all()
     if request.method == 'POST':
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
