@@ -6,10 +6,11 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from operator import attrgetter
 # Create your views here.
@@ -405,3 +406,21 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
+@login_required
+def review(request, product_id):
+    product = Product.objects.get(product_id=product_id)
+    customer = Customer.objects.get(email=request.email)
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            obj = review_form.save(commit=False)
+            obj.product = product
+            obj.user = customer
+            obj.user_review = review_form.cleaned_data['user_review']
+            obj.save()
+            messages.success(request, 'Your review has been posted.')
+        else:
+            messages.error(request, 'An error was found in the form.')
+    else:
+        review_form = ReviewForm()
+    return render(request, 'store/detail.html', {'review_form': review_form})
