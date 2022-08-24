@@ -89,9 +89,12 @@ class Order(models.Model):
         return str(self.transaction_id)
 
 
-class Reviews(models.Model):
+class Review(models.Model):
     user =        models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     user_review = models.TextField(max_length=1000, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.fullname}'s review"
 
 
 class OrderItem(models.Model):
