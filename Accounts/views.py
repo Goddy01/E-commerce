@@ -102,32 +102,17 @@ def user_login_view(request):
                         # if len(user_order) > 0:
                         cookie_orderitems = cookie_order.orderitem_set.all()
                         user_orderitems = user_order.orderitem_set.all()
-                        if len(user_orderitems) > 0:
-                            for cookie_orderitem in cookie_orderitems:
-                                for user_orderitem in user_orderitems:
-                                    if cookie_orderitem.product.product_name == user_orderitem.product.product_name:
-                                        user_orderitem.quantity += cookie_orderitem.quantity
-                                        print('new_q: ', user_orderitem.quantity, 'cookie_own: ', cookie_orderitem.quantity)
-                                        user_orderitem.save()
-                                    if cookie_orderitem.product.product_name != user_orderitem.product.product_name:
-                                        print('Hin no dey')
-                                        # user_orderitem.append(cookie_orderitem)
-                                        a = OrderItem.objects.create(
-                                            order = user_order,
-                                            product = cookie_orderitem.product,
-                                            quantity = cookie_orderitem.quantity,
-                                            size = cookie_orderitem.size,
-                                            color = cookie_orderitem.color
-                                        )
-                                        print('color is: ', a.color)
-                                        user_orderitem.save()
-                            cookie_order.delete()
-                        else:
-                            if cookie_order:
-                                print('notedey')
-                                customer = User.objects.get(email=email)
-                                cookie_order.customer = customer
-                                cookie_order.save()
+                        print('OrderITEM ARE: ', user_orderitems)
+                        for item in cookie_orderitems:
+                            new_item, created = OrderItem.objects.get_or_create(product=item.product, order=user_order)
+                            if new_item.quantity == 0:
+                                new_item.quantity = item.quantity
+                            else:
+                                new_item.quantity += item.quantity
+                            new_item.size = item.size
+                            new_item.color = item.color
+                            new_item.save()
+                        cookie_order.delete()
                         return redirect('home')
                     return redirect('home')
                 elif user.type == "VENDOR":
