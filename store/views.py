@@ -404,3 +404,4 @@ def get_product_queryset(request):
             return render(request, 'store/index.html')
     else:
         return render(request, 'store/index.html')
+

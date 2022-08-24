@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, OrderItem, BillingAddress
+from .models import Product, OrderItem, BillingAddress, Review
 
 class AddProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
@@ -51,3 +51,8 @@ class OrderItemForm(forms.ModelForm):
         # size = forms.CharField(label='Sizes: ', widget=forms.ChoiceField)
         model = OrderItem
         fields = ('size', 'color', 'quantity')
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('user_review')
