@@ -366,6 +366,9 @@ def review(request, product_id):
             obj = review_form.save(commit=False)
             obj.product = product
             obj.user = customer
+            if obj.user_review == '':
+                messages.error(request, "Your comment can't be blank.")
+                return redirect('product_details', product.product_id)
             obj.save()
             # messages.success(request, 'Your review has been posted.')
             return redirect('product_details', product.product_id)
