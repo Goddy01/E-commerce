@@ -386,9 +386,15 @@ def product_details(request, product_id):
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
     reviews_counter = 0
+    reviews_rating_sum_counter = 0
+    reviews_rating_counter = 0
     for review in reviews:
         reviews_counter+=1
+        reviews_rating_counter += 1
+        reviews_rating_sum_counter += review.rating
     product.num_of_reviews = reviews_counter
+    product.num_of_ratings = reviews_rating_counter
+    product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
     product.save()
     reviews_counter = product.num_of_reviews
     print('REVIEWS: ', reviews)
