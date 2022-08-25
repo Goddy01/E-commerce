@@ -32,6 +32,7 @@ class Product(models.Model):
     product_image3 =            models.ImageField(upload_to=upload_location, null=True, blank=True, verbose_name='product image 3')
     product_description =       models.TextField(max_length=1000, verbose_name="product's description", blank=False)
     slug =                      models.SlugField(blank=True, unique=True, max_length=256)
+    num_of_reviews =            models.IntegerField(blank=False, null=True)
 
     def __str__(self):
         return self.product_name

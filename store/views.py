@@ -385,6 +385,9 @@ def product_details(request, product_id):
     reviews_counter = 0
     for review in reviews:
         reviews_counter+=1
+    product.num_of_reviews = reviews_counter
+    product.save()
+    reviews_counter = product.num_of_reviews
     print('REVIEWS: ', reviews)
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
