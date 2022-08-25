@@ -159,11 +159,12 @@
                                         <p class="mb-0 mr-2 text-fade">Your Rating * :</p>
                                     </div>
                                     <div class="text-primary rating-wrapper">
-                                        <input type="radio" id="star-5" name="rating" value="5"/><label for="star-5" class="fas fa-star"></label>
-                                        <input type="radio" id="star-4" name="rating" value="4"><label for="star-4" class="fas fa-star"></label>
-                                        <input type="radio" id="star-3" name="rating" value="3"><label for="star-3" class="fas fa-star"></label>
-                                        <input type="radio" id="star-2" name="rating" value="2"><label for="star-2" class="fas fa-star"></label>
-                                        <input type="radio" id="star-1" name="rating" value="1"><label for="star-1" class="fas fa-star"></label>
+                                        <input type="radio" id="star-1" name="rating" value="1" hidden><label for="star-1" class="far fa-star stars"></label>
+                                        <input type="radio" id="star-2 stars" name="rating" value="2" hidden><label for="star-2" class="far fa-star stars"></label>
+                                        <input type="radio" id="star-3" name="rating" value="3" hidden><label for="star-3" class="far fa-star stars"></label>
+                                        <input type="radio" id="star-4" name="rating" value="4" hidden><label for="star-4" class="far fa-star stars"></label>
+                                        <input type="radio" id="star-5" name="rating" value="5" hidden/><label for="star-5" class="far fa-star stars"></label>
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label for="id_user_review">Your Review *</label>
@@ -212,5 +213,14 @@
     </div>
     <!-- Products End -->
 
-
+<script>
+    let star1 = document.getElementsByClassName('star-1').addEventListener("click", showStar(1));
+    let star2 = document.getElementsByClassName('star-1').addEventListener("click", showStar(2));
+    let star3 = document.getElementsByClassName('star-1').addEventListener("click", showStar(3));
+    let star4 = document.getElementsByClassName('star-1').addEventListener("click", showStar(4));
+    let star5 = document.getElementsByClassName('star-1').addEventListener("click", showStar(5));
+    function showStar(star_num) {
+        document.getElementById('star-{star_num}').setAttribute('class', 'fas fa-star')
+    }
+</script>
 {% endblock content %}
