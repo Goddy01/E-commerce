@@ -100,7 +100,7 @@ def home_page(request):
 
     # products1 = sorted(get_product_queryset(request), key=attrgetter('product_id'), reverse=True)
     # products_list = Product.objects.all()
-    productss = pagination(request, latest_products, 3)
+    productss = pagination(request, latest_products, 8)
     context['p_products'] = productss
     context['products'] = products
     context['latest_products'] = productss
@@ -427,7 +427,7 @@ def product_details(request, product_id):
         'product_sizes': product_sizes,
         'product_colors': product_colors,
         'orderitemform': orderitemform,
-        'reviews': pagination(request, reviews, 3),
+        'reviews': pagination(request, reviews, 5),
         'reviews_counter': reviews_counter
     }
     # product_sizes = 
