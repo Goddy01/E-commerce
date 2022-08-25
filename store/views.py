@@ -382,6 +382,9 @@ def review(request, product_id):
 def product_details(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
     reviews = product.review_set.all()
+    reviews_counter = 0
+    for review in reviews:
+        reviews_counter+=1
     print('REVIEWS: ', reviews)
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
@@ -407,6 +410,7 @@ def product_details(request, product_id):
         'product_colors': product_colors,
         'orderitemform': orderitemform,
         'reviews': reviews,
+        'reviews_counter': reviews_counter
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)
