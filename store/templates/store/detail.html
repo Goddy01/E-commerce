@@ -147,29 +147,24 @@
                             </div>
                             <div class="col-md-6">
                                 <h4 class="mb-5">Leave a review</h4>
-
-                                <form method="GET" action="">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}"/>
-                                    <div class="text-primary rating-wrapper">
-                                        <div class="d-flex my-3">
-                                            <p class="mb-0 mr-2">Your Rating * :</p>
-                                        </div>
-                                        <input type="radio" id="star-5" name="rating" value="5"/><label for="star-5" class="fas fa-star"></label>
-                                        <input type="radio" id="star-4" name="rating" value="4"><label for="star-4" class="fas fa-star"></label>
-                                        <input type="radio" id="star-3" name="rating" value="3"><label for="star-3" class="fas fa-star"></label>
-                                        <input type="radio" id="star-2" name="rating" value="2"><label for="star-2" class="fas fa-star"></label>
-                                        <input type="radio" id="star-1" name="rating" value="1"><label for="star-1" class="fas fa-star"></label>
-                                </form>
-                                
-                                <form action="{% url 'review' product.product_id %}" method="POST">
+                                <form action="{% url 'review' product.product_id %}" method="GET">
                                         <!-- <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i>
                                         <i class="far fa-star"></i> -->
-                                    </div>
                                     {% csrf_token %}
+                                    <input type="hidden" name="product_id" id="product_id" value="{{ product.product_id }}"/>
+                                    <div class="d-flex my-3">
+                                        <p class="mb-0 mr-2 text-fade">Your Rating * :</p>
+                                    </div>
+                                    <div class="text-primary rating-wrapper">
+                                        <input type="radio" id="star-5" name="rating" value="5"/><label for="star-5" class="fas fa-star"></label>
+                                        <input type="radio" id="star-4" name="rating" value="4"><label for="star-4" class="fas fa-star"></label>
+                                        <input type="radio" id="star-3" name="rating" value="3"><label for="star-3" class="fas fa-star"></label>
+                                        <input type="radio" id="star-2" name="rating" value="2"><label for="star-2" class="fas fa-star"></label>
+                                        <input type="radio" id="star-1" name="rating" value="1"><label for="star-1" class="fas fa-star"></label>
+                                    </div>
                                     <div class="form-group">
                                         <label for="id_user_review">Your Review *</label>
                                         <textarea id="id_user_review" cols="30" rows="5" class="form-control" name="user_review"></textarea>
