@@ -55,4 +55,4 @@ class OrderItemForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('user_review', )
+        fields = ('user_review', 'rating')
