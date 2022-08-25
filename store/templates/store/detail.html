@@ -50,13 +50,20 @@
                 <h3 class="font-weight-semi-bold">{{ product.product_name }}</h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
-                        <!-- <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
+                        <!-- <small class="far fa-star"></small>
+                        <small class="far fa-star"></small>
+                        <small class="far fa-star"></small>
+                        <small class="far fa-star"></small>
                         <small class="far fa-star"></small> -->
+                        <!-- <div class="text-primary"> -->
+                            <i class="far fa-star {% if product.average_rating > 0 %} fas {% endif %} "></i>
+                            <i class="far fa-star {% if product.average_rating > 1 %} fas {% endif %} "></i>
+                            <i class="far fa-star {% if product.average_rating > 2 %} fas {% endif %} "></i>
+                            <i class="far fa-star {% if product.average_rating > 3 %} fas {% endif %} "></i>
+                            <i class="far fa-star {% if product.average_rating > 4 %} fas {% endif %} "></i>
+                        <!-- </div> -->
                     </div>
-                    <small class="pt-1">({{ reviews_counter }} Reviews)</small>
+                    <small class="pt-1">({{ product.num_of_ratings }} Ratings)</small>
                 </div>
                 <h3 class="font-weight-semi-bold mb-4">${{ product.product_price }}</h3>
                 <p class="mb-4">{{ product.product_description }}</p>
@@ -153,8 +160,8 @@
                         <div class="">
                             <div class="col-md-6">
                             </div>
-                            <div class="col-md-6">
-                                <h4 class="mb-5">Leave a review</h4>
+                            <div class="col-md-6 mt-4">
+                                <h3 class="mb-5">Leave a review & rating</h3>
                                 <form action="{% url 'review' product.product_id %}" method="GET">
                                     {% csrf_token %}
                                     <input type="hidden" name="product_id" id="product_id" value="{{ product.product_id }}"/>

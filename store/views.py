@@ -391,10 +391,16 @@ def product_details(request, product_id):
     for review in reviews:
         reviews_counter+=1
         reviews_rating_counter += 1
-        reviews_rating_sum_counter += review.rating
+        if review.rating is not None:
+            reviews_rating_sum_counter += review.rating
+        else:
+            reviews_rating_sum_counter += 0
     product.num_of_reviews = reviews_counter
     product.num_of_ratings = reviews_rating_counter
-    product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
+    try:
+        product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
+    except:
+        product.average_rating = 0
     product.save()
     reviews_counter = product.num_of_reviews
     print('REVIEWS: ', reviews)
