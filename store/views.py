@@ -83,7 +83,8 @@ def vendor_dashboard(request):
     vendor = Vendor.objects.get(username=vendor_username)
     vendor_products = Product.objects.filter(seller=vendor)
     completed_order_products = OrderItem.objects.filter(order__complete=True)
-    return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products})
+    uncompleted_order_products = OrderItem.objects.filter(order__complete=False)
+    return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
 def update_product_view(request):
     vendor_username = request.user.username

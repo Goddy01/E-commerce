@@ -2,6 +2,11 @@
 {% block title %}Dashboard{% endblock title %}
 {% block content %}
 <div class="m-5">
+    <style>
+        .table {
+            margin-bottom: 180px;
+        }
+    </style>
     <table class="table">
         <h3>Products</h3>
         <thead>
@@ -49,6 +54,32 @@
                 <td>{{ completed_order_product.quantity }}</td>
                 <td>{{ completed_order_product.product.product_colors|title }}</td>
                 <td>{{ completed_order_product.product.product_sizes|upper }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <h3>Uncompleted Products</h3>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Colors</th>
+            <th scope="col">Sizes</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for uncompleted_order_product in uncompleted_order_products %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ uncompleted_order_product.product.product_name|title }}</td>
+                <td>${{ uncompleted_order_product.product.product_price }}</td>
+                <td>{{ uncompleted_order_product.quantity }}</td>
+                <td>{{ uncompleted_order_product.product.product_colors|title }}</td>
+                <td>{{ uncompleted_order_product.product.product_sizes|upper }}</td>
             </tr>
             {% endfor %}
         </tbody>
