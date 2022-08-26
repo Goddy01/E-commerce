@@ -15,7 +15,6 @@ def upload_location(instance, filename):
 
 class Product(models.Model):
     """Creates these fields in the database for a new product."""
-        
 
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE, null=True, blank=True)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)

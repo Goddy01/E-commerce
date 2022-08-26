@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<div class="m-5">
+    <table class="table">
+        <h3>Products</h3>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Num Available</th>
+            <th scope="col">Colors</th>
+            <th scope="col">Sizes</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for vendor_product in vendor_products %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ vendor_product.product_name|title }}</td>
+                <td>${{ vendor_product.product_price }}</td>
+                <td>{{ vendor_product.number_available }}</td>
+                <td>{{ vendor_product.product_colors|title }}</td>
+                <td>{{ vendor_product.product_sizes|upper }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
