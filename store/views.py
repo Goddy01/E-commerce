@@ -448,6 +448,10 @@ def product_details(request, product_id):
     # product_sizes = 
     return render(request, 'store/detail.html', context)
 
+def vendor_product_detail(request, product_id):
+    product = Product.objects.get(product_id=product_id)
+    return render(request, 'store/vendor_product_detail', {'product': product})
+
 def get_product_queryset(request):
     """The view that performs the search functionality"""
     if request.method == 'GET':
