@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review
 from django.contrib import messages
@@ -481,5 +481,18 @@ def get_product_queryset(request):
         return render(request, 'store/index.html')
 
 def update_product(request, product_id):
-    
+    vendors = Vendor.objects.all()
+    if not request.user.is_authenticated:
+        return HttpResponse('You must be authorized to visit this page.')
+    for vendor in vendors:
+        if vendor.username != request.user.username:
+            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    if request.method == 'POST':
+        product = Product.objects.get(product_id=product_id)
+        update_product_form = UpdateProductForm(request.POST or None,  request.FILES or None, instance=product)
+        if update_product_form.is_valid():
+            update_product_form.save()
+            messages.success(request, 'The product has been updated.')
+        else:
+            messages.error(request, 'There was error in the form.')
     return render(request, 'store/update_product.html')

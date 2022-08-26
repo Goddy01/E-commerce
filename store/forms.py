@@ -58,7 +58,7 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ('user_review', 'rating')
 
-class UpdateProductPostForm(forms.ModelForm):
+class UpdateProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
         ("M", "MEN"), 
         ("W", "WOMEN"), 
