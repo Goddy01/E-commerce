@@ -29,7 +29,7 @@ from store.views import (
     no_cart,
     no_checkout, add_to_cart,
     get_product_queryset, review,
-    update_product_view, vendor_dashboard,
+    vendor_dashboard,
     vendor_product_detail, update_product,
     )
 urlpatterns = [
@@ -41,9 +41,8 @@ urlpatterns = [
     path('<product_id>/product_details/', product_details, name='product_details'),
     path('search/', get_product_queryset, name="search"),
     path('<product_id>/reviews/', review, name="review"),
-    path('<product_id>/update_product', update_product_view, name='update_product'),
     path('dashboard/', vendor_dashboard, name='dashboard'),
-    path('<product_id>/vendor_product_details/', vendor_product_detail,name='v_product_details'),
+    path('<product_id>/vendor_product_details/', vendor_product_detail, name='v_product_details'),
     path('<product_id>/update_product', update_product, name="update_product"),
     path('cart/', cart, name='cart'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),

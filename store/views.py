@@ -86,12 +86,6 @@ def vendor_dashboard(request):
     uncompleted_order_products = OrderItem.objects.filter(order__complete=False)
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
-def update_product_view(request):
-    vendor_username = request.user.username
-    vendor = Vendor.objects.get(username=vendor_username)
-    vendor_products = Product.objects.filter(seller=vendor)
-
-    return render(request, 'store/create_product.html', {'vendor_products': vendor_products})
 
 def home_page(request):
     context = {}
@@ -481,6 +475,7 @@ def get_product_queryset(request):
         return render(request, 'store/index.html')
 
 def update_product(request, product_id):
+    product = Product.objects.get(product_id=product_id)
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return HttpResponse('You must be authorized to visit this page.')
@@ -488,17 +483,23 @@ def update_product(request, product_id):
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     if request.method == 'POST':
-        product = Product.objects.get(product_id=product_id)
         update_product_form = UpdateProductForm(request.POST or None, request.FILES or None, instance=product)
         if update_product_form.is_valid():
             update_product_form.save()
             messages.success(request, 'The product has been updated.')
         else:
             messages.error(request, 'There was error in the form.')
-    # update_product_form = UpdateProductForm(instance=request.user, initial= {
-
-    #     }
-    # )
-    else:
-        update_product_form = UpdateProductForm()
+    update_product_form = UpdateProductForm(instance=request.user, initial= {
+        "product_name": product.product_name,
+        "product_description": product.product_description,
+        "product_colors": product.product_colors,
+        "product_sizes": product.product_sizes,
+        "product_categories": product.product_categories,
+        "product_price": product.product_price,
+        "number_available": product.number_available,
+        "product_image1": product.product_image1,
+        "product_image2": product.product_image2,
+        "product_image3": product.product_image3,
+        }
+    )
     return render(request, 'store/update_product.html', {'product': product, 'update_product_form': update_product_form,})
