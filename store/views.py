@@ -450,7 +450,7 @@ def product_details(request, product_id):
 
 def vendor_product_detail(request, product_id):
     product = Product.objects.get(product_id=product_id)
-    return render(request, 'store/vendor_product_detail', {'product': product})
+    return render(request, 'store/vendor_product_detail.html', {'product': product})
 
 def get_product_queryset(request):
     """The view that performs the search functionality"""
@@ -478,9 +478,9 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
-def review_rating(request):
+# def review_rating(request):
     
-    if request.method == 'GET':
-        prod_id = request.GET.get('product_id')
-        product = Product.objects.get(product_id=product_id)
-        rating = request.GET.get('rating')
+#     if request.method == 'GET':
+#         prod_id = request.GET.get('product_id')
+#         product = Product.objects.get(product_id=product_id)
+#         rating = request.GET.get('rating')
