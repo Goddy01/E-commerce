@@ -10,15 +10,16 @@ class AddProductForm(forms.ModelForm):
     )
 
     product_image1 = forms.ImageField(widget=forms.FileInput)
-    product_image2 = forms.ImageField(widget=forms.FileInput)
-    product_image3 = forms.ImageField(widget=forms.FileInput)
+    product_image2 = forms.ImageField(widget=forms.FileInput, required=False)
+    product_image3 = forms.ImageField(widget=forms.FileInput, required=False)
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
 
     class Meta():
         model = Product
-        fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
+        # fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
+        exclude = ('seller', 'product_id', 'slug', 'num_of_reviews', 'average_rating', 'num_of_ratings')
 
     instance = ''
 
@@ -69,8 +70,8 @@ class UpdateProductForm(forms.ModelForm):
     )
 
     product_image1 = forms.ImageField(widget=forms.FileInput)
-    product_image2 = forms.ImageField(widget=forms.FileInput)
-    product_image3 = forms.ImageField(widget=forms.FileInput)
+    product_image2 = forms.ImageField(widget=forms.FileInput, required=False)
+    product_image3 = forms.ImageField(widget=forms.FileInput, required=False)
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
@@ -78,7 +79,9 @@ class UpdateProductForm(forms.ModelForm):
     class Meta():
         model = Product
 
-        fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
+        # fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
+
+        exclude = ('seller', 'product_id', 'slug', 'num_of_reviews', 'average_rating', 'num_of_ratings')
 
     def save(self, commit=True):
         product = self.instance

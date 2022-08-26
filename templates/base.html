@@ -223,6 +223,8 @@
 
                             {% for vendor in vendors %}
                                 {% if request.user.username == vendor.username %}
+                                <a href="{% url 'add-product' %}" class="nav-item nav-link">Add Product</a>
+
                                 <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
                                 {% endif %}
                             {% endfor %}
