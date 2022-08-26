@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="{% static 'css/jupyter-pattern.css' %}">
 <div class="w-75 mx-auto bg-white" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ececec; padding: 4rem 2rem; border-radius: 20px;margin-top: 10rem;margin-bottom: 5rem;color: black;">
     <h4 style="text-align: center; margin-bottom: 2rem">Want to sell your product</h4>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" action="{% url 'update_product' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div style="display: flex;">
             <label for="upload-image" class="m-auto shadow"><img src="{% static 'img/profile-image.png' %}" style="width: max-content; border-radius: 50%;"></label>
