@@ -489,10 +489,16 @@ def update_product(request, product_id):
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     if request.method == 'POST':
         product = Product.objects.get(product_id=product_id)
-        update_product_form = UpdateProductForm(request.POST or None,  request.FILES or None, instance=product)
+        update_product_form = UpdateProductForm(request.POST or None, request.FILES or None, instance=product)
         if update_product_form.is_valid():
             update_product_form.save()
             messages.success(request, 'The product has been updated.')
         else:
             messages.error(request, 'There was error in the form.')
-    return render(request, 'store/update_product.html')
+    # update_product_form = UpdateProductForm(instance=request.user, initial= {
+
+    #     }
+    # )
+    else:
+        update_product_form = UpdateProductForm()
+    return render(request, 'store/update_product.html', {'product': product, 'update_product_form': update_product_form,})
