@@ -481,4 +481,5 @@ def get_product_queryset(request):
         return render(request, 'store/index.html')
 
 def update_product(request, product_id):
+    
     return render(request, 'store/update_product.html')

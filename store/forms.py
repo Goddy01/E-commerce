@@ -17,7 +17,8 @@ class AddProductForm(forms.ModelForm):
     class Meta():
         model = Product
         fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
-        # fields = '__all__'
+
+    instance = ''
 
 
 class BillingForm(forms.ModelForm):
@@ -56,3 +57,41 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('user_review', 'rating')
+
+class UpdateProductPostForm(forms.ModelForm):
+    CATEGORY_CHOICES = (
+        ("M", "MEN"), 
+        ("W", "WOMEN"), 
+        ("MC", "MALE CHILDREN"), 
+        ("FC", "FEMALE CHILDREN"),
+    )
+
+
+    product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
+    product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
+    product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
+    
+    class Meta():
+        model = Product
+
+        fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
+
+    def save(self, commit=True):
+        product = self.instance
+        product.product_name = self.cleaned_data.get('product_name')
+        product.product_description = self.cleaned_data.get('product_description')
+        product.product_colors = self.cleaned_data.get('product_colors')
+        product.number_available = self.cleaned_data.get('number_available')
+        product.product_price = self.cleaned_data.get('product_price')
+        product.product_sizes = self.cleaned_data.get('product_sizes')
+        product.product_colors = self.cleaned_data.get('product_colors')
+        product.product_image1 = self.cleaned_data.get('product_image1')
+        
+        if self.cleaned_data['image']:
+            product.product_image2 = self.cleaned_data.get('product_image2')
+            product.product_image3 = self.cleaned_data.get('product_image3')
+
+        if commit:
+            product.save()
+
+        return product
