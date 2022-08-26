@@ -27,5 +27,31 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <table class="table">
+        <h3>Ordered Products</h3>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Colors</th>
+            <th scope="col">Sizes</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for completed_order_product in completed_order_products %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ completed_order_product.product.product_name|title }}</td>
+                <td>${{ completed_order_product.product.product_price }}</td>
+                <td>{{ completed_order_product.quantity }}</td>
+                <td>{{ completed_order_product.product.product_colors|title }}</td>
+                <td>{{ completed_order_product.product.product_sizes|upper }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock content %}
