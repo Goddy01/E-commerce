@@ -24,7 +24,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td class="font-weight-bold text-dark">
-                    <a href="">{{ vendor_product.product_name|title }}</a>
+                    <a href="{% url 'v_product_details' vendor_product.product_id %} ">{{ vendor_product.product_name|title }}</a>
                 </td>
                 <td>${{ vendor_product.product_price }}</td>
                 <td>{{ vendor_product.number_available }}</td>
