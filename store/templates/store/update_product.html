@@ -63,13 +63,13 @@
             <!-- Picture -->
             <div style="margin-bottom: 2rem;">
                 <p for="id_product_image1" class="font-weight-semi-bold">Image 1</p>
-                <img class="img-fluid image w-25" src="{{product.product_image1.url}}">
+                <img class="img-fluid image w-25 mb-2" src="{{product.product_image1.url}}">
                 <p>{{ update_product_form.product_image1 }}</p>
             </div>
             {% if product.product_image2 %}
             <div style="margin-bottom: 1rem;">
                 <p for="product_image3" class="font-weight-semi-bold">Image 2</p>
-                <img class="img-fluid image w-25" src="{{product.product_image2.url}}">
+                <img class="img-fluid image w-25 mb-2" src="{{product.product_image2.url}}">
                 <p>{{ update_product_form.product_image2 }}</p>
             </div>
             {% endif %}
