@@ -87,8 +87,9 @@ class UpdateProductForm(forms.ModelForm):
         product.product_colors = self.cleaned_data.get('product_colors')
         product.product_image1 = self.cleaned_data.get('product_image1')
         
-        if self.cleaned_data['image']:
+        if self.cleaned_data['product_image2']:
             product.product_image2 = self.cleaned_data.get('product_image2')
+        if self.cleaned_data['product_image3']:
             product.product_image3 = self.cleaned_data.get('product_image3')
 
         if commit:
