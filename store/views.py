@@ -63,7 +63,7 @@ def add_product_view(request):
         
         if add_form.is_valid():
             obj = add_form.save(commit=False)
-            # seller = Vendor.objects.filter(email=request.user.email).first()
+            # seller = Vendor.objects.filter(emaVendoril=request.user.email).first()
             obj.seller = request.user
             obj.save()
             messages.success(request, 'Product has been added to store.')
@@ -77,6 +77,13 @@ def add_product_view(request):
         add_form = AddProductForm()
     context['add_product_form'] = add_form
     return render(request,'store/create_product.html',context)
+
+def update_product_view(request):
+    username = request.user.username
+    vendor = Vendor.objects.get(username=vendor_username)
+    vendor_products = Product.objects.filter(seller=vendor)
+
+    return render(request, 'store/create_product.html', {'vendor_products': vendor_products})
 
 def home_page(request):
     context = {}
