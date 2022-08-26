@@ -480,9 +480,5 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
-# def review_rating(request):
-    
-#     if request.method == 'GET':
-#         prod_id = request.GET.get('product_id')
-#         product = Product.objects.get(product_id=product_id)
-#         rating = request.GET.get('rating')
+def update_product(request, product_id):
+    return render(request, 'store/update_product.html')
