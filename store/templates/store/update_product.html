@@ -61,18 +61,28 @@
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- Picture -->
-            <div style="margin-bottom: 1rem;">
-                <label for="id_product_image1">Image 1</label>
-                <input type="file" name="product_image1" accept="image/png, image/gif, image/jpeg" id="id_product_image1">
+            <div style="margin-bottom: 2rem;">
+                <p for="id_product_image1" class="font-weight-semi-bold">Image 1</p>
+                <img class="img-fluid image w-25" src="{{product.product_image1.url}}">
+                <p>{{ update_product_form.product_image1 }}</p>
             </div>
+            {% if product.product_image2 %}
             <div style="margin-bottom: 1rem;">
-                <label for="id_product_image2">Image 2</label>
-                <input type="file" name="product_image2" accept="image/png, image/gif, image/jpeg" id="id_product_image2">
+                <p for="product_image3" class="font-weight-semi-bold">Image 2</p>
+                <img class="img-fluid image w-25" src="{{product.product_image2.url}}">
+                <p>{{ update_product_form.product_image2 }}</p>
             </div>
+            {% endif %}
+
+            
             <div style="margin-bottom: 1rem;">
-                <label for="product_image3">Image 3</label>
-                <input type="file" name="product_image3" accept="image/png, image/gif, image/jpeg" id="id_product_image3">
+                <p for="product_image3" class="font-weight-semi-bold">Image 3</p>
+                {% if product.product_image3 %}
+                <img class="img-fluid image w-25" src="{{product.product_image3.url}}">
+                {% endif %}
+                <p>{{ update_product_form.product_image3 }}</p>
             </div>
+            
         </div>
 
          

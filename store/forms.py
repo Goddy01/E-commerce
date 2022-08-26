@@ -9,7 +9,7 @@ class AddProductForm(forms.ModelForm):
         ("FC", "FEMALE CHILDREN"),
     )
 
-
+    
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
@@ -66,7 +66,7 @@ class UpdateProductForm(forms.ModelForm):
         ("FC", "FEMALE CHILDREN"),
     )
 
-
+    
     product_categories = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CATEGORY_CHOICES)
     product_sizes = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each size separated with a comma."}))
     product_colors = forms.CharField(widget=forms. TextInput({ "placeholder": "Enter each color separated with a comma."}))
