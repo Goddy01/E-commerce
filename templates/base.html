@@ -220,6 +220,12 @@
                                 <!-- </div> -->
                             <!-- </div> -->
                             <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+
+                            {% for vendor in vendors %}
+                                {% if request.user.username == vendor.username %}
+                                <a href="{% url '' %}" class="nav-item nav-link">Dashboard</a>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             {% if request.user.is_authenticated %}

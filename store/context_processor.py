@@ -1,5 +1,5 @@
 import uuid
-from Accounts.models import Customer, User
+from Accounts.models import Customer, User, Vendor
 from .models import Order
 # from django.contrib.auth.decorators import login_required
 
@@ -7,7 +7,9 @@ from .models import Order
 def website_content(request):
     # if not request.user.is_authenticated:
     # 
-    # else:     
+    # else:
+    customers = Customer.objects.all()
+    vendors = Vendor.objects.all()
     try:
         user = User.objects.get(device=request.session['device'])
     except:
@@ -58,5 +60,7 @@ def website_content(request):
     context = {
         'items':items, 
         'cart_items': cart_items,
+        'customers': customers,
+        'vendors': vendors,
                     }
     return context

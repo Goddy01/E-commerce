@@ -78,8 +78,15 @@ def add_product_view(request):
     context['add_product_form'] = add_form
     return render(request,'store/create_product.html',context)
 
+def vendor_dashboard(request):
+    vendor_username = request.user.username
+    vendor = Vendor.objects.get(username=vendor_username)
+    vendor_products = Product.objects.filter(seller=vendor)
+
+    return render(request, 'store/dashboard.html', {'vendors_products': vendor_products})
+
 def update_product_view(request):
-    username = request.user.username
+    vendor_username = request.user.username
     vendor = Vendor.objects.get(username=vendor_username)
     vendor_products = Product.objects.filter(seller=vendor)
 
