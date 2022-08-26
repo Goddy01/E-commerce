@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}Product Details{% endblock title %}
 {% block content %}
+<style>
+    
+    .delete {
+        position: absolute;
+        right: 10px;
+        padding: 7px 10px;
+    }
+
+    @media (max-width: 396px) {
+        .update {
+            margin-bottom: 20px;
+        }
+
+        .delete {
+            display: block;
+            margin-top: -15px;
+            margin-bottom: 10px;
+            left: 30px;
+            width: fit-content;
+        }
+    }
+</style>
 
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
@@ -60,7 +82,7 @@
                     {% else %}
                     {{ product.num_of_ratings }}
                     {% endif %}
-                     Ratings)
+                     Rating(s))
                 </small>
             </div>
             <h3 class="font-weight-semi-bold mb-4">${{ product.product_price }}</h3>
@@ -80,21 +102,6 @@
                     <h4 class="mb-3 font-weight-bold">Product Description</h4>
                     <p style="font-size:18px;">{{ product.product_description }}</p>
                 </div>
-                <!-- <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
-                <div class="d-inline-flex">
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div> -->
             </div>
         </div>
     </div>
@@ -105,20 +112,13 @@
                 <div class="" style="display: block;">
                     <div class="">
                         <div class="justify-content-center border-secondary mb-4">
-                            <h2>Reviews</h2>
+                            <h2>Review(s)</h2>
                         </div>
                         {% if reviews %}
                             {% for review in reviews %}
                                 <!-- <h2>@review.user.username</h2> -->
                                 <div class="media-body mb-4 p-3" style="background-color: #EDF1FF;">
                                     <h6>{{ review.user.fullname|title }}<small> - <i>{{ review.created_on }}</i></small></h6>
-                                    <!-- <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
-                                    </div> -->
                                     <div class="text-primary">
                                         <i class="far fa-star {% if review.rating > 0 %} fas {% endif %} "></i>
                                         <i class="far fa-star {% if review.rating > 1 %} fas {% endif %} "></i>
@@ -131,10 +131,13 @@
                             {% endfor %}
                             {% include '../snippets/products_pagination_snippet.html' with p_products=reviews%}
                         {% else %}
-                        <p>There have not been review for this product.</p>
+                        <p>There have not been review(s) for this product.</p>
                         {% endif %}
                     </div>
-                    
+                    <div class="edit-product">
+                        <a href="" class="update btn btn-primary bg-danger text-light">Update Product</a>
+                        <a href="" class="delete btn bg-danger text-light" style="border: none;">Delete Product</a>
+                    </div>
                 </div>
             <!-- </div> -->
         </div>
