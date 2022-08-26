@@ -450,7 +450,9 @@ def product_details(request, product_id):
 
 def vendor_product_detail(request, product_id):
     product = Product.objects.get(product_id=product_id)
-    return render(request, 'store/vendor_product_detail.html', {'product': product})
+    reviews = product.review_set.all()
+    reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
+    return render(request, 'store/vendor_product_detail.html', {'product': product, 'reviews': pagination(request, reviews, 3)})
 
 def get_product_queryset(request):
     """The view that performs the search functionality"""
