@@ -443,6 +443,12 @@ def product_details(request, product_id):
     return render(request, 'store/detail.html', context)
 
 def vendor_product_detail(request, product_id):
+    vendors = Vendor.objects.all()
+    if not request.user.is_authenticated:
+        return HttpResponse('You must be authorized to visit this page.')
+    for vendor in vendors:
+        if vendor.username != request.user.username:
+            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     product = Product.objects.get(product_id=product_id)
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
@@ -503,3 +509,8 @@ def update_product(request, product_id):
         }
     )
     return render(request, 'store/update_product.html', {'product': product, 'update_product_form': update_product_form,})
+
+def delete_product(request, product_id):
+    product = Product.objects.get(product_id=product_id)
+    product.delete()
+    return redirect('dashboard')

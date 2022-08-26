@@ -137,7 +137,7 @@
                     </div>
                     <div class="edit-product">
                         <a href="{% url 'update_product' product.product_id %}" class="update btn btn-primary bg-danger text-light">Update Product</a>
-                        <a href="" class="delete btn bg-danger text-light" style="border: none;">Delete Product</a>
+                        <a href="{% url 'delete_product' product.product_id %}" class="delete btn bg-danger text-light" style="border: none;">Delete Product</a>
                     </div>
                 </div>
             <!-- </div> -->
