@@ -5,7 +5,7 @@
 {% block content %}
 {% include 'messages.html' %}
 <div class="errors" style="margin-left: 2rem;">
-    {% for field in add_product_form %}
+    {% for field in update_product_form %}
         <p>
         {% for error in field.errors %}
             <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
@@ -13,9 +13,9 @@
         </p>
     {% endfor %}
 
-    {% if add_product_form.non_field_errors %}
+    {% if update_product_form.non_field_errors %}
         <div style="color: rgb(175, 23, 23);">
-            {{add_product_form.non_field_errors}}
+            {{update_product_form.non_field_errors}}
         </div>
     {% endif %}
 </div>
@@ -28,39 +28,35 @@
             <label for="upload-image" class="m-auto shadow"><img src="{% static 'img/profile-image.png' %}" style="width: max-content; border-radius: 50%;"></label>
         </div>
 
-        {{add_product_form.product_categories.label_tag}}
-        {{add_product_form.product_categories}}
+        {{update_product_form.product_categories.label_tag}}
+        {{update_product_form.product_categories}}
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;margin-top: 1rem">
             <label for="id_product_name">Product name</label>
-            <input type="text" name="product_name" id="id_product_name">
+            {{ update_product_form.product_name }}
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- PRICE -->
             <label for="id_product_price">Price</label>
-            <input type="number" name="product_price" id="id_product_price" placeholder="In dollars($)" step=".01">
+            {{ update_product_form.product_price }}
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- SIZE -->
             <label for="">Size</label>
-            <!-- <div style="margin-left: 1rem;"> -->
-                {{ add_product_form.product_sizes }}
-
+                {{ update_product_form.product_sizes }}
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <label for="id_available_product">Number available</label>
-            <input type="number" name="number_available" id="id_number_available">
+            {{ update_product_form.number_available }}
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 3rem;">
             <!-- COLOR -->
             <label for="product-color">Color</label>
-            
-            </select>
-            {{ add_product_form.product_colors }}
+            {{ update_product_form.product_colors }}
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
@@ -79,7 +75,8 @@
             </div>
         </div>
 
-        <textarea placeholder="Description" name="product_description" id="id_product_description" style="width: 100%;" rows="10"></textarea>
+         
+            {{ update_product_form.product_description }}
 
         <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;" type="submit">
             <span style="margin: 0 auto;font-weight: bold;">Update Product</span>
