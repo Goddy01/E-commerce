@@ -113,7 +113,7 @@ def home_page(request):
     recently_added_products = Product.objects.all().order_by('-date_added')
     productss = pagination(request, latest_products, 8)
     context['p_products'] = productss
-    context['products'] = Product.objects.all().order_by('-num_of_visits')[:6]
+    context['products'] = pagination(request, Product.objects.all().order_by('-num_of_visits'), 6)
     context['latest_products'] = pagination(request, recently_added_products, 3)
     return render(request, 'store/index.html', context)
 
