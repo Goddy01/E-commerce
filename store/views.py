@@ -435,24 +435,17 @@ def product_details(request, product_id):
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
     
     users_recently_viewed_products_id = UsersRecentlyViewedProduct.objects.filter(customer=customer).order_by('-time_visited').values('product').distinct()
-    # for i in users_recently_viewed_products_id:
-    #     print('ID RE 1: ', i.product)
-    # users_recently_viewed_products_id = users_recently_viewed_products_id.order_by('-time_visited').distinct()
-    # print('ID RE 2: ', users_recently_viewed_products_id)
-    # users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=users_recently_viewed_products_id)
-    for i in users_recently_viewed_products_id:
-        print('NA: ', i)
-    # users_recently_viewed_products = sorted(Product.objects.filter(product_id__in=users_recently_viewed_products_id), key=attrgetter('last_visit'), reverse=True)[:4]
     
-    # users_recently_viewed_products = sorted(UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product__product_id').distinct(), key=attrgetter('time_visited'), reverse=True)[:4]
-
-    # users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product').distinct()
-
+    users_recently_viewed_products = sorted(customer.usersrecentlyviewedproduct_set.all(), key=attrgetter('time_visited'), reverse=True)
+    
     users_recently_viewed_products = customer.usersrecentlyviewedproduct_set.all().values('product').distinct()
+    print('ID RE: ', users_recently_viewed_products)
     users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products)
-    print('YEEE: ', users_recently_viewed_products)
+    
+    users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product').distinct()
 
-    # users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products.order_by('-time_visited'))
+    users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products)
+    print('YEEE2: ', users_recently_viewed_products)
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
@@ -474,7 +467,7 @@ def product_details(request, product_id):
         'orderitemform': orderitemform,
         'reviews': pagination(request, reviews, 5),
         'reviews_counter': reviews_counter,
-        'users_recently_viewed_products': users_recently_viewed_products,
+        'users_recently_viewed_products': users_recently_viewed_products[:5],
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)

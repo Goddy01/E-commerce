@@ -34,6 +34,7 @@ class UsersRecentlyViewedProdutForm(forms.ModelForm):
     class Meta:
         model = UsersRecentlyViewedProduct
         exclude = ('time_visited', )
+        ordering = ['time_visited']
 
 # product_sizes = product.product_sizes.split(',')
 # product_colors = product.product_colors.split(',')
