@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, OrderItem, BillingAddress, Review
+from .models import Product, OrderItem, BillingAddress, Review, UsersRecentlyViewedProduct
 
 class AddProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
@@ -19,7 +19,7 @@ class AddProductForm(forms.ModelForm):
     class Meta():
         model = Product
         # fields = ('product_description', 'product_image3', 'product_image2', 'product_image1', 'product_colors', 'number_available', 'product_sizes', 'product_price', 'product_name', 'product_categories')
-        exclude = ('seller', 'product_id', 'slug', 'num_of_reviews', 'average_rating', 'num_of_ratings')
+        exclude = ('seller', 'product_id', 'slug', 'num_of_reviews', 'average_rating', 'num_of_ratings', 'num_of_visits', 'last_visit', 'date_added')
 
     instance = ''
 
@@ -30,6 +30,10 @@ class BillingForm(forms.ModelForm):
         fields = '__all__'
 
 
+class UsersRecentlyViewedProdutForm(forms.ModelForm):
+    class Meta:
+        model = UsersRecentlyViewedProduct
+        exclude = ('time_visited', )
 
 # product_sizes = product.product_sizes.split(',')
 # product_colors = product.product_colors.split(',')
