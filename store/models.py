@@ -41,6 +41,10 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+def UsersRecentlyViewedProduct(models.Model):
+    user =          models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    product =       models.ForeignKey(Product, on_delete=models.CASCADE. null=True)
+    time_visited =  models.DateTimeField(auto_now=True, blank=True, null=True)
 
 def pre_save_product_receiver(sender, instance, **kwargs):
     """Checks if a product has a slug, if not it creates one before committing to the database"""
