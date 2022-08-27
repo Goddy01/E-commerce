@@ -7,9 +7,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, UsersRecentlyViewedProductForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
-from store.models import Product, Order, OrderItem, Review
+from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
@@ -420,12 +420,13 @@ def product_details(request, product_id):
     product.save()
     reviews_counter = product.num_of_reviews
     print('REVIEWS: ', reviews)
+    # user_viewed = 
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
-        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__email=request.user.email)
+        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__email=request.user.email)[:4]
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
-        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__device=request.session.get('device'))
+        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__device=request.session.get('device'))[:4]
     
     COLOR_CHOICES = []
     SIZE_CHOICES = []
