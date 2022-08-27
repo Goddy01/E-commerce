@@ -442,8 +442,17 @@ def product_details(request, product_id):
     # users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=users_recently_viewed_products_id)
     for i in users_recently_viewed_products_id:
         print('NA: ', i)
-    users_recently_viewed_products = sorted(Product.objects.filter(product_id__in=users_recently_viewed_products_id), key=attrgetter('last_visit'), reverse=True)[:4]
+    # users_recently_viewed_products = sorted(Product.objects.filter(product_id__in=users_recently_viewed_products_id), key=attrgetter('last_visit'), reverse=True)[:4]
     
+    # users_recently_viewed_products = sorted(UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product__product_id').distinct(), key=attrgetter('time_visited'), reverse=True)[:4]
+
+    # users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product').distinct()
+
+    users_recently_viewed_products = customer.usersrecentlyviewedproduct_set.all().values('product').distinct()
+    users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products)
+    print('YEEE: ', users_recently_viewed_products)
+
+    # users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products.order_by('-time_visited'))
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
