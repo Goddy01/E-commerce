@@ -110,10 +110,11 @@ def home_page(request):
 
     # products1 = sorted(get_product_queryset(request), key=attrgetter('product_id'), reverse=True)
     # products_list = Product.objects.all()
+    recently_added_products = Product.objects.all().order_by('-date_added')
     productss = pagination(request, latest_products, 8)
     context['p_products'] = productss
-    context['products'] = products
-    context['latest_products'] = productss
+    context['products'] = Product.objects.all().order_by('-num_of_visits')[:6]
+    context['latest_products'] = pagination(request, recently_added_products, 3)
     return render(request, 'store/index.html', context)
 
 def add_to_cart(request, product_id):

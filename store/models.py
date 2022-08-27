@@ -36,6 +36,7 @@ class Product(models.Model):
     num_of_ratings =            models.IntegerField(blank=True, null=True)
     num_of_visits =             models.IntegerField(blank=True, null=True, default=0)
     last_visit =                models.DateTimeField(blank=True, null=True, default=0)
+    date_added =                models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.product_name
