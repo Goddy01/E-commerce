@@ -1,4 +1,5 @@
 import json, uuid
+from datetime import datetime
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
@@ -406,6 +407,8 @@ def product_details(request, product_id):
             reviews_rating_sum_counter += 0
     product.num_of_reviews = reviews_counter
     product.num_of_ratings = reviews_rating_counter
+    product.num_of_visits += 1
+    product.last_visit = datetime.now()
     try:
         product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
     except:
