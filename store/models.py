@@ -42,7 +42,7 @@ class Product(models.Model):
         return self.product_name
 
 class UsersRecentlyViewedProduct(models.Model):
-    user =          models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =       models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     time_visited =  models.DateTimeField(auto_now=True, blank=True, null=True)
 

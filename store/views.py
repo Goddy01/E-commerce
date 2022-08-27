@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, UsersRecentlyViewedProductForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct
 from django.contrib import messages
@@ -425,17 +425,16 @@ def product_details(request, product_id):
         customer = Customer.objects.get(device=user.device)
     else:
         customer = Customer.objects.get(username=request.user.username)
-    user_viewed = UsersRecentlyViewedProduct.create(
-        user = customer,
+    user_viewed = UsersRecentlyViewedProduct.objects.create(
+        customer = customer,
         product = product,
     )
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
-        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__email=request.user.email)[:4]
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
-        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__device=request.session.get('device'))[:4]
     
+    users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, customer__device=request.session.get('device'))[:4]
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
