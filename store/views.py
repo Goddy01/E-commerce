@@ -407,7 +407,10 @@ def product_details(request, product_id):
             reviews_rating_sum_counter += 0
     product.num_of_reviews = reviews_counter
     product.num_of_ratings = reviews_rating_counter
-    product.num_of_visits += 1
+    if product.num_of_visits is not None:
+        product.num_of_visits += 1
+    else:
+        product.num_of_visits = 1
     product.last_visit = datetime.now()
     try:
         product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
