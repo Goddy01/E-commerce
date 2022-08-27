@@ -66,13 +66,14 @@
                 <img class="img-fluid image w-25 mb-2" src="{{product.product_image1.url}}">
                 <p>{{ update_product_form.product_image1 }}</p>
             </div>
-            {% if product.product_image2 %}
+            
             <div style="margin-bottom: 1rem;">
                 <p for="product_image3" class="font-weight-semi-bold">Image 2</p>
+                {% if product.product_image2 %}
                 <img class="img-fluid image w-25 mb-2" src="{{product.product_image2.url}}">
+                {% endif %}
                 <p>{{ update_product_form.product_image2 }}</p>
             </div>
-            {% endif %}
 
             
             <div style="margin-bottom: 1rem;">
