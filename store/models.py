@@ -35,7 +35,7 @@ class Product(models.Model):
     average_rating =            models.IntegerField(blank=True, null=True)
     num_of_ratings =            models.IntegerField(blank=True, null=True)
     num_of_visits =             models.IntegerField(blank=True, null=True, default=0)
-    last_visit =                models.DateTimeField(blank=True, null=True)
+    last_visit =                models.DateTimeField(auto_now=True, blank=True, null=True)
     date_added =                models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
@@ -44,10 +44,13 @@ class Product(models.Model):
 class UsersRecentlyViewedProduct(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =       models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    time_visited =  models.DateTimeField(auto_now=True, blank=True, null=True)
+    time_visited =  models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return self.user.fullname
+        if self.customer is not None:
+            return self.customer.fullname
+        else:
+            return ''
 
 def pre_save_product_receiver(sender, instance, **kwargs):
     """Checks if a product has a slug, if not it creates one before committing to the database"""

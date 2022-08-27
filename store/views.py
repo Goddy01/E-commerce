@@ -412,7 +412,6 @@ def product_details(request, product_id):
         product.num_of_visits += 1
     else:
         product.num_of_visits = 1
-    product.last_visit = datetime.now()
     try:
         product.average_rating = int(reviews_rating_sum_counter/product.num_of_ratings)
     except:
@@ -428,13 +427,23 @@ def product_details(request, product_id):
     user_viewed = UsersRecentlyViewedProduct.objects.create(
         customer = customer,
         product = product,
+        time_visited = datetime.now()
     )
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
     
-    users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, customer__device=request.session.get('device'))[:4]
+    users_recently_viewed_products_id = UsersRecentlyViewedProduct.objects.filter(customer=customer).order_by('-time_visited').values('product').distinct()
+    # for i in users_recently_viewed_products_id:
+    #     print('ID RE 1: ', i.product)
+    # users_recently_viewed_products_id = users_recently_viewed_products_id.order_by('-time_visited').distinct()
+    # print('ID RE 2: ', users_recently_viewed_products_id)
+    # users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=users_recently_viewed_products_id)
+    for i in users_recently_viewed_products_id:
+        print('NA: ', i)
+    users_recently_viewed_products = sorted(Product.objects.filter(product_id__in=users_recently_viewed_products_id), key=attrgetter('last_visit'), reverse=True)[:4]
+    
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
