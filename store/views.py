@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, UsersRecentlyViewedProductForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review
 from django.contrib import messages
@@ -422,8 +422,10 @@ def product_details(request, product_id):
     print('REVIEWS: ', reviews)
     try:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
+        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__email=request.user.email)
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
+        users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(product=product, user__device=request.session.get('device'))
     
     COLOR_CHOICES = []
     SIZE_CHOICES = []
@@ -438,13 +440,15 @@ def product_details(request, product_id):
     orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
+    
     context = {
         'product': product,
         'product_sizes': product_sizes,
         'product_colors': product_colors,
         'orderitemform': orderitemform,
         'reviews': pagination(request, reviews, 5),
-        'reviews_counter': reviews_counter
+        'reviews_counter': reviews_counter,
+        'users_recently_viewed_products': users_recently_viewed_products,
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)
