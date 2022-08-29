@@ -145,7 +145,7 @@ class OrderItem(models.Model):
 
     @property
     def get_items_price(self):
-        total_item_price = self.quantity * self.product.product_price
+        total_item_price = self.quantity * self.product.get_discount_price
         return total_item_price
 
     @get_items_price.setter
