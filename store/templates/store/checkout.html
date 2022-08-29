@@ -100,7 +100,7 @@
                         {% if item.quantity > 0 %}
                         <div class="d-flex justify-content-between text-dark">
                             <p>{{ item.product.product_name }}</p>
-                            <p>${{ item.get_items_price }} (${{ item.product.product_price }}x{{ item.quantity }})</p>
+                            <p>(${{ item.product.product_price }}x{{ item.quantity }})({{item.color|upper}})({{item.size|upper}})</p>
                         </div>
                         {% endif %}
                         {% endfor %}
