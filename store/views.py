@@ -421,22 +421,27 @@ def review(request, product_id):
     # except ObjectDoesNotExist:
     #     return HttpResponse('You must be a customer to access this page')
     # reviews = product.review_set.all()
+    
     if request.method == 'GET':
         review_form = ReviewForm(request.GET)
         if review_form.is_valid():
-            obj = review_form.save(commit=False)
-            obj.product = product
-            obj.user = customer
-            obj.rating = request.GET.get('rating')
-            if obj.user_review == '':
-                messages.error(request, "Your comment can't be blank.")
+            if OrderItem.objects.filter(order__customer__username=request.user.username, product__product_id=product_id, order__complete=True):
+                obj = review_form.save(commit=False)
+                obj.product = product
+                obj.user = customer
+                obj.rating = request.GET.get('rating')
+                if obj.user_review == '':
+                    messages.error(request, "Your comment can't be blank.")
+                    return redirect('product_details', product.product_id)
+                else:
+                    messages.success(request, 'Your review has been posted.')
+                obj.save()
                 return redirect('product_details', product.product_id)
             else:
-                messages.success(request, 'Your review has been posted.')
-            obj.save()
-            return redirect('product_details', product.product_id)
+                messages.info(request, 'You have not ordered this product. Therefore you cant make comments.')
         else:
             messages.error(request, 'An error was found in the form.')
+            
     else:
         review_form = ReviewForm()
     return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})
