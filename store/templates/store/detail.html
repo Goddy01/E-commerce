@@ -201,7 +201,9 @@
             <div class="col">
                 <div class="owl-carousel related-carousel">
                     {% for item in users_recently_viewed_products %}
+                    {% if not item.product_name == product.product_name %}
                     {% include '../snippets/product_card.html' with l_product=item %}
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
