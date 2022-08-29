@@ -1,6 +1,4 @@
 import uuid
-from django.http import HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
 from Accounts.models import Customer, User, Vendor
 from .models import Order
 # from django.contrib.auth.decorators import login_required
@@ -30,8 +28,6 @@ def website_content(request):
     if request.user.is_authenticated:
         try:
             customer = Customer.objects.get(username=request.user.username)
-        except ObjectDoesNotExist:
-            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
         except:
             customer = Customer.objects.get(device=request.session.get('device'))
     if request.user.id == None:

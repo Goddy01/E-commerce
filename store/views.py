@@ -97,21 +97,7 @@ def vendor_dashboard(request):
 
 def home_page(request):
     context = {}
-    try:
-        user = User.objects.get(device=request.session['device'])
-    except:
-        # if request.session.get('device') == []:
-        device = str(uuid.uuid4())
-        request.session['device'] = device
-        user = User.objects.create(
-            fullname=request.session['device'],
-            username=request.session['device'],
-            email=request.session['device'] + '@gmail.com',
-            address=request.session['device'],
-            first_phone_num='1',
-            device=request.session['device'],
 
-            )
     products = Product.objects.all().order_by('?').distinct()[:6]
     latest_products = Product.objects.all().order_by('-product_id')
 
