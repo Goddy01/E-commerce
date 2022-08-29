@@ -558,4 +558,4 @@ def update_product(request, product_id):
 def delete_product(request, product_id):
     product = Product.objects.get(product_id=product_id)
     product.delete()
-    return redirect('dashboard')
+    return redirect('v_dashboard')

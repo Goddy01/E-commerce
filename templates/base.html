@@ -225,9 +225,9 @@
                                 {% if request.user.username == vendor.username %}
                                 <a href="{% url 'add-product' %}" class="nav-item nav-link">Add Product</a>
 
-                                <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                                <a href="{% url 'v_dashboard' %}" class="nav-item nav-link">Dashboard</a>
                                 {% elif request.user.username in customers %}
-                                <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                                <a href="{% url 'c_dashboard' %}" class="nav-item nav-link">Dashboard</a>
                                 {% endif %}
                             {% endfor %}
                         </div>
