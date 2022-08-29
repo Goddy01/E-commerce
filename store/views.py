@@ -198,6 +198,7 @@ def add_to_cart(request, product_id):
             elif orderitemform.cleaned_data['quantity'] <= 0:
                 orderitem.quantity += 0
                 messages.error(request, 'You must add at least one item.')
+            orderitem.date_added = datetime.now()
             orderitem.save()
     else:
         orderitemform = OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
@@ -354,6 +355,7 @@ def checkout(request):
                     # obj.zipcode = billing_form.cleaned_data['zipcode']
                     obj.customer = Customer.objects.get(username=request.user.username)
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
+                    obj.order.date_ordered = datetime.now()
                     obj.order.complete = not obj.order.complete
                     obj.order.save()
                     obj.save()
