@@ -9,6 +9,7 @@ from django.dispatch import receiver
 from Accounts.models import Customer, User
 from django_countries.fields import CountryField
 from django.core.validators import MinValueValidator, MaxValueValidator
+from decimal import Decimal
 
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
