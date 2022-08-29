@@ -11,38 +11,10 @@
         <div class="row px-xl-5 pb-3">
             {% for product in products %}
             {% if product.number_available != 0 %}
-            <a href="{% url 'product_details' product.product_id %}">
-                <div class="col-lg-4 col-md-6 pb-1">
-                    <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;background-color: #f7f3f3;">
-                        <p class="text-right text-dark">{{ product.number_available }} Products</p>
-                        <!-- <a href="" class="cat-img position-relative overflow-hidden mb-3"> -->
-                            <img class="img-fluid" src="{{ product.product_image1.url }}" alt="Men's Category" style="width: 20rem;height: 21rem;">
-                        <!-- </a> -->
-                        <div style="display: flex;" class="mb-3">
-                            <span class="text-dark">{{product.product_name}}</span>
-                            <span style="margin-left: auto;" class="text-dark">${{product.get_discount_price}}</span>
-                        </div>
-                        <div>
-                            <span class="font-weight-semi-bold m-0 text-dark">
-                                {% if 'M' in product.product_categories and product.product_categories|length == 5 %}
-                                    <p>Men's Wears</p>
-                                {% elif 'W' in product.product_categories %}
-                                    <p>Women's Wears</p>
-                                {% elif 'MC' in product.product_categories %}
-                                    <p>Male Children's Wears</p>
-                                {% elif product.product_categories == 'female children' %}
-                                    <p>Female Children's Wears</p>
-                                {% endif %}
-                            </span>
-                            <a href="{% url 'product_details' product.product_id %}" class="btn btn-sm text-dark p-0 mx-auto">
-                            <i class="fas fa-eye text-primary mr-1"></i>
-                            View Detail
-                        </a>
-                        </div>
-                    </a>
-                    </div>
-                </div>
-                {% endif %}
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                {% include '../snippets/product_card.html' with l_product=product %}
+            </div>
+            {% endif %}
             {% endfor %}
             {% include '../snippets/products_pagination_snippet.html' with p_products=products%}
         </div>
