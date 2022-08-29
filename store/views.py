@@ -129,7 +129,10 @@ def add_to_cart(request, product_id):
         user = User.objects.get(device=request.session.get('device'))
         customer = Customer.objects.get(device=user.device)
     else:
-        customer = Customer.objects.get(username=request.user.username)
+        try:
+            customer = Customer.objects.get(username=request.user.username)
+        except ObjectDoesNotExist:
+            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     product = Product.objects.get(product_id=product_id)
     print('DEVICE IS: ', request.session['device'])
     try:    
@@ -190,7 +193,10 @@ def cart(request):
     context = {}
 
     if request.user.is_authenticated:
-        user = request.user
+        try:
+            user = Customer.objects.get(username=request.user.username)
+        except ObjectDoesNotExist:
+            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     else:
         user = Customer.objects.get(device=request.session.get('device'))
     # try:
@@ -301,6 +307,8 @@ def checkout(request):
 
     if not user.is_authenticated:
         return redirect('user:must_auth')
+    if request.user not in Customer.objects.all():
+        return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
 
     order = Order.objects.filter(customer=user).order_by('-id').first()
     if order is not None:
@@ -430,7 +438,10 @@ def product_details(request, product_id):
         user = User.objects.get(device=request.session.get('device'))
         customer = Customer.objects.get(device=user.device)
     else:
-        customer = Customer.objects.get(username=request.user.username)
+        try:
+            customer = Customer.objects.get(username=request.user.username)
+        except ObjectDoesNotExist:
+            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     user_viewed = UsersRecentlyViewedProduct.objects.create(
         customer = customer,
         product = product,
