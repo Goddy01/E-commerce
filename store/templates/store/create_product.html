@@ -63,6 +63,12 @@
             {{ add_product_form.product_colors }}
         </div>
 
+        <div class="mb-3">
+            <p>{{ add_product_form.discount.label }}</p>
+            <small>(E.g 1-100)</small>
+            {{ add_product_form.discount }} %
+        </div>
+
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- Picture -->
             <div style="margin-bottom: 1rem;">

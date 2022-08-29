@@ -4,9 +4,17 @@
             <img class="img-fluid " src="{{ l_product.product_image1.url }}" alt="" style="height: 20rem;">
         </div>
         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-            <h6 class="text-truncate mb-3">{{l_product.product_name}}</h6>
+            <h6 class="text-truncate mb-3">
+                {{l_product.product_name}}
+                {% if not l_product.discount == 0 %}
+                <small class="text-danger">-{{l_product.discount}}%</small>
+                {% endif %}
+            </h6>
             <div class="d-flex justify-content-center">
-                <h6>${{l_product.product_price}}</h6><h6 class="text-muted ml-2"><del>${{l_product.product_price}}</del></h6>
+                <h6>${{l_product.get_discount_price}}</h6>
+                {% if not l_product.discount == 0 %}
+                <h6 class="text-muted ml-2"><del>${{l_product.product_price}}</del></h6>
+                {% endif %}
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between bg-light border">
