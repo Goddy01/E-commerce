@@ -59,6 +59,12 @@
             {{ update_product_form.product_colors }}
         </div>
 
+        <div class="mb-3">
+            <p>{{ update_product_form.discount.label }}</p>
+            <small>(E.g 1-100)</small>
+            <input type="number" name="discount" value="{{ product.discount }}"> %
+        </div>
+
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
             <!-- Picture -->
             <div style="margin-bottom: 2rem;">

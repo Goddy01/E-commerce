@@ -11,10 +11,11 @@
                 {% endif %}
             </h6>
             <div class="d-flex justify-content-center">
-                <h6>${{l_product.get_discount_price}}</h6>
                 {% if not l_product.discount == 0 %}
                 <h6 class="text-muted ml-2"><del>${{l_product.product_price}}</del></h6>
                 {% endif %}
+
+                <h6 class="ml-2">${{l_product.get_discount_price}}</h6>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between bg-light border">

@@ -93,6 +93,7 @@ class UpdateProductForm(forms.ModelForm):
         product.product_name = self.cleaned_data.get('product_name')
         product.product_description = self.cleaned_data.get('product_description')
         product.product_colors = self.cleaned_data.get('product_colors')
+        product.discount = self.cleaned_data.get('discount')
         product.number_available = self.cleaned_data.get('number_available')
         product.product_price = self.cleaned_data.get('product_price')
         product.product_sizes = self.cleaned_data.get('product_sizes')
