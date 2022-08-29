@@ -205,6 +205,7 @@ def add_to_cart(request, product_id):
 
     if orderitem.quantity <= 0:
         orderitem.quantity = 0
+    orderitem.date_added = datetime.now()
     orderitem.save()
     context = {
         'product': product,

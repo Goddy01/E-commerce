@@ -48,7 +48,6 @@
             <th scope="col">Colors</th>
             <th scope="col">Sizes</th>
             <th scope="col">Date Ordered</th>
-            <th scope="col">Date Added</th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +60,6 @@
                 <td>{{ completed_order_product.product.product_colors|title }}</td>
                 <td>{{ completed_order_product.product.product_sizes|upper }}</td>
                 <td>{{ completed_order_product.order.date_ordered }}</td>
-                <td>{{ completed_order_product.date_added }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -77,6 +75,7 @@
             <th scope="col">Quantity</th>
             <th scope="col">Colors</th>
             <th scope="col">Sizes</th>
+            <th scope="col">Date Added</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +87,7 @@
                 <td>{{ uncompleted_order_product.quantity }}</td>
                 <td>{{ uncompleted_order_product.product.product_colors|title }}</td>
                 <td>{{ uncompleted_order_product.product.product_sizes|upper }}</td>
+                <td>{{ uncompleted_order_product.date_added }}</td>
             </tr>
             {% endfor %}
         </tbody>

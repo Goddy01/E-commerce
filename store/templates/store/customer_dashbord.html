@@ -17,6 +17,7 @@
             <th scope="col">Quantity</th>
             <th scope="col">Color</th>
             <th scope="col">Size</th>
+            <th scope="col">Date Added</th>
             <th scope="col">Date Ordered</th>
           </tr>
         </thead>
@@ -30,6 +31,7 @@
                 <td>{{ completed_orders.color|title }}</td>
                 <td>{{ completed_orders.size|upper }}</td>
                 <td>{{ completed_orders.date_added }}</td>
+                <td>{{ completed_orders.order.date_ordered }}</td>
             </tr>
             {% endfor %}
         </tbody>
