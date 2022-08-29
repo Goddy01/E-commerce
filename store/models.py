@@ -42,6 +42,11 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+    @property
+    def get_discount_price(self):
+        discount_price = self.product_price - (self.product_price * self.discount)/100
+        return discount_price
+
 class UsersRecentlyViewedProduct(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =       models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
