@@ -31,6 +31,7 @@ from store.views import (
     get_product_queryset, review,
     vendor_dashboard, delete_product,
     vendor_product_detail, update_product,
+    customer_dashboard,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,7 +43,7 @@ urlpatterns = [
     path('search/', get_product_queryset, name="search"),
     path('<product_id>/reviews/', review, name="review"),
     path('vendor_dashboard/', vendor_dashboard, name='v_dashboard'),
-    path('customer_dashboard/', vendor_dashboard, name='c_dashboard'),
+    path('customer_dashboard/', customer_dashboard, name='c_dashboard'),
     path('<product_id>/vendor_product_details/', vendor_product_detail, name='v_product_details'),
     path('<product_id>/update_product', update_product, name="update_product"),
     path('<product_id>/delete_product', delete_product, name="delete_product"),

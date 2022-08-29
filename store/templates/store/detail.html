@@ -65,6 +65,9 @@
                         </div>
                         <small class="pt-1">({{ product.num_of_ratings }} Ratings)</small>
                     </div>
+                    <div class="text-dark font-weight-medium mb-2">
+                        Quantity Available: {{ product.number_available }}
+                    </div>
                     <div style="display: inline;">
                         {% if not product.discount == 0 %}
                         <h3 class="font-weight-semi-bold mb-4 text-muted">

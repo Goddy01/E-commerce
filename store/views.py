@@ -96,15 +96,16 @@ def vendor_dashboard(request):
 
 def customer_dashboard(request):
     customers = Customer.objects.all()
-    for customer in customers:
-        if customer.username != request.user.username:
+    vendors = Vendor.objects.all()
+    for vendor in vendors:
+        if vendor.username == request.user.username:
             return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     try:
         completed_orders = Order.objects.filter(customer__username=request.user.username, complete=True)
         uncompleted_orders = Order.objects.filter(customer__username=request.user.username, complete=False)
     except:
         completed_orders = Order.objects.filter(customer__device=request.session.get('device'), complete=True)
-    return render(request, 'store/customer_dashboard.html', {'completed_orders': completed_orders, 'uncompleted_orders': uncompleted_orders})
+    return render(request, 'store/customer_dashbord.html', {'completed_orders': completed_orders, 'uncompleted_orders': uncompleted_orders})
 
 def home_page(request):
     context = {}
@@ -317,21 +318,28 @@ def checkout(request):
                 if billing_form.is_valid():
                     print('yooo')
                     obj = billing_form.save(commit=False)
+                    # obj.phone_num1 = billing_form.cleaned_data['phone_num1']
+                    # obj.fullname = billing_form.cleaned_data['fullname']
+                    # obj.email = billing_form.cleaned_data['email']
+                    # obj.address = billing_form.cleaned_data['address']
+                    # obj.country = billing_form.cleaned_data['country']
+                    # obj.city = billing_form.cleaned_data['city']
+                    # obj.state = billing_form.cleaned_data['state']
+                    # obj.zipcode = billing_form.cleaned_data['zipcode']
                     obj.customer = Customer.objects.get(username=request.user.username)
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
-                    obj.order.complete = True
+                    obj.order.complete = not obj.order.complete
                     obj.order.save()
-                    order.complete = True
-                    order.save()
                     obj.save()
+                    # order.complete = 
 
                     items = OrderItem.objects.filter(order=obj.order)
                     for item in items:
                         item.product.number_available -= item.quantity
                         item.product.save()
-                    billing_form= obj
+                    # billing_form= obj
 
-                    messages.success(request, 'Your order has been made. Thank you for patronizing us!')
+                    messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
                     # i = 0
                     # if i == 0:
                     #     return redirect('home')
