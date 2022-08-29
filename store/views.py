@@ -140,8 +140,8 @@ def add_to_cart(request, product_id):
     except:
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
-    # orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
-    orderitem = OrderItem.objects.filter(product=product, order=order).last()
+    orderitem, created = OrderItem.objects.get_or_create(product=product, order=order, color=request.POST.get('color'), size=request.POST.get('size'))
+    orderitems = OrderItem.objects.filter(product=product, order=order)
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in product.product_colors.split(','):
@@ -177,12 +177,17 @@ def add_to_cart(request, product_id):
 
                     print('O s: ', OrderItem.objects.filter(order=order, product=product).last().size)
                     print('O c: ', OrderItem.objects.filter(order=order, product=product).last().color)
-                
-                    if orderitemform.cleaned_data['size'] != OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] != OrderItem.objects.filter(order=order, product=product).last().color:
-                        OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
-                        print('omo')
-                    elif orderitemform.cleaned_data['size'] == OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] == OrderItem.objects.filter(order=order, product=product).last().color:
+
+                    # for item in orderitems:
+                    if orderitem.size == orderitemform.cleaned_data['size'] and orderitemform.cleaned_data['color'] == orderitem.color:
                         orderitem.quantity += orderitemform.cleaned_data['quantity']
+                    else:
+                        OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
+                    # if orderitemform.cleaned_data['size'] != OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] != OrderItem.objects.filter(order=order, product=product).last().color:
+                    #     OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
+                        print('omo')
+                    # elif orderitemform.cleaned_data['size'] == OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] == OrderItem.objects.filter(order=order, product=product).last().color:
+                    #     orderitem.quantity += orderitemform.cleaned_data['quantity']
                     print('Current qty is: ', orderitem.quantity)
                     messages.success(request, 'Item has been added to Cart.')
                 else:
