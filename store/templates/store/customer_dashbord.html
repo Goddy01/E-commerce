@@ -8,52 +8,52 @@
         }
     </style>
     <table class="table">
-        <h3>Ordered Products</h3>
+        <h3>Completed Orders</h3>
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Colors</th>
-            <th scope="col">Sizes</th>
+            <th scope="col">Color</th>
+            <th scope="col">Size</th>
           </tr>
         </thead>
         <tbody>
-            {% for completed_orders in completed_orderss %}
+            {% for completed_orders in completed_orders %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ completed_orders.product.product_name|title }}</td>
                 <td>${{ completed_orders.product.product_price }}</td>
                 <td>{{ completed_orders.quantity }}</td>
-                <td>{{ completed_orders.product.product_colors|title }}</td>
-                <td>{{ completed_orders.product.product_sizes|upper }}</td>
+                <td>{{ completed_orders.color|title }}</td>
+                <td>{{ completed_orders.size|upper }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <table class="table">
-        <h3>Uncompleted Order Products</h3>
+        <h3>Uncompleted Order</h3>
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Colors</th>
-            <th scope="col">Sizes</th>
+            <th scope="col">Color</th>
+            <th scope="col">Size</th>
           </tr>
         </thead>
         <tbody>
-            {% for uncompleted_orders in uncompleted_orderss %}
+            {% for uncompleted_orders in uncompleted_orders %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ uncompleted_orders.product.product_name|title }}</td>
                 <td>${{ uncompleted_orders.product.product_price }}</td>
                 <td>{{ uncompleted_orders.quantity }}</td>
-                <td>{{ uncompleted_orders.product.product_colors|title }}</td>
-                <td>{{ uncompleted_orders.product.product_sizes|upper }}</td>
+                <td>{{ uncompleted_orders.color|title }}</td>
+                <td>{{ uncompleted_orders.size|upper }}</td>
             </tr>
             {% endfor %}
         </tbody>
