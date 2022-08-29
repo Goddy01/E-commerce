@@ -226,9 +226,12 @@
                                 <a href="{% url 'add-product' %}" class="nav-item nav-link">Add Product</a>
 
                                 <a href="{% url 'v_dashboard' %}" class="nav-item nav-link">Dashboard</a>
-                                {% elif request.user.username in customers %}
-                                <a href="{% url 'c_dashboard' %}" class="nav-item nav-link">Dashboard</a>
                                 {% endif %}
+                            {% endfor %}
+                            {% for c in customers %}
+                            {% if c.username == request.user.username %}
+                            <a href="{% url 'c_dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                            {% endif %}
                             {% endfor %}
                         </div>
                         <div class="navbar-nav ml-auto py-0">
