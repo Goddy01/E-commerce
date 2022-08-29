@@ -140,7 +140,8 @@ def add_to_cart(request, product_id):
     except:
         order = Order.objects.filter(customer=customer).order_by('-id').first()
     # orderitems = []
-    orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
+    # orderitem, created = OrderItem.objects.get_or_create(product=product, order=order)
+    orderitem = OrderItem.objects.filter(product=product, order=order).last()
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in product.product_colors.split(','):
@@ -157,17 +158,32 @@ def add_to_cart(request, product_id):
         if orderitemform.is_valid():
             print('yaga')
             # obj = orderitemform.save(commit=False)
-            orderitem.size = orderitemform.cleaned_data['size']
-            orderitem.color = orderitemform.cleaned_data['color']
+            
+            # elif orderitemform.cleaned_data['color'] == orderitem.color:
+            #     orderitem.quantity += orderitemform.cleaned_data['quantity']
+            # else:
+            #     orderitem.color = orderitemform.cleaned_data['color']
             sum_qty = orderitemform.cleaned_data['quantity'] + orderitem.quantity
             # print(sum_qty)
             if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available:
                 orderitem.quantity += 0
                 messages.error(request, 'Quantity more than available product.')
                 OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-            elif orderitemform.cleaned_data['quantity'] < orderitem.product.number_available and orderitemform.cleaned_data['quantity'] != 0:
+            if orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
                 if sum_qty <= orderitem.product.number_available:
-                    orderitem.quantity += orderitemform.cleaned_data['quantity']
+                    # orderitem.quantity += orderitemform.cleaned_data['quantity']
+                    print('FORM s: ', orderitemform.cleaned_data['size'])
+                    print('FORM c: ', orderitemform.cleaned_data['color'])
+
+                    print('O s: ', OrderItem.objects.filter(order=order, product=product).last().size)
+                    print('O c: ', OrderItem.objects.filter(order=order, product=product).last().color)
+                
+                    if orderitemform.cleaned_data['size'] != OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] != OrderItem.objects.filter(order=order, product=product).last().color:
+                        OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
+                        print('omo')
+                    elif orderitemform.cleaned_data['size'] == OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] == OrderItem.objects.filter(order=order, product=product).last().color:
+                        orderitem.quantity += orderitemform.cleaned_data['quantity']
+                    print('Current qty is: ', orderitem.quantity)
                     messages.success(request, 'Item has been added to Cart.')
                 else:
                     messages.error(request, 'Quantity added more than the available product number.')
