@@ -20,14 +20,14 @@
           </tr>
         </thead>
         <tbody>
-            {% for completed_order_product in completed_order_products %}
+            {% for completed_orders in completed_orderss %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ completed_order_product.product.product_name|title }}</td>
-                <td>${{ completed_order_product.product.product_price }}</td>
-                <td>{{ completed_order_product.quantity }}</td>
-                <td>{{ completed_order_product.product.product_colors|title }}</td>
-                <td>{{ completed_order_product.product.product_sizes|upper }}</td>
+                <td>{{ completed_orders.product.product_name|title }}</td>
+                <td>${{ completed_orders.product.product_price }}</td>
+                <td>{{ completed_orders.quantity }}</td>
+                <td>{{ completed_orders.product.product_colors|title }}</td>
+                <td>{{ completed_orders.product.product_sizes|upper }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -46,14 +46,14 @@
           </tr>
         </thead>
         <tbody>
-            {% for uncompleted_order_product in uncompleted_order_products %}
+            {% for uncompleted_orders in uncompleted_orderss %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ uncompleted_order_product.product.product_name|title }}</td>
-                <td>${{ uncompleted_order_product.product.product_price }}</td>
-                <td>{{ uncompleted_order_product.quantity }}</td>
-                <td>{{ uncompleted_order_product.product.product_colors|title }}</td>
-                <td>{{ uncompleted_order_product.product.product_sizes|upper }}</td>
+                <td>{{ uncompleted_orders.product.product_name|title }}</td>
+                <td>${{ uncompleted_orders.product.product_price }}</td>
+                <td>{{ uncompleted_orders.quantity }}</td>
+                <td>{{ uncompleted_orders.product.product_colors|title }}</td>
+                <td>{{ uncompleted_orders.product.product_sizes|upper }}</td>
             </tr>
             {% endfor %}
         </tbody>

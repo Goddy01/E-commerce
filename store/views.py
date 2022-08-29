@@ -100,10 +100,11 @@ def customer_dashboard(request):
         if customer.username != request.user.username:
             return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     try:
-        orders = Order.objects.filter(customer__username=request.user.username)
+        completed_orders = Order.objects.filter(customer__username=request.user.username, complete=True)
+        uncompleted_orders = Order.objects.filter(customer__username=request.user.username, complete=False)
     except:
-        orders = Order.objects.filter(customer__device=request.session.get('device'))
-    return render(request, 'store/customer_dashboard.html', {'orders': orders})
+        completed_orders = Order.objects.filter(customer__device=request.session.get('device'), complete=True)
+    return render(request, 'store/customer_dashboard.html', {'completed_orders': completed_orders, 'uncompleted_orders': uncompleted_orders})
 
 def home_page(request):
     context = {}
