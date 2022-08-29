@@ -163,7 +163,10 @@ def add_to_cart(request, product_id):
             #     orderitem.quantity += orderitemform.cleaned_data['quantity']
             # else:
             #     orderitem.color = orderitemform.cleaned_data['color']
-            sum_qty = orderitemform.cleaned_data['quantity'] + orderitem.quantity
+            sum_qty = 0
+            for i in OrderItem.objects.filter(order=order, product=product):
+                sum_qty += i.quantity
+            sum_qty = orderitemform.cleaned_data['quantity'] + sum_qty
             # print(sum_qty)
             if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available:
                 orderitem.quantity += 0
