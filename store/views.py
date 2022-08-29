@@ -80,6 +80,13 @@ def add_product_view(request):
     return render(request,'store/create_product.html',context)
 
 def vendor_dashboard(request):
+    vendors = Vendor.objects.all()
+    if not request.user.is_authenticated:
+        return HttpResponse('You must be authorized to visit this page.')
+    for vendor in vendors:
+        if vendor.username != request.user.username:
+            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    
     vendor_username = request.user.username
     vendor = Vendor.objects.get(username=vendor_username)
     vendor_products = Product.objects.filter(seller=vendor)
