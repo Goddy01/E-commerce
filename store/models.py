@@ -8,11 +8,12 @@ from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 from Accounts.models import Customer, User
 from django_countries.fields import CountryField
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 def upload_location(instance, filename):
     return f'product/{str(instance.seller)}/{str(instance.product_name)}/{str(instance.product_id)}-{filename}'
 
-
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 class Product(models.Model):
     """Creates these fields in the database for a new product."""
 
@@ -37,7 +38,7 @@ class Product(models.Model):
     num_of_visits =             models.IntegerField(blank=True, null=True, default=0)
     last_visit =                models.DateTimeField(auto_now=True, blank=True, null=True)
     date_added =                models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
+    discount =                  models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
     def __str__(self):
         return self.product_name
 
