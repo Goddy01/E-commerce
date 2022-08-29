@@ -94,6 +94,16 @@ def vendor_dashboard(request):
     uncompleted_order_products = OrderItem.objects.filter(order__complete=False)
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
+def customer_dashboard(request):
+    customers = Customer.objects.all()
+    for customer in customers:
+        if customer.username != request.user.username:
+            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
+    try:
+        orders = Order.objects.filter(customer__username=request.user.username)
+    except:
+        orders = Order.objects.filter(customer__device=request.session.get('device'))
+    return render(request, 'store/customer_dashboard.html', {'orders': orders})
 
 def home_page(request):
     context = {}
