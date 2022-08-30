@@ -11,3 +11,15 @@ class WalletInfo(APIView):
         wallet = Wallet.objects.get(user=request.user)
         data = WalletSerializer(wallet).data
         return Response(data)
+
+
+class DepositFunds(APIView):
+
+    def post(self, request):
+        serializer = DepositSerializer(
+            data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+
+        resp = serializer.save()
+        return Response(resp)
+
