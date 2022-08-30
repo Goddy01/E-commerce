@@ -257,14 +257,14 @@ def cart(request):
 
     if len(items) == 0:
         
-        order.total_order_price = 10
+        order.total_order_price = 100
         order.save()
         # print('Get Total1: ', order.total_order_price)
         print('brozo1.0')
         return redirect('no_cart')
     else:
         print('Get Total2: ', order.total_order_price)
-        order.total_order_price = order.get_cart_total + 10
+        order.total_order_price = order.get_cart_total + 100
         subtotal = order.get_cart_total
         order.save()
         total = order.total_order_price
@@ -286,7 +286,7 @@ def quantity_increment(request, item_id):
         order_item.quantity = order_item.product.number_available
     order_item.save()
     subtotal = order_item.order.get_cart_total
-    total = subtotal + 10
+    total = subtotal + 100
     i = 1
     if i == 1:
         return redirect('cart')
@@ -310,7 +310,7 @@ def quantity_decrement(request, item_id):
         if i == 1:
             return redirect('cart')
         subtotal = order_item.order.get_cart_total
-        total = subtotal + 10
+        total = subtotal + 100
     return render(request, 'store/cart.html', {'sub_total':subtotal, 'total':total})
 
 
