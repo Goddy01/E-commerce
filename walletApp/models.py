@@ -26,7 +26,6 @@ class Payment(models.Model):
             if not object_with_similar_ref:
                 self.ref = ref
         super().save(*args, **kwargs)
-
 # class Wallet(models.Model):
 #     user = models.OneToOneField(
 #         User, null=True, on_delete=models.CASCADE)
