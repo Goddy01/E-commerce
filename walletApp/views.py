@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import PaymentForm
+from .models import Payment
 from datetime import datetime
 from django.contrib import messages
 from django.conf import settings
@@ -19,3 +20,8 @@ def initiate_payment(request: HttpRequest, amount, email) -> HttpResponse:
     else:
         payment_form = PaymentForm()
     return render(request, 'store/checkout.html', {'payment_form': payment_form})
+
+def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
+    payment = get_object_or_404(Payment, ref=ref)
+    verified = payment.verify_payment()
+    return redirect('initiate-payment')
