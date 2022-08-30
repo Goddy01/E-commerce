@@ -29,6 +29,16 @@ class Payment(models.Model):
 
     def amount_value(self) -> int:
         return self.amount
+
+    def verify_payment(self):
+        paystack = Paystack()
+        status, result = paystack.verify_payment(self.ref, self.amount)
+        if status:
+            self.verified = True
+            self.save()
+            if self.verified:
+                return True
+        return False
 # class Wallet(models.Model):
 #     user = models.OneToOneField(
 #         User, null=True, on_delete=models.CASCADE)
