@@ -177,6 +177,10 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 AUTH_USER_MODEL = 'Accounts.User'
 
+# PAYSTACK
+PAYSTACK_SECRET_KEY = os.environ.get('PAYSTACK_SECRET_KEY')
+PAYSTACK_PUBLIC_KEY = os.environ.get('PAYSTACK_PUBLIC_KEY')
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
