@@ -1,4 +1,4 @@
-from E_commerce import settings
+from django.conf import settings
 import requests, json
 
 class PayStack:
@@ -7,12 +7,14 @@ class PayStack:
 
     def verify_payment(self, ref, *args, **kwargs):
         # path = f'/transaction/verify/{ref}'
-        url = 'https://api.paystack.co/transaction/initialize'
+        # url = 'https://api.paystack.co/transaction/initialize'
 
         headers = {
-            {"Authorization": f"Bearer {self.PAYSTACK_SECRET_KEY}",}}
+            "Authorization": "Bearer {}".format(self.PAYSTACK_SECRET_KEY),
+            "Content-Type": "application/json",
+            }
         
-        r = requests.get(url, headers=headers)
+        r = requests.get(self.url, headers=headers)
         if r.status_code == 200:
             response = r.json()
             return response['status'], response['data']
