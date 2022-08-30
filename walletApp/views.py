@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import PaymentForm
 from .models import Payment
 from datetime import datetime
@@ -14,7 +14,7 @@ def initiate_payment(request: HttpRequest, amount, email) -> HttpResponse:
             payment.amount = amount
             payment.email = email
             payment.save()
-            render(request, 'store/checkout.html', {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
+            return render(request, 'store/checkout.html', {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
         else:
             messages.error(request, 'Payment Failed!')
     else:
@@ -24,4 +24,8 @@ def initiate_payment(request: HttpRequest, amount, email) -> HttpResponse:
 def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
     payment = get_object_or_404(Payment, ref=ref)
     verified = payment.verify_payment()
+    if verified:
+        messages.success(request, 'Verfication Successful')
+    else:
+        messages.error(request, 'Verification Failed')
     return redirect('initiate-payment')
