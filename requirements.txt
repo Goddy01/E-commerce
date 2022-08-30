@@ -21,6 +21,7 @@ django-extensions==3.1.5
 django-phone-field==1.8.1
 django-phonenumber-field==6.1.0
 django-shell-plus==1.1.7
+djangorestframework==3.13.1
 entrypoints==0.3
 et-xmlfile==1.1.0
 Faker==13.2.0
@@ -70,11 +71,13 @@ pyparsing==3.0.6
 pypiwin32==223
 pyrsistent==0.18.0
 python-dateutil==2.8.2
+pytz==2022.2.1
 pywin32==303
 pywinpty==1.1.6
 pyzmq==22.3.0
 qtconsole==5.2.2
 QtPy==2.0.0
+requests==2.28.1
 rfc3986==1.5.0
 Send2Trash==1.8.0
 six==1.16.0
@@ -87,6 +90,7 @@ traitlets==5.1.1
 typing_extensions==4.3.0
 tzdata==2021.5
 uncertainties==3.1.6
+urllib3==1.26.12
 validus==0.3.0
 virtualenv==20.14.1
 wcwidth==0.2.5

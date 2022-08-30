@@ -20,3 +20,8 @@ class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         fields = ['id', 'currency', 'balance']
+
+def is_amount(value):
+    if value <= 0:
+        raise serializers.ValidationError({"detail": "Invalid Amount"})
+    return value
