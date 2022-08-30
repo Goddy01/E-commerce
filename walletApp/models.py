@@ -1,6 +1,8 @@
+from time import timezone
 from django.db import models
 from Accounts.models import User
 import secrets
+
 
 # Create your models here.
 
@@ -9,7 +11,7 @@ class Payment(models.Model):
     ref =           models.CharField(max_length=200)
     email =         models.EmailField()
     verified =      models.BooleanField(default=False)
-    date_created =  models.DateTimeField(auto_add_now=True)
+    date_created =  models.DateTimeField(null=True)
 
     class Meta:
         ordering = ('-date_created', )
