@@ -97,6 +97,7 @@
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                        <h4 class="font-weight-semi-bold m-0">Make Payment (in Naira)</h4>
                     </div>
                     <div class="card-body font-weight-semi-bold">
                         <h5 class="font-weight-medium mb-3">Products</h5>
@@ -104,7 +105,11 @@
                         {% if item.quantity > 0 %}
                         <div class="d-flex justify-content-between text-dark">
                             <p>{{ item.product.product_name }}</p>
-                            <p>(#{{ item.product.product_price }}x{{ item.quantity }})({{item.color|upper}})({{item.size|upper}})</p>
+                            {% if item.product.discount == 0 %}
+                            <span>(#{{ item.product.product_price }}x{{ item.quantity }})({{item.color|upper}})({{item.size|upper}})</span>
+                            {% else %}
+                            <span>(#{{ item.product.get_discount_price }}x{{ item.quantity }})({{item.color|upper}})({{item.size|upper}})</span>
+                            {% endif %}
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -139,7 +144,8 @@
                         <p class="mt-3 font-weight-bold text-dark">Paystack</p>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <label class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" id="make-payment" type="submit" for="submit-form">Place Order</label>
+                        <script src="https://js.paystack.co/v1/inline.js"></script>
+                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="payWithPayStack()" id="django-paystack-button" type="submit" for="submit-form">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -149,12 +155,27 @@
 
 
     <script>
-        document.getElementById('make-payment').addEventListener('click', function(e) {
-            submitFormData()
-        })
-
-        function submitFormData() {
-            console.log('Payment button has been clicked')
+        function payWithPayStack() {
+            let currency = "NGN";
+            let plan = "";
+            let = "{{ payment.ref }}";
+            let obj = {
+                key: "{{ paystack_public_key }}",
+                email: "{{ payment.email }}",
+                amount: "{{ payment.amount_value }}",
+                ref: ref,
+                callback: function(response){
+                    window.location.href = "{% url 'verify-payment' payment.ref %}"
+                }
+            }
+            if (Boolean(currency)) {
+                obj.currency = currency.toUpperCase()
+            }
+            if (Boolean(plan)) {
+                obj.plan = plan;
+            }
+            var handler = PaystackPop.setup(obj);
+            handler.openIframe();
         }
     </script>
 

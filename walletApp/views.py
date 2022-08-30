@@ -13,7 +13,7 @@ def initiate_payment(request: HttpRequest, amount, email) -> HttpResponse:
             payment.amount = amount
             payment.email = email
             payment.save()
-            render(request, 'make_payment.html', {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
+            render(request, 'store/checkout.html', {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
         else:
             messages.error(request, 'Payment Failed!')
     else:
