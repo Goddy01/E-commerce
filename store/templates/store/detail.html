@@ -75,12 +75,12 @@
                     <div style="display: inline;">
                         {% if not product.discount == 0 %}
                         <h3 class="font-weight-semi-bold mb-4 text-muted">
-                            <del>${{ product.product_price }}</del>
+                            <del>#{{ product.product_price }}</del>
                             <small class="text-danger">-{{product.discount}}%</small>
                         </h3>
-                        <h3 class="font-weight-semi-bold mb-4">${{ product.get_discount_price }}</h3>
+                        <h3 class="font-weight-semi-bold mb-4">#{{ product.get_discount_price }}</h3>
                         {% else %}
-                        <h3 class="font-weight-semi-bold mb-4">${{ product.product_price }}</h3>
+                        <h3 class="font-weight-semi-bold mb-4">#{{ product.product_price }}</h3>
                         {% endif %}
                     </div>
                     <div class="d-flex mb-3">
@@ -241,7 +241,7 @@
     let star5 = document.getElementById('s-5')
     star5.addEventListener("click", function (){showStar(5)});
     function showStar(star_num) {
-        // console.log(`star-${star_num}`)
+        // console.log(`star-#{star_num}`)
         if (star_num == 1) {
             // Activates star1 when clicked
             star1.setAttribute('class', 'fas fa-star active')
@@ -295,8 +295,8 @@
             star5.setAttribute('class', 'fas fa-star active')
             
         }
-        // document.getElementById(`s-${star_num}`).setAttribute('class', 'fas fa-star')
-        // console.log(document.getElementById(`s-${star_num}`))
+        // document.getElementById(`s-#{star_num}`).setAttribute('class', 'fas fa-star')
+        // console.log(document.getElementById(`s-#{star_num}`))
     }
 </script>
 {% endblock content %}
