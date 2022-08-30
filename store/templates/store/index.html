@@ -68,11 +68,11 @@
         </div>
         <div class="row px-xl-5 pb-3">
             {% for l_product in latest_products %}
-                {% if l_product.number_available != 0 %}
+                
                 <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                     {% include '../snippets/product_card.html' %}
                 </div>
-                {% endif %}
+                
             {% endfor %}
         </div>
     </div>

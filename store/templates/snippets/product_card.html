@@ -5,6 +5,9 @@
         </div>
         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
             <h6 class="text-truncate mb-3">
+                {% if l_product.number_available == 0 %}
+                <p class="text-danger">Out of Stock</p>
+                {% endif %}
                 {{l_product.product_name}}
                 {% if not l_product.discount == 0 %}
                 <small class="text-danger">-{{l_product.discount}}%</small>

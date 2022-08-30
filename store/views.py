@@ -169,7 +169,9 @@ def add_to_cart(request, product_id):
                 sum_qty += i.quantity
             sum_qty = orderitemform.cleaned_data['quantity'] + sum_qty
             # print(sum_qty)
-            if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available:
+            if orderitem.product.number_available == 0:
+                messages.info(request, 'Product is out of stock.')
+            if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available and orderitem.product.number_available != 0:
                 orderitem.quantity += 0
                 messages.error(request, 'Quantity more than available product.')
                 OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
@@ -194,8 +196,6 @@ def add_to_cart(request, product_id):
                     #     orderitem.quantity += orderitemform.cleaned_data['quantity']
                     print('Current qty is: ', orderitem.quantity)
                     messages.success(request, 'Item has been added to Cart.')
-                else:
-                    messages.error(request, 'Quantity added more than the available product number.')
             elif orderitemform.cleaned_data['quantity'] <= 0:
                 orderitem.quantity += 0
                 messages.error(request, 'You must add at least one item.')

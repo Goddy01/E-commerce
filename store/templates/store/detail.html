@@ -66,7 +66,11 @@
                         <small class="pt-1">({{ product.num_of_ratings }} Ratings)</small>
                     </div>
                     <div class="text-dark font-weight-medium mb-2">
+                        {% if product.number_available == 0 %}
+                        <p class="text-danger">Out of Stock</p>
+                        {% else %}
                         Quantity Available: {{ product.number_available }}
+                        {% endif %}
                     </div>
                     <div style="display: inline;">
                         {% if not product.discount == 0 %}
