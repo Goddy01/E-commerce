@@ -1,4 +1,5 @@
 import json, uuid
+import itertools 
 from datetime import datetime
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
@@ -481,6 +482,8 @@ def product_details(request, product_id):
             customer = Customer.objects.get(username=request.user.username)
         except ObjectDoesNotExist:
             return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
+    product.customer_viewed_by = customer
+    product.save()
     user_viewed = UsersRecentlyViewedProduct.objects.create(
         customer = customer,
         product = product,
@@ -491,18 +494,16 @@ def product_details(request, product_id):
     except:
         order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
     
-    users_recently_viewed_products_id = UsersRecentlyViewedProduct.objects.filter(customer=customer).order_by('-time_visited').values('product').distinct()
-    
-    users_recently_viewed_products = sorted(customer.usersrecentlyviewedproduct_set.all(), key=attrgetter('time_visited'), reverse=True)
-    
-    users_recently_viewed_products = customer.usersrecentlyviewedproduct_set.all().values('product').distinct()
-    print('ID RE: ', users_recently_viewed_products)
-    users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products)
-    
-    users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).values('product').distinct()
-
-    users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products)
-    print('YEEE2: ', users_recently_viewed_products)
+    users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).order_by('-time_visited').values('product').distinct()
+    users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products, customer_viewed_by=customer).order_by('-last_visit')
+    for i in users_recently_viewed_products:
+        if i.product_id == product_id:
+            users_recently_viewed_products
+    # try:
+    #     request.session.get['p_id']
+    # except:
+    #     request.session['p_id'] = product_id
+    print('WEST:', users_recently_viewed_products)
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
@@ -519,12 +520,13 @@ def product_details(request, product_id):
     
     context = {
         'product': product,
+        'productss': Product.objects.all(),
         'product_sizes': product_sizes,
         'product_colors': product_colors,
         'orderitemform': orderitemform,
         'reviews': pagination(request, reviews, 5),
         'reviews_counter': reviews_counter,
-        'users_recently_viewed_products': users_recently_viewed_products[:5],
+        'users_recently_viewed_products': users_recently_viewed_products[:4],
     }
     # product_sizes = 
     return render(request, 'store/detail.html', context)

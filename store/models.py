@@ -40,6 +40,7 @@ class Product(models.Model):
     last_visit =                models.DateTimeField(auto_now=True, blank=True, null=True)
     date_added =                models.DateTimeField(auto_now_add=True, null=True, blank=True)
     discount =                  models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR, null=True, blank=False)
+    customer_viewed_by =        models.ForeignKey(Customer, related_name='related_secondary_user', on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.product_name
 
