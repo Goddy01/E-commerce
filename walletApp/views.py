@@ -22,10 +22,20 @@ def initiate_payment(request: HttpRequest, amount, email) -> HttpResponse:
     return render(request, 'store/checkout.html', {'payment_form': payment_form})
 
 def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
-    payment = get_object_or_404(Payment, ref=ref)
-    verified = payment.verify_payment()
-    if verified:
-        messages.success(request, 'Verfication Successful')
+    trxref = request.GET["trxref"]
+    if trxref != ref:
+        messages.error(
+            request,
+            "The transaction reference passed was different from the actual reference. Please do not modify data during transactions",
+        )
+    payment: Payment = get_object_or_404(Payment, ref=ref)
+    if payment.verify_payment():
+        messages.success(
+            request, f"Payment Completed Successfully, NGN #{payment.amount}."
+        )
+        messages.success(
+            request, f"Your new credit balance is GH₵ {payment.user.credit}."
+        )
     else:
-        messages.error(request, 'Verification Failed')
-    return redirect('initiate-payment')
+        messages.warning(request, "Sorry, your payment could not be confirmed.")
+    return redirect("initiate-payment")

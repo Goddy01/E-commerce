@@ -29,7 +29,7 @@ class Payment(models.Model):
         super().save(*args, **kwargs)
 
     def amount_value(self) -> int:
-        return self.amount
+        return self.amount*100
 
     def verify_payment(self):
         paystack = PayStack()

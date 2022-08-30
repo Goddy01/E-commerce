@@ -1,5 +1,5 @@
-from django.conf import settings
-import requests
+from E_commerce import settings
+import requests, json
 
 class PayStack:
     PAYSTACK_SECRET_KEY = settings.PAYSTACK_SECRET_KEY
@@ -7,11 +7,10 @@ class PayStack:
 
     def verify_payment(self, ref, *args, **kwargs):
         # path = f'/transaction/verify/{ref}'
+        url = 'https://api.paystack.co/transaction/initialize'
 
         headers = {
-            {"Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
-            "Content-Type": 'application/json',
-            }}
+            {"Authorization": f"Bearer {self.PAYSTACK_SECRET_KEY}",}}
         
         r = requests.get(url, headers=headers)
         if r.status_code == 200:
