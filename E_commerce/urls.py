@@ -35,7 +35,7 @@ from store.views import (
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('django.contrib.auth.urls')),
+    path('', include('walletApp.urls')),
     path('', home_page, name='home'),
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
     # path('shop/', ShopDetailView.as_view(), name='shop'),

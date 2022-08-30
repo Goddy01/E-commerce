@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Accounts',
     'Vendor',
     'store',
+    'walletApp',
     'phonenumber_field',
     'django_countries',
 
