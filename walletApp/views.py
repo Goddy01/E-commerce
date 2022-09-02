@@ -4,6 +4,8 @@ from datetime import datetime
 from django.contrib import messages
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
+from store.models import BillingAddress, Order
 
 def make_payment(request):
-    return render(request, 'make_payment.html')
+    order = Order.objects.filter(customer__email=request.user.email).order_by('-id').first()
+    return render(request, 'make_payment.html', {'total':order.total_order_price, 'email': order.customer.email})

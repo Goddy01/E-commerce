@@ -4,18 +4,19 @@
 {% block content %}
     <div class="container">
         <div class="d-flex row justify-content-center align-items-center py-md-5 py-3">
-            <div class="col-12">
+            <form class="col-12">
                 <h4>Make Payment (in Naira)</h4>
                 <script src="https://js.paystack.co/v1/inline.js"></script>
-                <button class="btn btn-large btn-success" onclick="makePyament ()"></button>
-            </div>
+                <h4>#{{ total }}</h4>
+                <button class="btn btn-large btn-success" onclick="makePayment ()"></button>
+            </form>
         </div>
     </div>
     <script>
         function makePayment(){
         var handler = PaystackPop.setup({
                 key: 'pk_test_94c9c0292b58b03a1e0feaa5b1b1da81b04b0873', //public key from your paystack
-                email: '{{request.user.email}}',
+                email: '{{email}}',
                 amount:'{{ total }}' * 100,
                 currency:'NGN',
                 ref: ''+Math.floor((Math.random() * 100000000) + 1),
