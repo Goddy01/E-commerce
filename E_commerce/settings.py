@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'walletApp',
     'phonenumber_field',
     'django_countries',
+    'paystack',
 
     'django.contrib.admin',
     'django.contrib.auth',
