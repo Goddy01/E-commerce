@@ -372,10 +372,8 @@ def checkout(request):
                         item.product.number_available -= item.quantity
                         item.product.save()
                     # billing_form= obj
-                    messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
-                    # i = 0
-                    # if i == 0:
-                    #     return redirect('home')
+                    # messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
+                    return redirect('wallet:make-payment')
                 else:
                     messages.error(request, 'Unable to checkout.')
             else:

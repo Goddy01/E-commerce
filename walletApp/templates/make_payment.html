@@ -1,4 +1,5 @@
-<!-- {% extends 'base.html' %}
+{% extends 'base.html' %}
+{% load paystack %}
 {% block title %} Make Payment {% endblock title %}
 {% block content %}
     <div class="container">
@@ -6,32 +7,28 @@
             <div class="col-12">
                 <h4>Make Payment (in Naira)</h4>
                 <script src="https://js.paystack.co/v1/inline.js"></script>
-                <button class="btn btn-large btn-success" onclick="payWithPayStack()" id="django-paystack-button"></button>
+                <button class="btn btn-large btn-success" onclick="makePyament ()"></button>
             </div>
         </div>
     </div>
     <script>
-        function payWithPayStack() {
-            let currency = "NGN";
-            let plan = "";
-            let = "{{ payment.ref }}";
-            let obj = {
-                key: "{{ paystack_public_key }}",
-                email: "{{ payment.email }}",
-                amount: "{{ payment.amount_value }}",
-                ref: ref,
+        function makePayment(){
+        var handler = PaystackPop.setup({
+                key: 'pk_test_94c9c0292b58b03a1e0feaa5b1b1da81b04b0873', //public key from your paystack
+                email: '{{request.user.email}}',
+                amount:'{{ total }}' * 100,
+                currency:'NGN',
+                ref: ''+Math.floor((Math.random() * 100000000) + 1),
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                 callback: function(response){
-                    window.location.href = "{% url 'verify-payment' payment.ref %}"
-                }
-            }
-            if (Boolean(currency)) {
-                obj.currency = currency.toUpperCase()
-            }
-            if (Boolean(plan)) {
-                obj.plan = plan;
-            }
-            var handler = PaystackPop.setup(obj);
-            handler.openIframe();
+            alert('success. transaction ref is ' +response.reference);
+        },
+        onClose: function(){
+            alert('window closed');
         }
+        });
+        handler.openIframe();
+    }
+    // window.onload = makePayment()
     </script>
-{% endblock content %} -->
+{% endblock content %}

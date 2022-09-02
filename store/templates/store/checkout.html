@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load paystack %}
 {% block title %}Checkout{% endblock title %}
 {% block content %}
 
@@ -26,7 +25,7 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8">
-                <form action="" method="post" id="paymentForm">
+                <form action="{% url 'checkout' %}" method="post">
                     {% csrf_token %}
                     <script src="https://js.paystack.co/v1/inline.js"></script>
                     <div class="mb-4">
@@ -147,35 +146,14 @@
                         <p class="mt-3 font-weight-bold text-dark">Paystack</p>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" {%if not billing_form.errors %} onclick="makePayment ()" {% endif %} for="submit-form">Place Order</button>
+                        <label class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" for="submit-form">
+                            Place Order
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Checkout End -->
-
-
-    <script>
-    
-        function makePayment(){
-        var handler = PaystackPop.setup({
-                key: 'pk_test_94c9c0292b58b03a1e0feaa5b1b1da81b04b0873', //public key from your paystack
-                email: '{{request.user.email}}',
-                amount:'{{ total }}' * 100,
-                currency:'NGN',
-                ref: ''+Math.floor((Math.random() * 100000000) + 1),
-                ref: ''+Math.floor((Math.random() * 1000000000) + 1),
-                callback: function(response){
-            alert('success. transaction ref is ' +response.reference);
-        },
-        onClose: function(){
-            alert('window closed');
-        }
-        });
-        handler.openIframe();
-    }
-    // window.onload = makePayment()
-    </script>
 
 {% endblock content %}
