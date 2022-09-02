@@ -16,7 +16,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from operator import attrgetter
-from walletApp.views import initiate_payment
 # Create your views here.
 
 import phonenumbers
@@ -356,7 +355,9 @@ def checkout(request):
                     # obj.city = billing_form.cleaned_data['city']
                     # obj.state = billing_form.cleaned_data['state']
                     # obj.zipcode = billing_form.cleaned_data['zipcode']
-                    initiate_payment(data=request, amount=obj.order.total_order_price, email=order.customer.email)
+                    
+                    
+
                     obj.customer = Customer.objects.get(username=request.user.username)
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
                     obj.order.date_ordered = datetime.now()
@@ -371,7 +372,6 @@ def checkout(request):
                         item.product.number_available -= item.quantity
                         item.product.save()
                     # billing_form= obj
-                    return redirect('walletApp:deposit')
                     messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
                     # i = 0
                     # if i == 0:

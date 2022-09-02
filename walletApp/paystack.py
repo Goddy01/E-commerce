@@ -18,5 +18,5 @@ class PayStack:
         if r.status_code == 200:
             response = r.json()
             return response['status'], response['data']
-        response = response.json()
+        response = r.json()
         return response['status'], response['message']
