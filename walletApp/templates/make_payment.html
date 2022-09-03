@@ -9,15 +9,6 @@
                     <h5>Make Payment for #{{ total }} in Naira.</h5>
                     <script src="https://js.paystack.co/v1/inline.js"></script>
                     <button class="btn btn-large btn-success" onclick="makePayment()">Make Payment</button>
-                {% else %}
-                    <div class="d-flex flex-column">
-                        <p class="mx-auto text-dark h5 mb-5">Your order has been placed!</p>
-                        <p class="mx-auto">
-                            <a href="{% url 'home' %}">
-                                <button class="btn" style="background-color: #C17A74;color: white;padding: 1rem;">Start Shopping</button>
-                            </a>
-                        </p>
-                    </div>
                 {% endif %}
             </form>
         </div>
