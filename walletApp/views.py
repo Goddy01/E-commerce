@@ -20,14 +20,17 @@ def make_payment(request):
             request.session['total'] = order.total_order_price
             request.session['email'] = request.user.email
             print('BOOL RE: ', request.POST.get('bool'))
-            if request.session.get('total') == order.total_order_price and request.POST.get('bool') == 'True':
-                print('YEAHHHHHH')
-                items = OrderItem.objects.filter(order=order)
-                for item in items:
-                    item.product.number_available -= item.quantity
-                    item.product.save()
-                order.complete = not order.complete
-                # return 
+            if request.session.get('total') == order.total_order_price:
+                if request.POST.get('bool') == 'True':
+                    print('YEAHHHHHH')
+                    items = OrderItem.objects.filter(order=order)
+                    for item in items:
+                        item.product.number_available -= item.quantity
+                        item.product.save()
+                    order.complete = not order.complete
+                    return redirect('wallet:make-payment')
+            if order.total_order_price is None:
+                return redirect('no-cart')
             if request.POST.get('bool') != 'True':
                 print('NAHHHHHH')
                 order.complete = order.complete

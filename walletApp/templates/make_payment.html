@@ -4,30 +4,31 @@
 {% block content %}
     <div class="container">
         <div class="d-flex row justify-content-center align-items-center py-md-5 py-3 mx-auto">
-            <form class="col-12" method="post">
+            <form class="col-12" action="{% url 'wallet:make-payment' %}" method="post" id="payForm">
                 {% csrf_token %}
                 <input type="text" id="hide" style="visibility: hidden;" value="bro" name="bool">
-                {% if total != None %}
-                    <h5>Make Payment for #{{ total }} in Naira.</h5>
-                    <script src="https://js.paystack.co/v1/inline.js"></script>
-                    <button class="btn btn-large btn-success" onclick="makePayment()">Make Payment</button>
-                {% endif %}
+                <h5>Make Payment for #{{ total }} in Naira.</h5>
+                <script src="https://js.paystack.co/v1/inline.js"></script>
+                <button class="btn btn-large btn-success" id="make-payment-btn">Make Payment</button>
             </form>
         </div>
     </div>
     <script>
-        function makePayment(){
-        var handler = PaystackPop.setup({
+        document.getElementById('make-payment-btn').addEventListener('click', makePayment, false);
+        function makePayment(e){
+        e.preventDefault();
+        let handler = PaystackPop.setup({
                 key: 'pk_test_94c9c0292b58b03a1e0feaa5b1b1da81b04b0873', //public key from your paystack
-                email: '{{email}}',
+                email: '{{ email }}',
                 amount:'{{ total }}' * 100,
                 currency:'NGN',
-                ref: ''+Math.floor((Math.random() * 100000000) + 1),
-                ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                // ref: ''+Math.floor((Math.random() * 100000000) + 1),
+                // ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                 callback: function(response){
             alert('success. transaction ref is ' +response.reference);
             document.getElementById('hide').value = 'True';
             document.getElementById('hide').style.visibility = 'visible';
+            document.getElementById('payForm').submit();
         },
         onClose: function(){
             alert('window closed');
@@ -35,6 +36,6 @@
         });
         handler.openIframe();
     }
-    window.onload = makePayment()
+    // window.onload = makePayment()
     </script>
 {% endblock content %}
