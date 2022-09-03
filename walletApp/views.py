@@ -28,13 +28,14 @@ def make_payment(request):
                         item.product.number_available -= item.quantity
                         item.product.save()
                     order.complete = not order.complete
-                    return redirect('wallet:make-payment')
+                    order.save()
+                    return redirect('home')
             if order.total_order_price is None:
                 return redirect('no-cart')
             if request.POST.get('bool') != 'True':
                 print('NAHHHHHH')
                 order.complete = order.complete
-            order.save()
+                order.save()
             # messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
     else:
         return redirect('user:must_auth')

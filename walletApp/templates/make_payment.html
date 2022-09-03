@@ -25,9 +25,9 @@
                 // ref: ''+Math.floor((Math.random() * 100000000) + 1),
                 // ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                 callback: function(response){
-            alert('success. transaction ref is ' +response.reference);
+            alert('Success. transaction ref is ' +response.reference);
             document.getElementById('hide').value = 'True';
-            document.getElementById('hide').style.visibility = 'visible';
+            // document.getElementById('hide').style.visibility = 'visible';
             document.getElementById('payForm').submit();
         },
         onClose: function(){
