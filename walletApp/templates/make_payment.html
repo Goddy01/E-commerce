@@ -4,7 +4,9 @@
 {% block content %}
     <div class="container">
         <div class="d-flex row justify-content-center align-items-center py-md-5 py-3 mx-auto">
-            <form class="col-12">
+            <form class="col-12" method="post">
+                {% csrf_token %}
+                <input type="text" id="hide" style="visibility: hidden;" value="bro" name="bool">
                 {% if total != None %}
                     <h5>Make Payment for #{{ total }} in Naira.</h5>
                     <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -24,6 +26,8 @@
                 ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                 callback: function(response){
             alert('success. transaction ref is ' +response.reference);
+            document.getElementById('hide').value = 'True';
+            document.getElementById('hide').style.visibility = 'visible';
         },
         onClose: function(){
             alert('window closed');

@@ -19,9 +19,16 @@ def make_payment(request):
         else:
             request.session['total'] = order.total_order_price
             request.session['email'] = request.user.email
-            if request.session.get('total') == order.total_order_price:
+            print('BOOL RE: ', request.POST.get('bool'))
+            if request.session.get('total') == order.total_order_price and request.POST.get('bool') == 'True':
+                print('YEAHHHHHH')
                 order.complete = not order.complete
+                # return 
+            if request.POST.get('bool') != 'True':
+                print('NAHHHHHH')
+                order.complete = order.complete
             order.save()
+            # messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
     else:
         return redirect('user:must_auth')
     return render(request, 'make_payment.html', {'total': request.session.get('total'), 'email': request.session.get('email')})
