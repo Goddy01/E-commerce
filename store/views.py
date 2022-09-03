@@ -361,7 +361,7 @@ def checkout(request):
                     obj.customer = Customer.objects.get(username=request.user.username)
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
                     obj.order.date_ordered = datetime.now()
-                    obj.order.complete = not obj.order.complete
+                    # obj.order.complete = not obj.order.complete
                     print('TOTAL RE: ', obj.order.total_order_price)
                     obj.order.save()
                     obj.save()
@@ -372,8 +372,9 @@ def checkout(request):
                         item.product.number_available -= item.quantity
                         item.product.save()
                     # billing_form= obj
-                    # messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
+                    messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
                     return redirect('wallet:make-payment')
+                    # make_payment(request)
                 else:
                     messages.error(request, 'Unable to checkout.')
             else:
