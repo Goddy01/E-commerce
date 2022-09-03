@@ -4,7 +4,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponse
-from store.models import BillingAddress, Order
+from store.models import BillingAddress, Order, OrderItem
 from Accounts.models import Vendor
 
 def make_payment(request):
@@ -22,6 +22,10 @@ def make_payment(request):
             print('BOOL RE: ', request.POST.get('bool'))
             if request.session.get('total') == order.total_order_price and request.POST.get('bool') == 'True':
                 print('YEAHHHHHH')
+                items = OrderItem.objects.filter(order=order)
+                for item in items:
+                    item.product.number_available -= item.quantity
+                    item.product.save()
                 order.complete = not order.complete
                 # return 
             if request.POST.get('bool') != 'True':

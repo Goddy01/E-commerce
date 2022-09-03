@@ -367,10 +367,10 @@ def checkout(request):
                     obj.save()
                     # order.complete = 
 
-                    items = OrderItem.objects.filter(order=obj.order)
-                    for item in items:
-                        item.product.number_available -= item.quantity
-                        item.product.save()
+                    # items = OrderItem.objects.filter(order=obj.order)
+                    # for item in items:
+                    #     item.product.number_available -= item.quantity
+                    #     item.product.save()
                     # billing_form= obj
                     # messages.success(request, 'Your order has been placed. Thank you for patronizing us!')
                     return redirect('wallet:make-payment')
