@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}WishList{% endblock title %}
+{% block content %}
+<div class="m-5">
+    <style>
+        .table {
+            margin-bottom: 180px;
+        }
+    </style>
+    <table class="table">
+        <h3>Completed Orders</h3>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity Available</th>
+            <th scope="col">Colors</th>
+            <th scope="col">Sizes</th>
+            <th scope="col">Date Added</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in wishlist %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item.product.product_name|title }}</td>
+                <td>${{ item.product.product_price }}</td>
+                <td>{{ item.product.number_available }}</td>
+                <td>{{ item.product.colors }}</td>
+                <td>{{ item.product.sizes|upper }}</td>
+                <td>{{ item.date_added }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% block %}
