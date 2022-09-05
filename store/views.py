@@ -470,6 +470,8 @@ def review(request, product_id):
     return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})
 
 def product_details(request, product_id):
+    if not request.user.is_authenticated:
+        messages.info(request, 'Note: You must be logged in to add items to your WishList.')
     product = get_object_or_404(Product, product_id=product_id)
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
