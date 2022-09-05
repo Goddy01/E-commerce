@@ -160,9 +160,6 @@ class WishList(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =           models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =        models.DateTimeField(auto_now_add=True)
-    quantity =          models.IntegerField(null=True, blank=True, default=0)
-    size =              models.CharField(max_length=10, null=True, blank=False)
-    color =             models.CharField(max_length=10, null=True, blank=False)
     heart_val =         models.BooleanField(default=False)
 
 

@@ -66,11 +66,6 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ('user_review', 'rating')
 
-class WishListForm(forms.ModelForm):
-    class Meta:
-        model = WishList
-        fields = ('color', 'size')
-
 class UpdateProductForm(forms.ModelForm):
     CATEGORY_CHOICES = (
         ("M", "MEN"), 

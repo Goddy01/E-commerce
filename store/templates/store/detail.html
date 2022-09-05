@@ -49,7 +49,11 @@
                 <div class="col-lg-7 pb-5 pl-3">
                     <h3 class="font-weight-semi-bold">{{ product.product_name }}
                             <span style="font-size: 30px;float: right;">
+                                {% if heart_val == 1 %}
+                                <i class="fas fa-heart text-primary add-wishlist" data-product="{{product.product_id}}" id="wishlist"></i>
+                                {% else %}
                                 <i class="far fa-heart text-primary add-wishlist" data-product="{{product.product_id}}" id="wishlist"></i>
+                                {% endif %}
                             </span>
                     </h3>
                     <div class="d-flex mb-3">
@@ -248,7 +252,7 @@
         $(document).on('click', '#wishlist', function () {
             let _pId = $(this).attr('data-product');
             // Ajax
-            if ($(this).hasClass("far")) {
+            if ($(this).hasClass("fas")) {
             $.ajax ({
                 url: "{% url 'add_to_wishlist' product.product_id %}",
                 data: {
@@ -256,11 +260,11 @@
                 },
                 dataType: 'json',
                 success: function(res) {
-                    console.log('Yes')
+                    console.log('Added')
                 }
             })
         }
-            else if ($(this).hasClass("fas")) {
+            else if ($(this).hasClass("far")) {
                 $.ajax ({
                     url: "{% url 'remove_from_wishlist' product.product_id %}",
                     data: {
@@ -268,7 +272,7 @@
                     },
                     dataType: 'json',
                     success: function(res) {
-                        console.log('Yes')
+                        console.log('Deleted')
                     }
                 })
             }

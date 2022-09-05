@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, WishListForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct, WishList
 from django.contrib import messages
@@ -237,11 +237,11 @@ def remove_from_wishlist(request, product_id):
     
     product = Product.objects.get(product_id=product_id)
     customer = Customer.objects.get(email=request.user)
-    wish_item = WishList.objects.get(product__product_id=product, customer=customer)
+    wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
     bool = True
 
-    return JsonResponse(bool, safe=False)
+    return HttpResponse('OK.')
 
 def cart(request):
     context = {}
@@ -477,9 +477,14 @@ def review(request, product_id):
     return render(request, 'store/detail.html', {'review_form': review_form, 'product': product})
 
 def product_details(request, product_id):
+    context = {}
     if not request.user.is_authenticated:
         messages.info(request, 'Note: You must be logged in to add items to your WishList.')
     product = get_object_or_404(Product, product_id=product_id)
+    try:
+        context['heart_val'] = heart_val = WishList.objects.get(product=product, customer=request.user).heart_val
+    except:
+        pass
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
     reviews_counter = 0
@@ -549,17 +554,15 @@ def product_details(request, product_id):
     product_sizes = product.product_sizes.split(',')
     product_colors = product.product_colors.split(',')
     
-    context = {
-        'product': product,
-        'productss': Product.objects.all(),
-        'product_sizes': product_sizes,
-        'product_colors': product_colors,
-        'orderitemform': orderitemform,
-        'reviews': pagination(request, reviews, 5),
-        'reviews_counter': reviews_counter,
-        'users_recently_viewed_products': users_recently_viewed_products[:4],
-    }
-    # product_sizes = 
+    context['product'] = product
+    context['productss'] = Product.objects.all()
+    context['product_sizes'] = product_sizes
+    context['product_colors'] = product_colors
+    context['orderitemform'] = orderitemform
+    context['reviews'] = pagination(request, reviews, 5)
+    context['reviews_counter'] = reviews_counter
+    context['users_recently_viewed_products'] = users_recently_viewed_products[:4]
+    
     return render(request, 'store/detail.html', context)
 
 def vendor_product_detail(request, product_id):
