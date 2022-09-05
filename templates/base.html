@@ -238,7 +238,7 @@
                             {% for c in customers %}
                             {% if c.username == request.user.username %}
                             <a href="{% url 'c_dashboard' %}" class="nav-item nav-link">Dashboard</a>
-                            <a href="{% url 'c_dashboard' %}" class="nav-item nav-link">Wish-List</a>
+                            <a href="{% url 'wishlist' %}" class="nav-item nav-link">Wishlist</a>
                             {% endif %}
                             {% endfor %}
                         </div>
