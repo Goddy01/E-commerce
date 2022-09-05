@@ -47,7 +47,11 @@
                 </div>
 
                 <div class="col-lg-7 pb-5 pl-3">
-                    <h3 class="font-weight-semi-bold">{{ product.product_name }}</h3>
+                    <h3 class="font-weight-semi-bold">{{ product.product_name }}
+                        <span style="font-size: 30px;float: right;">
+                            <i class="far fa-heart text-primary" id="wishlist"></i>
+                        </span>
+                    </h3>
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
                             <!-- <small class="far fa-star"></small>
@@ -96,7 +100,7 @@
                                 <span style="width: 10px;" class="ml-2">{{ orderitemform.color }}</span>
                             </div>
                             <!-- </div> -->
-                            <div class="custom-control custom-control-inline ml-4">
+                            <div class="custom-control custom-control-block">
                                 <label for="quantity" class="text-dark font-weight-medium">Quantity: </label>
                                 <!-- <input type="text" id="quantity" name="quantity" maxlength="4" size="4" class="ml-2"> -->
                                 {{ orderitemform.quantity }}
@@ -230,6 +234,14 @@
 
     <!-- Script for rating products -->
 <script>
+    let wishlist = document.getElementById('wishlist');
+    wishlist.addEventListener('click', function (){wishListFunc()});
+    function wishListFunc() {
+        if (wishlist.classList.contains('far')) {
+            wishlist.setAttribute('class', 'fas fa-heart text-primary');
+        }
+    }
+
     let star1 = document.getElementById('s-1')
     star1.addEventListener("click", function (){showStar(1)});
     let star2 = document.getElementById('s-2')
