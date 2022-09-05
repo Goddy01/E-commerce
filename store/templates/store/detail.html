@@ -49,7 +49,7 @@
                 <div class="col-lg-7 pb-5 pl-3">
                     <h3 class="font-weight-semi-bold">{{ product.product_name }}
                             <span style="font-size: 30px;float: right;">
-                                <i class="far fa-heart text-primary" id="wishlist"></i>
+                                <i class="far fa-heart text-primary add-wishlist" data-product="{{product.product_id}}" id="wishlist"></i>
                             </span>
                     </h3>
                     <div class="d-flex mb-3">
@@ -246,8 +246,25 @@
                 wishlist.setAttribute('class', 'far fa-heart text-primary');
             }
         }
-    {% endif %} 
+        $(document).on('click', '#wishlist', function () {
+            let _pId = $(this).attr('data-product');
+            // Ajax
+            $.ajax ({
+                url: "{% url ('add_to_wishlist' _pID) %}",
+                data: {
+                    product: _pId
+                },
+                dataType: 'json',
+                success: function(res) {
+                    console.log(res);
+                }
+            })
 
+            // End Ajax
+        })
+    {% endif %}
+
+    
     let star1 = document.getElementById('s-1')
     star1.addEventListener("click", function (){showStar(1)});
     let star2 = document.getElementById('s-2')
