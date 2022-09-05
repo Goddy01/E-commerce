@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Just Arrived{% endblock title %}
+{% block content %}
+    {% for l_product in latest_products %}
+        {% include snippets/product_card.html %}
+    {% endfor %}
+{% endblock content %}
