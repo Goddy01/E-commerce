@@ -240,7 +240,6 @@
         function wishListFunc() {
             if (wishlist.classList.contains('far')) {
                 wishlist.setAttribute('class', 'fas fa-heart text-primary');
-                // wishlist.href =  "{% url 'add_to_wishlist' product.product_id %}";
             }
             else {
                 wishlist.setAttribute('class', 'far fa-heart text-primary');
@@ -248,15 +247,18 @@
         }
         $(document).on('click', '#wishlist', function () {
             let _pId = $(this).attr('data-product');
+            let _vm = $(this);
             // Ajax
             $.ajax ({
-                url: "{% url ('add_to_wishlist' _pID) %}",
+                url: "{% url 'add_to_wishlist' product.product_id %}",
                 data: {
                     product: _pId
                 },
                 dataType: 'json',
                 success: function(res) {
-                    console.log(res);
+                    if (res.bool == true) {
+                        _vm.css
+                    }
                 }
             })
 

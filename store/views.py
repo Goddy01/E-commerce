@@ -219,19 +219,17 @@ def add_to_wishlist(request, product_id):
         return redirect('user:must_auth')
     
     product = Product.objects.get(product_id=product_id)
-    # if request.method == 'POST':
-    #     wish_form = WishListForm(request.POST)
-    # if wish_form.is_valid():
     customer = Customer.objects.get(email=request.user)
-    try:
-        wish_item = WishList.objects.filter(product=product, customer=customer, color=request.GET.get('color'), size=request.POST.get('size'))
-        data = {'bool', False}
-    except:
-        wish_item = WishList.objects.create(product=product, customer=customer, color=request.POST.get('color'), size=request.POST.get('size'), quantity=1)
-        data = {'bool', True}
+    # try:
+    wish_item = WishList.objects.filter(product=product, customer=customer)
+    if wish_item.count() > 0:
+        bool = False
+    else:
+        wish_item = WishList.objects.create(product=product, customer=customer)
+        bool = True
     request.session[f'{request.user.username}_wish_counter'] += 1
     
-    return JsonResponse(data)
+    return JsonResponse(bool, safe=False)
 
 
 def cart(request):
