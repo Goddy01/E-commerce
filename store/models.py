@@ -161,6 +161,7 @@ class WishList(models.Model):
     product =           models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =        models.DateTimeField(auto_now_add=True)
     heart_val =         models.BooleanField(default=False)
+    wish_item_counter = models.IntegerField(null=True, blank=False)
 
     def __str__(self):
         return f'{self.customer.username}-{self.product.product_name}'

@@ -132,10 +132,10 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <!-- <a href="" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">{{ wish_count }}</span>
-                </a>
+                    <label class="badge heart-badge">{{wish_count}}</label>
+                </a> -->
                 <a href="{% url 'cart' %}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">{{ cart_items }}</span>
@@ -397,20 +397,11 @@
         </div>
     </div>
     <!-- Footer End -->
-    {% if request.user.is_authenticated %}
-        <script>
-            $.ajax ({
-                    url: "{% url 'remove_from_wishlist' product.product_id %}",
-                    data: {
-                        product: _pId
-                    },
-                    dataType: 'json',
-                    success: function(res) {
-                        console.log('Deleted')
-                    }
-                })
-        </script>
-    {% endif %}
+    <!-- <script>
+        let heart_badge = document.getElementsByClassName('heart-bad');
+        heart_badge.value = {{request.session.wish_count}}
+        console.log(heart_badge)
+    </script> -->
 </body>
 
 <!-- Back to Top -->

@@ -227,6 +227,8 @@ def add_to_wishlist(request, product_id):
     else:
         wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1)
         bool = True
+    request.session['wish_count'] += 1
+    print('YEEE', request.session['wish_count'])
     request.session[f'{request.user.username}_wish_counter'] += 1
     
     return JsonResponse(bool, safe=False)
@@ -239,8 +241,9 @@ def remove_from_wishlist(request, product_id):
     customer = Customer.objects.get(email=request.user)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
+    request.session['wish_count'] -= 1
+    print('YEEE', request.session['wish_count'])
     bool = True
-
     return HttpResponse('OK.')
 
 def wishlist_counts(request):
@@ -568,7 +571,6 @@ def product_details(request, product_id):
     context['reviews'] = pagination(request, reviews, 5)
     context['reviews_counter'] = reviews_counter
     context['users_recently_viewed_products'] = users_recently_viewed_products[:4]
-    
     return render(request, 'store/detail.html', context)
 
 def vendor_product_detail(request, product_id):
