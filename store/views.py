@@ -4,9 +4,8 @@ from datetime import datetime
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, WishListForm
 from Accounts.models import Vendor, User, Customer
@@ -225,15 +224,14 @@ def add_to_wishlist(request, product_id):
     # if wish_form.is_valid():
     customer = Customer.objects.get(email=request.user)
     try:
-        wish_item = WishList.objects.get(product=product, customer=customer, color=request.GET.get('color'), size=request.POST.get('size'))
-        wish_item.quantity += 1
-        wish_item.save()
+        wish_item = WishList.objects.filter(product=product, customer=customer, color=request.GET.get('color'), size=request.POST.get('size'))
+        data = {'bool', False}
     except:
         wish_item = WishList.objects.create(product=product, customer=customer, color=request.POST.get('color'), size=request.POST.get('size'), quantity=1)
-        
+        data = {'bool', True}
     request.session[f'{request.user.username}_wish_counter'] += 1
     
-    return render(request, 'store/detail.html', {'wish_item':wish_item})
+    return JsonResponse(data)
 
 
 def cart(request):
