@@ -225,7 +225,7 @@ def add_to_wishlist(request, product_id):
     if wish_item.count() > 0:
         bool = False
     else:
-        wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1)
+        wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1, date_added=datetime.now())
         bool = True
     request.session['wish_count'] += 1
     print('YEEE', request.session['wish_count'])

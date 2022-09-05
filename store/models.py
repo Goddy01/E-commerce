@@ -3,6 +3,7 @@ from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
@@ -159,7 +160,7 @@ class WishList(models.Model):
     item_id =           models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =           models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    date_added =        models.DateTimeField(auto_now_add=True)
+    date_added =        models.DateTimeField()
     heart_val =         models.BooleanField(default=False)
     wish_item_counter = models.IntegerField(null=True, blank=False)
 
