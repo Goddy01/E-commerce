@@ -1,10 +1,11 @@
 import uuid
 from Accounts.models import Customer, User, Vendor
-from .models import Order
+from .models import Order, WishList
 # from django.contrib.auth.decorators import login_required
 
 # @login_required
 def website_content(request):
+    context = {}
     request.session[f'{request.user.username}_wish_counter'] = 0
     # if not request.user.is_authenticated:
     # 
@@ -31,6 +32,8 @@ def website_content(request):
             customer = Customer.objects.get(username=request.user.username)
         except:
             customer = Customer.objects.get(device=request.session.get('device'))
+        wish_count = WishList.objects.filter(customer=request.user).count()
+        context['wish_count'] = wish_count
     if request.user.id == None:
         customer = Customer.objects.get(device=request.session.get('device'))
     try:    
@@ -62,9 +65,9 @@ def website_content(request):
         order = Order.objects.filter(customer__email=request.user.email).order_by('-id').first()
         total = order.total_order_price
         email = request.user.email
-    context = {
-        'items':items, 
-        'cart_items': cart_items,
-        'customers': customers,
-        'vendors': vendors,}
+
+    context['items'] = items
+    context['cart_items'] = cart_items
+    context['customers'] = customers
+    context['vendors'] = vendors
     return context

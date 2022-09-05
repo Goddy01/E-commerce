@@ -237,8 +237,8 @@
     <!-- Products End -->
 
     <!-- Script for rating products -->
-<script>
-    {% if request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
+    <script>
         let wishlist = document.getElementById('wishlist');
         wishlist.addEventListener('click', function (){wishListFunc()});
         function wishListFunc() {
@@ -278,9 +278,10 @@
             }
             // End Ajax
         })
-    {% endif %}
+    </script>
+{% endif %}
 
-    
+<script>
     let star1 = document.getElementById('s-1')
     star1.addEventListener("click", function (){showStar(1)});
     let star2 = document.getElementById('s-2')

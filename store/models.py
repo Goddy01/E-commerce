@@ -162,6 +162,9 @@ class WishList(models.Model):
     date_added =        models.DateTimeField(auto_now_add=True)
     heart_val =         models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.customer.username}-{self.product.product_name}'
+
 
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
