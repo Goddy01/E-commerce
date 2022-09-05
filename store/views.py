@@ -246,12 +246,12 @@ def remove_from_wishlist(request, product_id):
     bool = True
     return HttpResponse('OK.')
 
-def wishlist_counts(request):
+def wishlist(request):
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    wishlists = WishList.objects.filter(customer=request.user).count()
+    wishlist = WishList.objects.filter(customer=request.user)
 
-    return HttpResponse(wishlists)
+    return render(request, 'store/wishlist.html', {'wishlist': wishlist})
 def cart(request):
     context = {}
 
@@ -645,3 +645,4 @@ def delete_product(request, product_id):
     product = Product.objects.get(product_id=product_id)
     product.delete()
     return redirect('v_dashboard')
+
