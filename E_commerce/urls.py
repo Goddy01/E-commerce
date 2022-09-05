@@ -31,13 +31,14 @@ from store.views import (
     get_product_queryset, review,
     vendor_dashboard, delete_product,
     vendor_product_detail, update_product,
-    customer_dashboard,
+    customer_dashboard, just_arrived
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('walletApp.urls')),
     path('', home_page, name='home'),
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
+    path('just_arrived_products/', just_arrived, name='just_arrived'),
     # path('shop/', ShopDetailView.as_view(), name='shop'),
     path('<product_id>/product_details/', product_details, name='product_details'),
     path('search/', get_product_queryset, name="search"),
