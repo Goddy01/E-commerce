@@ -399,7 +399,16 @@
     <!-- Footer End -->
     {% if request.user.is_authenticated %}
         <script>
-            
+            $.ajax ({
+                    url: "{% url 'remove_from_wishlist' product.product_id %}",
+                    data: {
+                        product: _pId
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        console.log('Deleted')
+                    }
+                })
         </script>
     {% endif %}
 </body>

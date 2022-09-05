@@ -243,6 +243,12 @@ def remove_from_wishlist(request, product_id):
 
     return HttpResponse('OK.')
 
+def wishlist_counts(request):
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    wishlists = WishList.objects.filter(customer=request.user).count()
+
+    return HttpResponse(wishlists)
 def cart(request):
     context = {}
 

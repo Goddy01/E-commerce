@@ -1,6 +1,8 @@
 import uuid
 from Accounts.models import Customer, User, Vendor
 from .models import Order, WishList
+from django.shortcuts import redirect
+from django.http import HttpResponse
 # from django.contrib.auth.decorators import login_required
 
 # @login_required
@@ -71,3 +73,10 @@ def website_content(request):
     context['customers'] = customers
     context['vendors'] = vendors
     return context
+
+def wishlist_counts(request):
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    wishlists = WishList.objects.filter(customer=request.user).count()
+
+    return HttpResponse(wishlists)
