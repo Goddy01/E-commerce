@@ -125,6 +125,13 @@ def home_page(request):
     context['latest_products'] = sorted(recently_added_products, key=attrgetter('date_added'), reverse=True)[:6]
     return render(request, 'store/index.html', context)
 
+def just_arrived(request):
+    context = {}
+    products = Product.objects.all()
+
+    context['latest_products'] = sorted(products, key=attrgetter('date_added'), reverse=True)
+    return render(request, 'store/just_arrived.html', context)
+
 def add_to_cart(request, product_id):
     if not request.user.is_authenticated:
         user = User.objects.get(device=request.session.get('device'))
