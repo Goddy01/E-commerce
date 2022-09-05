@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
-from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct
+from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct, WishList
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
@@ -222,6 +222,11 @@ def add_to_cart(request, product_id):
     # if True:
     #     return redirect('home')
     return render(request, 'store/detail.html', context)
+
+# def add_to_wishlist(request, product_id):
+#     product = Product.objects.get(product_id=product_id)
+#     wish_item = WishList.objects.create(product=product, customer__email=Customer.objects.get(email=request.user.email), quantity=1)
+
 
 def cart(request):
     context = {}
