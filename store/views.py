@@ -231,6 +231,16 @@ def add_to_wishlist(request, product_id):
     
     return JsonResponse(bool, safe=False)
 
+def remove_from_wishlist(request, product_id):
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    
+    product = Product.objects.get(product_id=product_id)
+    customer = Customer.objects.get(email=request.user)
+    wish_item = WishList.objects.get(product__product_id=product, customer=customer)
+    wish_item.delete()
+
+    return JsonResponse()
 
 def cart(request):
     context = {}
