@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
+from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm, WishListForm
 from Accounts.models import Vendor, User, Customer
 from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct, WishList
 from django.contrib import messages
@@ -223,9 +223,21 @@ def add_to_cart(request, product_id):
     #     return redirect('home')
     return render(request, 'store/detail.html', context)
 
-# def add_to_wishlist(request, product_id):
-#     product = Product.objects.get(product_id=product_id)
-#     wish_item = WishList.objects.create(product=product, customer__email=Customer.objects.get(email=request.user.email), quantity=1)
+def add_to_wishlist(request, product_id):
+    product = Product.objects.get(product_id=product_id)
+    if request.method == 'POST':
+        wish_form = WishListForm(request.POST)
+        if wish_form.is_valid():
+            customer = Customer.objects.get(email=request.user.email)
+            try:
+                wish_item = WishList.objects.get(product=product, customer__email=customer, color=wish_form.cleaned_data.get('color'), size=wish_form.cleaned_data.get('size'))
+                wish_item.quantity += 1
+                wish_item.save()
+            except:
+                wish_item = WishList.objects.create(product=product, customer__email=customer, color=wish_form.cleaned_data.get('color'), size=wish_form.cleaned_data.get('size'), quantity=1)
+                print('Counter Na: '. request.session[f'{request.user.username}_wish_counter'])
+            request.session[f'{request.user.username}_wish_counter'] += 1
+    return render(request, 'store/detail.html', {'wish_item':wish_item})
 
 
 def cart(request):

@@ -5,6 +5,7 @@ from .models import Order
 
 # @login_required
 def website_content(request):
+    request.session[f'{request.user.username}_wish_counter'] = 0
     # if not request.user.is_authenticated:
     # 
     # else:
