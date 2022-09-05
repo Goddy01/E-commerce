@@ -10,11 +10,9 @@
         </div>
         <div class="row px-xl-5 pb-3">
             {% for product in products %}
-            {% if product.number_available != 0 %}
             <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                 {% include '../snippets/product_card.html' with l_product=product %}
             </div>
-            {% endif %}
             {% endfor %}
             {% include '../snippets/products_pagination_snippet.html' with p_products=products%}
         </div>
