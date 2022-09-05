@@ -163,6 +163,7 @@ class WishList(models.Model):
     quantity =          models.IntegerField(null=True, blank=True, default=0)
     size =              models.CharField(max_length=10, null=True, blank=False)
     color =             models.CharField(max_length=10, null=True, blank=False)
+    heart_val =         models.BooleanField(default=False)
 
 
 class BillingAddress(models.Model):

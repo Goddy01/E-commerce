@@ -32,7 +32,7 @@ from store.views import (
     vendor_dashboard, delete_product,
     vendor_product_detail, update_product,
     customer_dashboard, just_arrived,
-    add_to_wishlist,
+    add_to_wishlist, remove_from_wishlist
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +41,7 @@ urlpatterns = [
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
     path('just_arrived_products/', just_arrived, name='just_arrived'),
     path('add_to_wishlist/<product_id>/', add_to_wishlist, name='add_to_wishlist'),
+    path('remove_from_wishlist/<product_id>/', remove_from_wishlist, name='remove_from_wishlist'),
     # path('shop/', ShopDetailView.as_view(), name='shop'),
     path('<product_id>/product_details/', product_details, name='product_details'),
     path('search/', get_product_queryset, name="search"),

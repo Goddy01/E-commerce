@@ -225,7 +225,7 @@ def add_to_wishlist(request, product_id):
     if wish_item.count() > 0:
         bool = False
     else:
-        wish_item = WishList.objects.create(product=product, customer=customer)
+        wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1)
         bool = True
     request.session[f'{request.user.username}_wish_counter'] += 1
     
@@ -239,8 +239,9 @@ def remove_from_wishlist(request, product_id):
     customer = Customer.objects.get(email=request.user)
     wish_item = WishList.objects.get(product__product_id=product, customer=customer)
     wish_item.delete()
+    bool = True
 
-    return JsonResponse()
+    return JsonResponse(bool, safe=False)
 
 def cart(request):
     context = {}
