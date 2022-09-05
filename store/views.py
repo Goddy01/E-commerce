@@ -438,8 +438,8 @@ def no_checkout(request):
 def review(request, product_id):
     product = Product.objects.get(product_id=product_id)
     if not request.user.is_authenticated:
-        
-        return redirect('user:must_auth')
+        messages.info(request, 'You must be logged in to leave reviews/ratings.')
+        return redirect('product_details', product_id)
     customer = User.objects.get(email=request.user.email)
     # except ObjectDoesNotExist:
     #     return HttpResponse('You must be a customer to access this page')

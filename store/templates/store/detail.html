@@ -48,11 +48,9 @@
 
                 <div class="col-lg-7 pb-5 pl-3">
                     <h3 class="font-weight-semi-bold">{{ product.product_name }}
-                        {% if request.user.is_authenticated %}
                             <span style="font-size: 30px;float: right;">
-                                <a class="far fa-heart text-primary" id="wishlist" style="text-decoration: none;"></a>
+                                <i class="far fa-heart text-primary" id="wishlist"></i>
                             </span>
-                        {% endif %}
                     </h3>
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
@@ -236,17 +234,19 @@
 
     <!-- Script for rating products -->
 <script>
-    let wishlist = document.getElementById('wishlist');
-    wishlist.addEventListener('click', function (){wishListFunc()});
-    function wishListFunc() {
-        if (wishlist.classList.contains('far')) {
-            wishlist.setAttribute('class', 'fas fa-heart text-primary');
-            // wishlist.href =  "{% url 'add_to_wishlist' product.product_id %}";
+    {% if request.user.is_authenticated %}
+        let wishlist = document.getElementById('wishlist');
+        wishlist.addEventListener('click', function (){wishListFunc()});
+        function wishListFunc() {
+            if (wishlist.classList.contains('far')) {
+                wishlist.setAttribute('class', 'fas fa-heart text-primary');
+                // wishlist.href =  "{% url 'add_to_wishlist' product.product_id %}";
+            }
+            else {
+                wishlist.setAttribute('class', 'far fa-heart text-primary');
+            }
         }
-        else {
-            wishlist.setAttribute('class', 'far fa-heart text-primary');
-        }
-    }
+    {% endif %} 
 
     let star1 = document.getElementById('s-1')
     star1.addEventListener("click", function (){showStar(1)});
