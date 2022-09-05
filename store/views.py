@@ -104,9 +104,9 @@ def customer_dashboard(request):
         if vendor.username == request.user.username:
             return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     completed_orders = OrderItem.objects.filter(order__customer__username=request.user.username, order__complete=True)
-    print('completed_orders', completed_orders)
+    
     uncompleted_orders = OrderItem.objects.filter(order__customer__username=request.user.username, order__complete=False)
-    print('uncompleted_orders', uncompleted_orders)
+    
 
     return render(request, 'store/customer_dashbord.html', {'completed_orders': completed_orders, 'uncompleted_orders': uncompleted_orders})
 
@@ -142,7 +142,7 @@ def add_to_cart(request, product_id):
         except ObjectDoesNotExist:
             return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     product = Product.objects.get(product_id=product_id)
-    print('DEVICE IS: ', request.session['device'])
+    
     try:    
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
     except:
@@ -160,11 +160,11 @@ def add_to_cart(request, product_id):
         size = size.strip()
         SIZE_CHOICES.append((size, size))
     if request.method == 'POST':
-        print('amazon')
+        
         orderitemform = OrderItemForm(data=request.POST, size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
 
         if orderitemform.is_valid():
-            print('yaga')
+            
             # obj = orderitemform.save(commit=False)
             
             # elif orderitemform.cleaned_data['color'] == orderitem.color:
@@ -175,7 +175,7 @@ def add_to_cart(request, product_id):
             for i in OrderItem.objects.filter(order=order, product=product):
                 sum_qty += i.quantity
             sum_qty = orderitemform.cleaned_data['quantity'] + sum_qty
-            # print(sum_qty)
+            # 
             if orderitem.product.number_available == 0:
                 messages.info(request, 'Product is out of stock.')
             if orderitemform.cleaned_data['quantity'] > orderitem.product.number_available and orderitem.product.number_available != 0:
@@ -184,24 +184,16 @@ def add_to_cart(request, product_id):
                 OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
             if orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
                 if sum_qty <= orderitem.product.number_available:
-                    # orderitem.quantity += orderitemform.cleaned_data['quantity']
-                    print('FORM s: ', orderitemform.cleaned_data['size'])
-                    print('FORM c: ', orderitemform.cleaned_data['color'])
-
-                    print('O s: ', OrderItem.objects.filter(order=order, product=product).last().size)
-                    print('O c: ', OrderItem.objects.filter(order=order, product=product).last().color)
-
-                    # for item in orderitems:
                     if orderitem.size == orderitemform.cleaned_data['size'] and orderitemform.cleaned_data['color'] == orderitem.color:
                         orderitem.quantity += orderitemform.cleaned_data['quantity']
                     else:
                         OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
                     # if orderitemform.cleaned_data['size'] != OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] != OrderItem.objects.filter(order=order, product=product).last().color:
                     #     OrderItem.objects.create(order=order, product=product, color=orderitemform.cleaned_data['color'], size=orderitemform.cleaned_data['size'], quantity=orderitemform.cleaned_data['quantity'])
-                        print('omo')
+                        
                     # elif orderitemform.cleaned_data['size'] == OrderItem.objects.filter(order=order, product=product).last().size or orderitemform.cleaned_data['color'] == OrderItem.objects.filter(order=order, product=product).last().color:
                     #     orderitem.quantity += orderitemform.cleaned_data['quantity']
-                    print('Current qty is: ', orderitem.quantity)
+                    
                     messages.success(request, 'Item has been added to Cart.')
             elif orderitemform.cleaned_data['quantity'] <= 0:
                 orderitem.quantity += 0
@@ -231,17 +223,17 @@ def add_to_wishlist(request, product_id):
     # if request.method == 'POST':
     #     wish_form = WishListForm(request.POST)
     # if wish_form.is_valid():
-    customer = Customer.objects.get(email=request.user.email)
+    customer = Customer.objects.get(email=request.user)
     try:
-        wish_item = WishList.objects.get(product=product, customer__email=customer, color=request.GET.get('color'), size=request.POST.get('size'))
+        wish_item = WishList.objects.get(product=product, customer=customer, color=request.GET.get('color'), size=request.POST.get('size'))
         wish_item.quantity += 1
         wish_item.save()
     except:
-        wish_item = WishList.objects.create(product=product, customer__email=customer, color=request.POST.get('color'), size=request.POST.get('size'), quantity=1)
-        print('Counter Na:', request.session[f'{request.user.username}_wish_counter'])
+        wish_item = WishList.objects.create(product=product, customer=customer, color=request.POST.get('color'), size=request.POST.get('size'), quantity=1)
+        
     request.session[f'{request.user.username}_wish_counter'] += 1
+    
     return render(request, 'store/detail.html', {'wish_item':wish_item})
-    return render(request, 'store/detail.html')
 
 
 def cart(request):
@@ -255,23 +247,23 @@ def cart(request):
     else:
         user = Customer.objects.get(device=request.session.get('device'))
     # try:
-    print('first', Order.objects.filter(customer=user).order_by('-date_ordered').first())
-    # print('1', Order.objects.filter(customer=user).order_by('-id')[1])
-    print('latest', Order.objects.filter(customer=user).order_by('-id').first())
-    print('latest2', Order.objects.filter(customer=user).order_by('-id').first())
+    
+    # 
+    
+    
     if Order.objects.filter(customer=user).order_by('-id').first() is not None:
         if Order.objects.filter(customer=user).order_by('-id').first().get_cart_total == 0:
-            print('brozo')
+            
             return redirect('no_cart')
     else:
         return redirect('home')
     # order, created = Order.objects.get_or_create(customer=user, complete=False)
     try:    
         order, created = Order.objects.get_or_create(customer=user, complete=False)
-        print('order1:', order)
+        
     except:
         order = Order.objects.filter(customer=user).order_by('-id').first()
-        print('order2:', order)
+        
     # if order.complete == False:
     items = order.orderitem_set.all()
     for item in items:
@@ -287,11 +279,11 @@ def cart(request):
         
         order.total_order_price = 100
         order.save()
-        # print('Get Total1: ', order.total_order_price)
-        print('brozo1.0')
+        # 
+        
         return redirect('no_cart')
     else:
-        print('Get Total2: ', order.total_order_price)
+        
         order.total_order_price = order.get_cart_total + 100
         subtotal = order.get_cart_total
         order.save()
@@ -373,7 +365,7 @@ def checkout(request):
             if request.method == 'POST':
                 billing_form = BillingForm(request.POST)
                 if billing_form.is_valid():
-                    print('yooo')
+                    
                     obj = billing_form.save(commit=False)
                     # obj.phone_num1 = billing_form.cleaned_data['phone_num1']
                     # obj.fullname = billing_form.cleaned_data['fullname']
@@ -390,7 +382,7 @@ def checkout(request):
                     obj.order = Order.objects.filter(customer=user).order_by('-id').first()
                     obj.order.date_ordered = datetime.now()
                     # obj.order.complete = not obj.order.complete
-                    print('TOTAL RE: ', obj.order.total_order_price)
+                    
                     obj.order.save()
                     obj.save()
                     # order.complete = 
@@ -446,7 +438,7 @@ def no_checkout(request):
 def review(request, product_id):
     product = Product.objects.get(product_id=product_id)
     if not request.user.is_authenticated:
-        print('HI')
+        
         return redirect('user:must_auth')
     customer = User.objects.get(email=request.user.email)
     # except ObjectDoesNotExist:
@@ -503,7 +495,7 @@ def product_details(request, product_id):
         product.average_rating = 0
     product.save()
     reviews_counter = product.num_of_reviews
-    print('REVIEWS: ', reviews)
+    
     if not request.user.is_authenticated:
         user = User.objects.get(device=request.session.get('device'))
         customer = Customer.objects.get(device=user.device)
@@ -533,7 +525,7 @@ def product_details(request, product_id):
     #     request.session.get['p_id']
     # except:
     #     request.session['p_id'] = product_id
-    print('WEST:', users_recently_viewed_products)
+    
     COLOR_CHOICES = []
     SIZE_CHOICES = []
     for color in order_item.ordered_product_color:
@@ -577,7 +569,7 @@ def get_product_queryset(request):
     """The view that performs the search functionality"""
     if request.method == 'GET':
         query = request.GET.get('query', '')
-        print('Q: ', query)
+        
 
         if query is not None:
             products = Product.objects.filter(

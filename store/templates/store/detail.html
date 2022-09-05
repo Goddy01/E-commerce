@@ -48,9 +48,11 @@
 
                 <div class="col-lg-7 pb-5 pl-3">
                     <h3 class="font-weight-semi-bold">{{ product.product_name }}
-                        <span style="font-size: 30px;float: right;">
-                            <a class="far fa-heart text-primary" id="wishlist"></a>
-                        </span>
+                        {% if request.user.is_authenticated %}
+                            <span style="font-size: 30px;float: right;">
+                                <a class="far fa-heart text-primary" id="wishlist" style="text-decoration: none;"></a>
+                            </span>
+                        {% endif %}
                     </h3>
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
@@ -239,7 +241,7 @@
     function wishListFunc() {
         if (wishlist.classList.contains('far')) {
             wishlist.setAttribute('class', 'fas fa-heart text-primary');
-            wishlist.href =  "{% url 'add_to_wishlist' product.product_id %}";
+            // wishlist.href =  "{% url 'add_to_wishlist' product.product_id %}";
         }
         else {
             wishlist.setAttribute('class', 'far fa-heart text-primary');
