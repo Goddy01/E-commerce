@@ -224,20 +224,24 @@ def add_to_cart(request, product_id):
     return render(request, 'store/detail.html', context)
 
 def add_to_wishlist(request, product_id):
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    
     product = Product.objects.get(product_id=product_id)
-    if request.method == 'POST':
-        wish_form = WishListForm(request.POST)
-        if wish_form.is_valid():
-            customer = Customer.objects.get(email=request.user.email)
-            try:
-                wish_item = WishList.objects.get(product=product, customer__email=customer, color=wish_form.cleaned_data.get('color'), size=wish_form.cleaned_data.get('size'))
-                wish_item.quantity += 1
-                wish_item.save()
-            except:
-                wish_item = WishList.objects.create(product=product, customer__email=customer, color=wish_form.cleaned_data.get('color'), size=wish_form.cleaned_data.get('size'), quantity=1)
-                print('Counter Na:', request.session[f'{request.user.username}_wish_counter'])
-            request.session[f'{request.user.username}_wish_counter'] += 1
+    # if request.method == 'POST':
+    #     wish_form = WishListForm(request.POST)
+    # if wish_form.is_valid():
+    customer = Customer.objects.get(email=request.user.email)
+    try:
+        wish_item = WishList.objects.get(product=product, customer__email=customer, color=request.GET.get('color'), size=request.POST.get('size'))
+        wish_item.quantity += 1
+        wish_item.save()
+    except:
+        wish_item = WishList.objects.create(product=product, customer__email=customer, color=request.POST.get('color'), size=request.POST.get('size'), quantity=1)
+        print('Counter Na:', request.session[f'{request.user.username}_wish_counter'])
+    request.session[f'{request.user.username}_wish_counter'] += 1
     return render(request, 'store/detail.html', {'wish_item':wish_item})
+    return render(request, 'store/detail.html')
 
 
 def cart(request):
