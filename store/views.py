@@ -235,7 +235,7 @@ def add_to_wishlist(request, product_id):
                 wish_item.save()
             except:
                 wish_item = WishList.objects.create(product=product, customer__email=customer, color=wish_form.cleaned_data.get('color'), size=wish_form.cleaned_data.get('size'), quantity=1)
-                print('Counter Na: '. request.session[f'{request.user.username}_wish_counter'])
+                print('Counter Na:', request.session[f'{request.user.username}_wish_counter'])
             request.session[f'{request.user.username}_wish_counter'] += 1
     return render(request, 'store/detail.html', {'wish_item':wish_item})
 
