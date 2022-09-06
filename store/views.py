@@ -249,7 +249,9 @@ def remove_from_wishlist_view(request, product_id):
     customer = Customer.objects.get(email=request.user)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
-    return render(request, 'store/wishlist.html')
+    # if True:
+    return redirect('wishlist')
+    # return render(request, 'store/wishlist.html')
 
 def wishlist(request):
     if not request.user.is_authenticated:

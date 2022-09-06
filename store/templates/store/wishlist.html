@@ -34,17 +34,14 @@
                     <td>{{ item.product.product_sizes|upper }}</td>
                     <td>{{ item.date_added }}</td>
                     <td>
-                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-3 btn" ">Delete</a>
-                    </td>   
+                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-2 btn" ">Remove</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
     <script>
-        let rmWishItem = document.getElementById('remove-wishitem')
-        rmWishItem.addEventListener('click',function () {
-            rmWishItem.setAttribute('href', '127.0.0.1.8000/wishlist/');
-        })
+        
     </script>
 </div>
 {% endblock content %}
