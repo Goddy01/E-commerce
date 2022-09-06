@@ -66,11 +66,12 @@ def website_content(request):
     else:
         items=0
         cart_items=0
-    if Order.objects.filter(customer__email=request.user.email, customer__type='CUSTOMER'):
-        if request.user.is_authenticated and Order.objects.filter(customer__email=request.user.email).order_by('-id').first().get_cart_total != 0:
-            order = Order.objects.filter(customer__email=request.user.email).order_by('-id').first()
-            total = order.total_order_price
-            email = request.user.email
+    if request.user.is_authenticated:
+        if Order.objects.filter(customer__email=request.user.email, customer__type='CUSTOMER'):
+            if Order.objects.filter(customer__email=request.user.email).order_by('-id').first().get_cart_total != 0:
+                order = Order.objects.filter(customer__email=request.user.email).order_by('-id').first()
+                total = order.total_order_price
+                email = request.user.email
 
     context['items'] = items
     context['cart_items'] = cart_items
