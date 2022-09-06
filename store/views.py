@@ -111,7 +111,15 @@ def customer_dashboard(request):
 
 def home_page(request):
     context = {}
-
+    val = ''
+    customers = Customer.objects.all()
+    vendors = Vendor.objects.all()
+    for c in customers:
+        if c.email == request.user.email:
+            val = 'customer'
+    for c in vendors:
+        if c.email == request.user.email:
+            val = 'vendor'
     products = Product.objects.all().order_by('?').distinct()[:6]
     latest_products = Product.objects.all().order_by('-product_id')
 
@@ -122,6 +130,7 @@ def home_page(request):
     context['p_products'] = productss
     context['products'] = pagination(request, Product.objects.all().order_by('-num_of_visits'), 6)
     context['latest_products'] = sorted(recently_added_products, key=attrgetter('date_added'), reverse=True)[:6]
+    context['val'] = val
     return render(request, 'store/index.html', context)
 
 def just_arrived(request):
