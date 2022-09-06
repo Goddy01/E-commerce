@@ -278,6 +278,9 @@ def remove_from_wishlist_view(request, product_id):
 def wishlist(request):
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
+    customers = Customer.objects.all()
+    if request.user not in customers:
+        return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     wishlist = WishList.objects.filter(customer=request.user)
 
     return render(request, 'store/wishlist.html', {'wishlist': wishlist})
