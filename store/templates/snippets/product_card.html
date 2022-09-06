@@ -24,7 +24,11 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between bg-light border">
+            {% if val != 'vendor' %}
             <a href="{% url 'product_details' l_product.product_id %}" class="btn btn-sm text-dark p-0 mx-auto"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+            {% else %}
+            <a href="{% url 'v_product_details' l_product.product_id %}" class="btn btn-sm text-dark p-0 mx-auto"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+            {% endif %}
         </div>
     </div>
 <!-- </div> -->

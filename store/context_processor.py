@@ -6,6 +6,7 @@ from .models import Order, WishList, Product
 # @login_required
 def website_content(request):
     context = {}
+    val = ''
     men = Product.objects.filter(product_categories=["M"]).count()
     women = Product.objects.filter(product_categories=["W"]).count()
     m_c = Product.objects.filter(product_categories=["MC"]).count()
@@ -16,6 +17,14 @@ def website_content(request):
     # else:
     customers = Customer.objects.all()
     vendors = Vendor.objects.all()
+    if request.user.is_authenticated:
+        for c in customers:
+            if c.email == request.user.email:
+                val = 'customer'
+        for c in vendors:
+            if c.email == request.user.email:
+                val = 'vendor'
+        context['val'] = val
     try:
         user = User.objects.get(device=request.session['device'])
     except:
