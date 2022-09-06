@@ -11,6 +11,10 @@ def website_content(request):
     women = Product.objects.filter(product_categories=["W"]).count()
     m_c = Product.objects.filter(product_categories=["MC"]).count()
     f_c = Product.objects.filter(product_categories=["FC"]).count()
+    men_category = Product.objects.filter(product_categories=["M"])
+    women_category = Product.objects.filter(product_categories=["W"])
+    m_c_category = Product.objects.filter(product_categories=["MC"])
+    f_c_category = Product.objects.filter(product_categories=["FC"])
     request.session[f'{request.user.username}_wish_counter'] = 0
     # if not request.user.is_authenticated:
     # 
@@ -90,4 +94,8 @@ def website_content(request):
     context['women'] = women
     context['m_c'] = m_c
     context['f_c'] = f_c
+    context['men_category'] = men_category
+    context['women_category'] = women_category
+    context['m_c_category'] = m_c_category
+    context['f_c_category'] = f_c_category
     return context
