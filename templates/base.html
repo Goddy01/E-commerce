@@ -122,7 +122,7 @@
                 <form action="{% url 'search' %}" method="get">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products" name="query" id="id_query" value="{{request.GET.query}}">
+                        <input type="text" class="form-control" placeholder="Search by product name, product description, and product category." name="query" id="id_query" value="{{request.GET.query}}">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search" name="search"></i>
