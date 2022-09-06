@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Must be Authenticated{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column">
+            <p class="mx-auto text-dark">No search result for this query.</p>
+            <p class="mx-auto">
+                <a href="{% url 'home' %}" style="color: blue;">Go back to Home</a>
+            </p>
+        </div>
+    </div>
+{% endblock content %}
