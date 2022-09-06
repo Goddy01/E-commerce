@@ -41,6 +41,9 @@ class ContactView(TemplateView):
 def men_category(request):
     return render(request, 'store/categories/men.html')
 
+def women_category(request):
+    return render(request, 'store/categories/women.html')
+
 def pagination(request, items_list, num_of_pages):
     page_number = request.GET.get('page', 1)
     products_paginator = Paginator(items_list, num_of_pages)
