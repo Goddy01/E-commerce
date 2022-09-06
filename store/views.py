@@ -640,6 +640,9 @@ def get_product_queryset(request):
     else:
         return render(request, 'store/index.html')
 
+def no_search(request):
+    return render(request, 'store/no_search,html')
+
 def update_product(request, product_id):
     product = Product.objects.get(product_id=product_id)
     vendors = Vendor.objects.all()
