@@ -68,7 +68,12 @@
         </div>
 
         <div class="col-lg-7 pb-5 pl-3">
-            <h3 class="font-weight-semi-bold">{{ product.product_name }}</h3>
+            <h3 class="font-weight-semi-bold">
+                {{ product.product_name }}
+                {% if product.discount != 0 %}
+                <small class="text-danger">-{{product.discount}}%</small>
+            {% endif %}
+            </h3>
             <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
                         <i class="far fa-star {% if product.average_rating > 0 %} fas {% endif %} "></i>
@@ -86,16 +91,17 @@
                      Rating(s))
                 </small>
             </div>
-            {% if not product.discount == 0 %}
-                <h3 class="font-weight-semi-bold mb-4 text-muted">
-                    <del>#{{ product.product_price }}</del>
-                    <small class="text-danger">-{{product.discount}}%</small>
+            <div style="display: inline;" class="text-dark">
+                {% if not product.discount == 0 %}
+                <h3 class="font-weight-semi-bold mb-4 text-muted d-inline">
+                    <del class="">#{{ product.product_price }}</del>
                 </h3>
-                <h3 class="font-weight-semi-bold mb-4">#{{ product.get_discount_price }}</h3>
+                <h3 class="font-weight-semi-bold mb-4 d-inline">#{{ product.get_discount_price }}</h3>
                 {% else %}
                 <h3 class="font-weight-semi-bold mb-4">#{{ product.product_price }}</h3>
-            {% endif %}
-            <div class="mb-3">
+                {% endif %}
+            </div>
+            <div class="my-3">
                 <p class="font-weight-bold text-dark">Product Sizes: 
                     <span class="font-weight-medium">{{ product.product_sizes|upper }}</span>
                 </p>
