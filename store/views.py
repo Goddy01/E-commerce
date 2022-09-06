@@ -47,6 +47,9 @@ def women_category(request):
 def male_children_category(request):
     return render(request, 'store/categories/male_children.html')
 
+def female_children_category(request):
+    return render(request, 'store/categories/female_children.html')
+
 def pagination(request, items_list, num_of_pages):
     page_number = request.GET.get('page', 1)
     products_paginator = Paginator(items_list, num_of_pages)
