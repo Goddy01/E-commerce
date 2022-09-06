@@ -166,10 +166,23 @@
                                     <a href="" class="dropdown-item">Baby's Dresses</a>
                                 </div>
                             </div> -->
-                            <a href="" class="nav-item nav-link">MEN</a>
-                            <a href="" class="nav-item nav-link">WOMEN</a>
-                            <a href="" class="nav-item nav-link">MALE CHILDREN</a>
-                            <a href="" class="nav-item nav-link">FEMALE CHILDREN</a>
+                            <a href="{% url 'men_category' %}" class="nav-item nav-link">
+                                MEN
+                                <span style="float: right;">{{ men.0 }}</span>
+                            </a>
+
+                            <a href="" class="nav-item nav-link">
+                                WOMEN
+                                <span style="float: right;">{{ women }}</span>
+                            </a>
+                            <a href="" class="nav-item nav-link">
+                                MALE CHILDREN
+                                <span style="float: right;">{{ m_c }}</span>
+                            </a>
+                            <a href="" class="nav-item nav-link">
+                                FEMALE CHILDREN
+                                <span style="float: right;">{{ f_c }}</span>
+                            </a>
                         </div>
                     </nav>
                 </div>
@@ -189,7 +202,7 @@
                                     <a href="" class="dropdown-item">Baby's Dresses</a>
                                 </div>
                             </div> -->
-                            <a href="" class="nav-item nav-link">
+                            <a href="{% url 'men_category' %}" class="nav-item nav-link">
                                 MEN
                                 <span style="float: right;">{{ men.0 }}</span>
                             </a>
