@@ -6,7 +6,11 @@
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
+            {% with request.resolver_match.url_name as url_name %}
+            {% if url_name == 'home' %}
             <h2 class="section-title px-5"><span class="px-2">Popular Products</span></h2>
+            {% endif %}
+            {% endwith %}
         </div>
         <div class="row px-xl-5 pb-3">
             {% for product in products %}
