@@ -227,9 +227,6 @@ def add_to_wishlist(request, product_id):
     else:
         wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1, date_added=datetime.now())
         bool = True
-    request.session['wish_count'] += 1
-    print('YEEE', request.session['wish_count'])
-    request.session[f'{request.user.username}_wish_counter'] += 1
     
     return JsonResponse(bool, safe=False)
 
@@ -241,10 +238,18 @@ def remove_from_wishlist(request, product_id):
     customer = Customer.objects.get(email=request.user)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
-    request.session['wish_count'] -= 1
-    print('YEEE', request.session['wish_count'])
     bool = True
     return HttpResponse('OK.')
+
+def remove_from_wishlist_view(request, product_id):
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    
+    product = Product.objects.get(product_id=product_id)
+    customer = Customer.objects.get(email=request.user)
+    wish_item = WishList.objects.get(product=product, customer=customer)
+    wish_item.delete()
+    return render(request, 'store/wishlist.html')
 
 def wishlist(request):
     if not request.user.is_authenticated:

@@ -5,6 +5,8 @@
     <style>
         .table {
             margin-bottom: 180px;
+            border-collapse: separate;
+            border-spacing: 0 15px;
         }
     </style>
     <table class="table">
@@ -18,21 +20,31 @@
             <th scope="col">Colors</th>
             <th scope="col">Sizes</th>
             <th scope="col">Date Added</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
             {% for item in wishlist %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ item.product.product_name|title }}</td>
-                <td>${{ item.product.product_price }}</td>
-                <td>{{ item.product.number_available }}</td>
-                <td>{{ item.product.product_colors|upper }}</td>
-                <td>{{ item.product.product_sizes|upper }}</td>
-                <td>{{ item.date_added }}</td>
-            </tr>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ item.product.product_name|title }}</td>
+                    <td>${{ item.product.product_price }}</td>
+                    <td>{{ item.product.number_available }}</td>
+                    <td>{{ item.product.product_colors|upper }}</td>
+                    <td>{{ item.product.product_sizes|upper }}</td>
+                    <td>{{ item.date_added }}</td>
+                    <td class="bg-danger text-light" style="height: 50px;position: relative;width: 60px;">
+                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light" style="margin: 0;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">Delete</a>
+                    </td>   
+                </tr>
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        let rmWishItem = document.getElementById('remove-wishitem')
+        rmWishItem.addEventListener('click',function () {
+            rmWishItem.setAttribute('href', '127.0.0.1.8000/wishlist/');
+        })
+    </script>
 </div>
 {% endblock content %}
