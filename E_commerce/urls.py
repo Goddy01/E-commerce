@@ -35,7 +35,7 @@ from store.views import (
     add_to_wishlist, remove_from_wishlist,
     wishlist, remove_from_wishlist_view,
     men_category,women_category,
-    male_children_category,
+    male_children_category, female_children_category,
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -60,6 +60,7 @@ urlpatterns = [
     path('men_category/', men_category, name='men_category'),
     path('women_category/', women_category, name='women_category'),
     path('male_children_category/', male_children_category, name='male_children_category'),
+    path('female_children_category/', female_children_category, name='female_children_category'),
     path('cart/<item_id>/increment/', quantity_increment, name='q_incr'),
     path('cart/<item_id>/decrement/', quantity_decrement, name='q_decr'),
     path('cart/<item_id>/delete/', delete_order_item, name='del_item'),
