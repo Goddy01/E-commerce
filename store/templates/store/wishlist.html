@@ -34,7 +34,7 @@
                     <td>{{ item.product.product_sizes|upper }}</td>
                     <td>{{ item.date_added }}</td>
                     <td class="bg-danger text-light" style="height: 50px;position: relative;width: 60px;">
-                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light" style="margin: 0;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">Delete</a>
+                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light" style="margin: 0;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">Delete</a>
                     </td>   
                 </tr>
             {% endfor %}
