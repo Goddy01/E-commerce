@@ -1,0 +1,12 @@
+{% extend 'base.html' %}
+{% block title %}MEN's Category{% endblock title %}
+{% block content %}
+<div class="row px-xl-5 pb-3">
+    {% for product in men %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+        {% include '../snippets/product_card.html' with l_product=product %}
+    </div>
+    {% endfor %}
+    {% include '../snippets/products_pagination_snippet.html' with p_products=men%}
+</div>
+{% endblock content %}

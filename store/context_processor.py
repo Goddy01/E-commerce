@@ -86,7 +86,7 @@ def website_content(request):
     context['cart_items'] = cart_items
     context['customers'] = customers
     context['vendors'] = vendors
-    context['men'] = men,
+    context['men'] = men
     context['women'] = women
     context['m_c'] = m_c
     context['f_c'] = f_c
