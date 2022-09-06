@@ -38,6 +38,13 @@ class ShopView(TemplateView):
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
+def categories(request):
+    men = Product.objects.filter(product_categories="M").count()
+    women = Product.objects.filter(product_categories="W").count()
+    m_c = Product.objects.filter(product_categories="MC").count()
+    f_c = Product.objects.filter(product_categories="FC").count()
+    return render(request, 'base.html', {'men':men, 'women': women, 'm_c': m_c, 'f_c': f_c,})
+
 def pagination(request, items_list, num_of_pages):
     page_number = request.GET.get('page', 1)
     products_paginator = Paginator(items_list, num_of_pages)
