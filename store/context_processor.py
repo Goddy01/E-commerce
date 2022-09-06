@@ -1,11 +1,15 @@
 import uuid
 from Accounts.models import Customer, User, Vendor
-from .models import Order, WishList
+from .models import Order, WishList, Product
 # from django.contrib.auth.decorators import login_required
 
 # @login_required
 def website_content(request):
     context = {}
+    men = Product.objects.filter(product_categories=["M"]).count()
+    women = Product.objects.filter(product_categories=["W"]).count()
+    m_c = Product.objects.filter(product_categories=["MC"]).count()
+    f_c = Product.objects.filter(product_categories=["FC"]).count()
     request.session[f'{request.user.username}_wish_counter'] = 0
     # if not request.user.is_authenticated:
     # 
@@ -71,4 +75,8 @@ def website_content(request):
     context['cart_items'] = cart_items
     context['customers'] = customers
     context['vendors'] = vendors
+    context['men'] = men,
+    context['women'] = women
+    context['m_c'] = m_c
+    context['f_c'] = f_c
     return context
