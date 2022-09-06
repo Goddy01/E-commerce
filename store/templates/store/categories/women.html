@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}Men's Category{% endblock title %}
+{% block title %}Women's Category{% endblock title %}
 {% block content %}
 <div class="text-center mb-4">
-    <h2 class="section-title px-5"><span class="px-2">Men's Category</span></h2>
+    <h2 class="section-title px-5"><span class="px-2">Women's Category</span></h2>
 </div>
 <div class="row px-xl-5 pb-3">
-    {% for product in men_category %}
+    {% for product in women_category %}
     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
         {% include '../../snippets/product_card.html' with l_product=product %}
     </div>
