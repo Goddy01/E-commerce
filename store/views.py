@@ -600,7 +600,7 @@ def product_details(request, product_id):
     context['product_sizes'] = product_sizes
     context['product_colors'] = product_colors
     context['orderitemform'] = orderitemform
-    context['reviews'] = pagination(request, reviews, 5)
+    context['reviews'] = reviews[:5]
     context['reviews_counter'] = reviews_counter
     context['users_recently_viewed_products'] = users_recently_viewed_products[:4]
     return render(request, 'store/detail.html', context)
