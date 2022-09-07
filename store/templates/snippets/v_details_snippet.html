@@ -105,7 +105,13 @@
                     <span class="font-weight-medium">{{ product.product_colors|upper }}</span>
                 </p>
                 <p class="font-weight-bold text-dark">Product Number Available: 
-                    <span class="font-weight-medium">{{ product.number_available }}</span>
+                    <span class="font-weight-medium">
+                        {% if product.number_available == 0 %}
+                        <span class="text-danger">Out of Stock</span>
+                        {% else %}
+                        {{product.number_available}}
+                        {% endif %}
+                    </span>
                 </p>
             </div>
             <div class="pt-2">

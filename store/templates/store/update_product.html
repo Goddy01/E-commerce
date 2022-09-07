@@ -20,13 +20,10 @@
     {% endif %}
 </div>
 <link rel="stylesheet" href="{% static 'css/jupyter-pattern.css' %}">
-<div class="w-75 mx-auto bg-white" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ececec; padding: 4rem 2rem; border-radius: 20px;margin-top: 10rem;margin-bottom: 5rem;color: black;">
-    <h4 style="text-align: center; margin-bottom: 2rem">Want to sell your product</h4>
+<div class="w-75 mx-auto bg-white" style="border: 1px solid #ccc; box-shadow: 1px .2px .2px 2px #ececec; padding: 4rem 1rem; border-radius: 20px;margin-top: 10rem;margin-bottom: 5rem;color: black;">
+    <h2 style="text-align: center; margin-bottom: 4rem">Update Product</h2>
     <form method="post" action="{% url 'update_product' product.product_id %}" enctype="multipart/form-data">
         {% csrf_token %}
-        <div style="display: flex;">
-            <label for="upload-image" class="m-auto shadow"><img src="{% static 'img/profile-image.png' %}" style="width: max-content; border-radius: 50%;"></label>
-        </div>
 
         {{update_product_form.product_categories.label_tag}}
         {{update_product_form.product_categories}}
@@ -59,10 +56,10 @@
             {{ update_product_form.product_colors }}
         </div>
 
-        <div class="mb-3">
-            <p>{{ update_product_form.discount.label }}</p>
-            <small>(E.g 1-100)</small>
-            <input type="number" name="discount" value="{{ product.discount }}"> %
+        <div style="display: flex; flex-direction: column; margin-bottom: 3rem;">
+            <label for="id_discount" class="mb-0">Discount</label>
+            <small class="m-0">Value will be rendered in %(Enter value between 1-100)</small>
+            <input type="number" name="discount" id="id_discount" value="{{product.discount}}">
         </div>
 
         <div style="display: flex; flex-direction: column; margin-bottom: 1rem;">
@@ -92,10 +89,9 @@
             
         </div>
 
-         
-            {{ update_product_form.product_description }}
+        <textarea name="product_description" id="id_product_description" style="width: 100%;" rows="10" cols="5">{{product.product_description}}</textarea>
 
-        <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 40%;" type="submit">
+        <button class="btn btn-primary" style="display: flex; margin: auto; margin-top: .5rem;width: 50%;" type="submit">
             <span style="margin: 0 auto;font-weight: bold;">Update Product</span>
         </button>
         <p style="color: green;text-align: center;" class="h5 mt-5">{{success}}</p>
