@@ -503,6 +503,7 @@ def review(request, product_id):
                 obj = review_form.save(commit=False)
                 obj.product = product
                 obj.user = customer
+                obj.created_on = datetime.now()
                 obj.rating = request.GET.get('rating')
                 if obj.user_review == '':
                     messages.error(request, "Your comment can't be blank.")

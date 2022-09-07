@@ -118,7 +118,7 @@ class Review(models.Model):
     user =        models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
     user_review = models.TextField(max_length=1000, blank=True, null=True)
     rating =      models.IntegerField(null=True, default=0, blank=True)
-    created_on =  models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    created_on =  models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.fullname}'s review"
