@@ -154,36 +154,12 @@
                         <div class="" style="display: block;">
                             <div class="">
                                 <div class="justify-content-center border-secondary mb-4">
-                                    <h2>Reviews</h2>
+                                    <h2>Verified Reviews✅</h2>
                                 </div>
-                                {% if reviews %}
-                                    {% for review in reviews %}
-                                        <!-- <h2>@review.user.username</h2> -->
-                                        <div class="media-body mb-4 p-3" style="background-color: #EDF1FF;">
-                                            <h6>{{ review.user.fullname|title }}<small> - <i>{{ review.created_on }}</i></small></h6>
-                                            <!-- <div class="text-primary mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                            </div> -->
-                                            <div class="text-primary">
-                                                <i class="far fa-star {% if review.rating > 0 %} fas {% endif %} "></i>
-                                                <i class="far fa-star {% if review.rating > 1 %} fas {% endif %} "></i>
-                                                <i class="far fa-star {% if review.rating > 2 %} fas {% endif %} "></i>
-                                                <i class="far fa-star {% if review.rating > 3 %} fas {% endif %} "></i>
-                                                <i class="far fa-star {% if review.rating > 4 %} fas {% endif %} "></i>
-                                            </div>
-                                            <p>{{ review.user_review }}</p>
-                                        </div>
-                                    {% endfor %}
-                                    <div class="mx-auto mb-5" style="text-align: center;">
-                                        <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
-                                    </div>
-                                {% else %}
-                                <p>There have not been review for this product.</p>
-                                {% endif %}
+                                {% include '../snippets/reviews_snippet.html' %}
+                                <div class="mx-auto mb-5" style="text-align: center;">
+                                    <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
+                                </div>
                             </div>
                             <div class="">
                                 <div class="col-md-6">
