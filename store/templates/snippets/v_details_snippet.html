@@ -132,14 +132,14 @@
                             <h2>Verified Reviews({{ product.num_of_reviews }})✅</h2>
                         </div>
                         {% include 'snippets/reviews_snippet.html' %}
-                        <div class="mx-auto mb-5" style="text-align: center;">
+                        <div class="mb-5">
                             {% if reviews %}
                                 <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="edit-product">
-                        <a href="{% url 'update_product' product.product_id %}" class="update btn btn-primary bg-danger text-light">Update Product</a>
+                        <a href="{% url 'update_product' product.product_id %}" class="update btn btn-primary bg-success text-light p-2" style="border: none;">Update Product</a>
                         <a href="{% url 'delete_product' product.product_id %}" class="delete btn bg-danger text-light" style="border: none;" onclick="return confirm('Are you sure you want to delete this product?')">Delete Product</a>
                     </div>
                 </div>

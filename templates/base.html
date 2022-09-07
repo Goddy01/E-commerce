@@ -112,6 +112,13 @@
                 </div>
             </div>
         </div>
+        <p class="text-center text-success font-weight-semi-bold w-50 mx-auto mt-1">
+            <span class="text-dark">Hi, </span>
+        {% if request.user.is_authenticated %}
+        {{request.user.fullname|title}}.</p>
+        {% else %}
+        Guest.</p>
+        {% endif %}
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="{% url 'home' %}" class="text-decoration-none">
@@ -238,17 +245,17 @@
                             <!-- <div class="nav-item dropdown"> -->
                                 <!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a> -->
                                 <!-- <div class="dropdown-menu rounded-0 m-0"> -->
-                            <a href="{% url 'cart' %}" class="nav-item nav-link">Shopping Cart</a>
-                                    <!-- <a href="{% url 'checkout' %}" class="dropdown-item">Checkout</a> -->
-                                <!-- </div> -->
-                            <!-- </div> -->
-                            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
-
                             {% for vendor in vendors %}
                                 {% if request.user.username == vendor.username %}
                                 <a href="{% url 'add-product' %}" class="nav-item nav-link">Add Product</a>
 
                                 <a href="{% url 'v_dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                                {% else %}
+                                <a href="{% url 'cart' %}" class="nav-item nav-link">Shopping Cart</a>
+                                    <!-- <a href="{% url 'checkout' %}" class="dropdown-item">Checkout</a> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                                 {% endif %}
                             {% endfor %}
                             {% for c in customers %}
