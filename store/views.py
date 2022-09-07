@@ -488,6 +488,9 @@ def review(request, product_id):
     if not request.user.is_authenticated:
         messages.info(request, 'You must be logged in to leave reviews/ratings.')
         return redirect('product_details', product_id)
+    if request.user not in Customer.objects.all():
+        return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
+
     customer = User.objects.get(email=request.user.email)
     # except ObjectDoesNotExist:
     #     return HttpResponse('You must be a customer to access this page')
