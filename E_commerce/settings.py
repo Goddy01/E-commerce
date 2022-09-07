@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from django.contrib import messages
-from dotenv import load_dotenv, find_dotenv
 
 
 # import dj_database_url
@@ -30,7 +29,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = 'django-insecure-rp#z8($s#emahp%xom24#ag$2-p89!ef4gz=tpiam1sa&$lup4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', ]
 
