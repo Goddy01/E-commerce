@@ -10,7 +10,7 @@
         }
     </style>
     <table class="table">
-        <h3>Completed Orders</h3>
+        <h3>Wishlist</h3>
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -34,14 +34,12 @@
                     <td>{{ item.product.product_sizes|upper }}</td>
                     <td>{{ item.date_added }}</td>
                     <td>
-                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-2 btn" ">Remove</a>
+                        <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-2 btn" onclick="return confirm('Are you sure you want to remove this product from your wishlist?')">Remove</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <script>
-        
-    </script>
 </div>
+
 {% endblock content %}

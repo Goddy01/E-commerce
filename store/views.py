@@ -241,7 +241,7 @@ def add_to_wishlist(request, product_id):
         return redirect('user:must_auth')
     
     product = Product.objects.get(product_id=product_id)
-    customer = Customer.objects.get(email=request.user)
+    customer = Customer.objects.get(email=request.user.email)
     # try:
     wish_item = WishList.objects.filter(product=product, customer=customer)
     if wish_item.count() > 0:
@@ -257,7 +257,7 @@ def remove_from_wishlist(request, product_id):
         return redirect('user:must_auth')
     
     product = Product.objects.get(product_id=product_id)
-    customer = Customer.objects.get(email=request.user)
+    customer = Customer.objects.get(email=request.user.email)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
     bool = True
@@ -268,7 +268,7 @@ def remove_from_wishlist_view(request, product_id):
         return redirect('user:must_auth')
     
     product = Product.objects.get(product_id=product_id)
-    customer = Customer.objects.get(email=request.user)
+    customer = Customer.objects.get(email=request.user.email)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
     # if True:
