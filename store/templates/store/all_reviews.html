@@ -3,7 +3,7 @@
 {% block content %}
 <div class="m-2 p-3">
     <div class="justify-content-center border-secondary mb-4">
-        <h2 class="text-center">Verified Reviews✅</h2>
+        <h2 class="text-center">Verified Reviews({{reviews_counter}})✅</h2>
     </div>
     {% include '../snippets/reviews_snippet.html' with reviews=all_reviews %}
 </div>

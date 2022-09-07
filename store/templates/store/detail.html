@@ -153,19 +153,21 @@
                     <div class="col-md-6 mx-3">
                         <div class="" style="display: block;">
                             <div class="">
-                                <div class="justify-content-center border-secondary mb-4">
-                                    <h2>Verified Reviews✅</h2>
+                                <div class="justify-content-center border-secondary mt-5 mb-3">
+                                    <h2>Verified Reviews({{ reviews_counter }})✅</h2>
                                 </div>
                                 {% include '../snippets/reviews_snippet.html' %}
                                 <div class="mx-auto mb-5" style="text-align: center;">
-                                    <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
+                                    {% if reviews %}
+                                        <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="">
                                 <div class="col-md-6">
                                 </div>
                                 <div class="col-md-6 mt-4">
-                                    <h3 class="mb-5">Leave a review & rating</h3>
+                                    <h3 class="mb-5">Leave a review & rating.</h3>
                                     <form action="{% url 'review' product.product_id %}" method="GET">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_id" id="product_id" value="{{ product.product_id }}"/>

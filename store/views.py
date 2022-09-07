@@ -609,7 +609,7 @@ def all_reviews(request, product_id):
     product = get_object_or_404(Product, product_id=product_id)
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
-    return render(request, 'store/all_reviews.html', {'all_reviews': reviews})
+    return render(request, 'store/all_reviews.html', {'all_reviews': reviews, 'reviews_counter': product.num_of_reviews, })
 
 def vendor_product_detail(request, product_id):
     vendors = Vendor.objects.all()
