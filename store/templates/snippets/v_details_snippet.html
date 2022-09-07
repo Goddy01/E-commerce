@@ -129,27 +129,14 @@
                 <div class="" style="display: block;">
                     <div class="">
                         <div class="justify-content-center border-secondary mb-4">
-                            <h2>Review(s)</h2>
+                            <h2>Verified Reviews({{ product.num_of_reviews }})✅</h2>
                         </div>
-                        {% if reviews %}
-                            {% for review in reviews %}
-                                <!-- <h2>@review.user.username</h2> -->
-                                <div class="media-body mb-4 p-3" style="background-color: #EDF1FF;">
-                                    <h6>{{ review.user.fullname|title }}<small> - <i>{{ review.created_on }}</i></small></h6>
-                                    <div class="text-primary">
-                                        <i class="far fa-star {% if review.rating > 0 %} fas {% endif %} "></i>
-                                        <i class="far fa-star {% if review.rating > 1 %} fas {% endif %} "></i>
-                                        <i class="far fa-star {% if review.rating > 2 %} fas {% endif %} "></i>
-                                        <i class="far fa-star {% if review.rating > 3 %} fas {% endif %} "></i>
-                                        <i class="far fa-star {% if review.rating > 4 %} fas {% endif %} "></i>
-                                    </div>
-                                    <p>{{ review.user_review }}</p>
-                                </div>
-                            {% endfor %}
-                            {% include '../snippets/products_pagination_snippet.html' with p_products=reviews%}
-                        {% else %}
-                        <p>There have not been review(s) for this product.</p>
-                        {% endif %}
+                        {% include 'snippets/reviews_snippet.html' %}
+                        <div class="mx-auto mb-5" style="text-align: center;">
+                            {% if reviews %}
+                                <a href="{% url 'all_reviews' product.product_id %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="edit-product">
                         <a href="{% url 'update_product' product.product_id %}" class="update btn btn-primary bg-danger text-light">Update Product</a>
