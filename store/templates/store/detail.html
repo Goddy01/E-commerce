@@ -178,6 +178,9 @@
                                             <p>{{ review.user_review }}</p>
                                         </div>
                                     {% endfor %}
+                                    <div class="mx-auto mb-5" style="text-align: center;">
+                                        <a href="{% url 'just_arrived' %}" class="bg-primary p-2 text-dark text-decoration-none">View All Reviews</a>
+                                    </div>
                                 {% else %}
                                 <p>There have not been review for this product.</p>
                                 {% endif %}

@@ -605,6 +605,12 @@ def product_details(request, product_id):
     context['users_recently_viewed_products'] = users_recently_viewed_products[:4]
     return render(request, 'store/detail.html', context)
 
+def all_reviews(request, product_id):
+    product = get_object_or_404(Product, product_id=product_id)
+    reviews = product.review_set.all()
+    reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
+    return render(request, 'store/index.html', {'all_reviews': reviews})
+
 def vendor_product_detail(request, product_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
