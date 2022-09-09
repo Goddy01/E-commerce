@@ -9,7 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
 from .forms import AddProductForm, OrderItemForm, BillingForm, ReviewForm, UpdateProductForm
 from Accounts.models import Vendor, User, Customer
-from store.models import Product, Order, OrderItem, Review, UsersRecentlyViewedProduct, WishList
+from store.models import BillingAddress, Product, Order, OrderItem, Review, UsersRecentlyViewedProduct, WishList
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
@@ -105,6 +105,10 @@ def vendor_dashboard(request):
     completed_order_products = OrderItem.objects.filter(order__complete=True)
     uncompleted_order_products = OrderItem.objects.filter(order__complete=False)
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
+
+def billing_address(request, transaction_id):
+    billing_address = BillingAddress.objects.get(transaction_id=transaction_id)
+    return render(request, 'store/ordered_product_shipping_address.html', {'billing_address': billing_address})
 
 def customer_dashboard(request):
     customers = Customer.objects.all()
