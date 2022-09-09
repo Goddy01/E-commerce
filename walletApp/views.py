@@ -6,6 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from store.models import BillingAddress, Order, OrderItem
 from Accounts.models import Vendor
+# import requests, os
 
 def make_payment(request):
     vendors = Vendor.objects.all()
@@ -28,6 +29,9 @@ def make_payment(request):
                         item.product.number_available -= item.quantity
                         item.product.save()
                     order.complete = not order.complete
+                    # headers = {"Authorization": "Bearer {}".format(os.environ.get('PAYSTACK_SECRET_KEY)), "Content-Type": "application/json"}
+                    # data = { "business_name": "Cheese Sticks", "bank_code": "058", "account_number": "0123456789", "percentage_charge": 0.2 }
+                    # r = requests.post('https://api.paystack.co/subaccount', headers=headers, params=data)
                     order.save()
                     return redirect('home')
             if order.total_order_price is None:
