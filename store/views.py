@@ -105,9 +105,13 @@ def vendor_dashboard(request):
     uncompleted_order_products = OrderItem.objects.filter(order__complete=False)
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
-def billing_address(request, orderitem):
-    order = Order.objects.get(orderitem__product__product_id=orderitem)
-    billing_address = BillingAddress.objects.filter(order__transaction_id=order.transaction_id).first()
+def billing_address(request, transaction_id):
+    
+    # order = Order.objects.get(transaction_id=transaction_id)
+    try:
+        billing_address = BillingAddress.objects.get(order__transaction_id=transaction_id)
+    except:
+        billing_address = BillingAddress.objects.filter(order__transaction_id=transaction_id).first()
     return render(request, 'store/ordered_product_shipping_address.html', {'billing_address': billing_address})
 
 def customer_dashboard(request):
