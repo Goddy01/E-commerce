@@ -106,7 +106,12 @@ def vendor_dashboard(request):
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
 def billing_address(request, transaction_id):
-    
+    vendors = Vendor.objects.all()
+    if not request.user.is_authenticated:
+        return HttpResponse('You must be authorized to visit this page.')
+    for vendor in vendors:
+        if vendor.username != request.user.username:
+            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     # order = Order.objects.get(transaction_id=transaction_id)
     try:
         billing_address = BillingAddress.objects.get(order__transaction_id=transaction_id)
