@@ -98,7 +98,6 @@ def vendor_dashboard(request):
     for vendor in vendors:
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
-    
     vendor_username = request.user.username
     vendor = Vendor.objects.get(username=vendor_username)
     vendor_products = Product.objects.filter(seller=vendor)
@@ -107,7 +106,7 @@ def vendor_dashboard(request):
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
 def billing_address(request, orderitem):
-    order = Order.objects.get(orderitem__item_id=orderitem)
+    order = Order.objects.get(orderitem__product__product_id=orderitem)
     billing_address = BillingAddress.objects.filter(order__transaction_id=order.transaction_id).first()
     return render(request, 'store/ordered_product_shipping_address.html', {'billing_address': billing_address})
 
@@ -420,7 +419,7 @@ def checkout(request):
                 if billing_form.is_valid():
                     
                     obj = billing_form.save(commit=False)
-                    # obj.phone_num1 = billing_form.cleaned_data['phone_num1']
+                    obj.phone_num1.region = obj.country.code
                     # obj.fullname = billing_form.cleaned_data['fullname']
                     # obj.email = billing_form.cleaned_data['email']
                     # obj.address = billing_form.cleaned_data['address']

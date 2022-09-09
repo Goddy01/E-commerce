@@ -171,11 +171,11 @@ class WishList(models.Model):
 class BillingAddress(models.Model):
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     fullname =         models.CharField(max_length=256, null=False, default="", blank=True)
-    phone_num1 =        PhoneNumberField(null=True, blank=True, verbose_name="Phone No 1")
+    country =           CountryField(max_length=256, null=False, blank=False)
+    phone_num1 =        PhoneNumberField(null=True, blank=True, verbose_name="Phone No 1", region="")
     email =             models.EmailField(max_length=128, null=False, default="", blank=False)
     address =          models.CharField(max_length=512, null=False, default="", blank=True)
     order =             models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
-    country =           CountryField(max_length=256, null=False, blank=False)
     city =              models.CharField(null=False, max_length=256, default="", blank=False)
     state =             models.CharField(null=False, max_length=256, blank=False)
     zipcode =           models.IntegerField(null=False, blank=False)
