@@ -71,7 +71,7 @@ urlpatterns = [
     path('checkout/', checkout, name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('add-product/', add_product_view, name='add-product'),
-    path('vendors/', include('Accounts.urls')),
+    path('users/', include('Accounts.urls')),
     # re_path(r'^update_item/$', updateItem, name='update_item'),
     path('no_cart/', no_cart, name='no_cart'),
     path('no_checkout', no_checkout, name='no_checkout'),
