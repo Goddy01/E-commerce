@@ -28,7 +28,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ completed_orders.product.product_name|title }}</td>
-                <td>${{ completed_orders.product.product_price }}</td>
+                <td>#{{ completed_orders.product.product_price }}</td>
                 <td>{{ completed_orders.quantity }}</td>
                 <td>{{ completed_orders.color|title }}</td>
                 <td>{{ completed_orders.size|upper }}</td>
@@ -57,7 +57,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ uncompleted_orders.product.product_name|title }}</td>
-                <td>${{ uncompleted_orders.product.product_price }}</td>
+                <td>#{{ uncompleted_orders.product.product_price }}</td>
                 <td>{{ uncompleted_orders.quantity }}</td>
                 <td>{{ uncompleted_orders.color|title }}</td>
                 <td>{{ uncompleted_orders.size|upper }}</td>

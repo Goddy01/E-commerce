@@ -29,7 +29,7 @@
                 <td class="font-weight-bold text-dark">
                     <a href="{% url 'v_product_details' vendor_product.product_id %} ">{{ vendor_product.product_name|title }}</a>
                 </td>
-                <td>${{ vendor_product.product_price }}</td>
+                <td>#{{ vendor_product.product_price }}</td>
                 <td>{{ vendor_product.number_available }}</td>
                 <td>{{ vendor_product.product_colors|title }}</td>
                 <td>{{ vendor_product.product_sizes|upper }}</td>
@@ -61,7 +61,7 @@
                         {{ completed_order_product.product.product_name|title }}
                     </a>
                 </td>
-                <td>${{ completed_order_product.product.product_price }}</td>
+                <td>#{{ completed_order_product.product.product_price }}</td>
                 <td>{{ completed_order_product.quantity }}</td>
                 <td>{{ completed_order_product.color|title }}</td>
                 <td>{{ completed_order_product.size|upper }}</td>
@@ -89,10 +89,10 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ uncompleted_order_product.product.product_name|title }}</td>
-                <td>${{ uncompleted_order_product.product.product_price }}</td>
+                <td>#{{ uncompleted_order_product.product.product_price }}</td>
                 <td>{{ uncompleted_order_product.quantity }}</td>
-                <td>{{ uncompleted_order_product.product.product_colors|title }}</td>
-                <td>{{ uncompleted_order_product.product.product_sizes|upper }}</td>
+                <td>{{ uncompleted_order_product.color|title }}</td>
+                <td>{{ uncompleted_order_product.size|upper }}</td>
                 <td>{{ uncompleted_order_product.date_added }}</td>
             </tr>
             {% endfor %}
