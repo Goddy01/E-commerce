@@ -94,7 +94,7 @@ def add_product_view(request):
 def vendor_dashboard(request):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
-        return HttpResponse('You must be authorized to visit this page.')
+        return redirect('user:must_auth')
     for vendor in vendors:
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
@@ -108,7 +108,7 @@ def vendor_dashboard(request):
 def billing_address(request, transaction_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
-        return HttpResponse('You must be authorized to visit this page.')
+        return redirect('user:must_auth')
     for vendor in vendors:
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
@@ -623,7 +623,7 @@ def all_reviews(request, product_id):
 def vendor_product_detail(request, product_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
-        return HttpResponse('You must be authorized to visit this page.')
+        return redirect('user:must_auth')
     for vendor in vendors:
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
@@ -665,7 +665,7 @@ def update_product(request, product_id):
     product = Product.objects.get(product_id=product_id)
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
-        return HttpResponse('You must be authorized to visit this page.')
+        return redirect('user:must_auth')
     for vendor in vendors:
         if vendor.username != request.user.username:
             return HttpResponse('You cannot access this page because you are not the vendor of this product.')
@@ -692,7 +692,13 @@ def update_product(request, product_id):
     return render(request, 'store/update_product.html', {'product': product, 'update_product_form': update_product_form,})
 
 def delete_product(request, product_id):
+    vendors = Vendor.objects.all()
+    if not request.user.is_authenticated:
+        return redirect('user:must_auth')
+    for vendor in vendors:
+        if vendor.username != request.user.username:
+            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    
     product = Product.objects.get(product_id=product_id)
     product.delete()
     return redirect('v_dashboard')
-
