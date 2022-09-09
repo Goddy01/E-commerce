@@ -104,7 +104,7 @@ def user_login_view(request):
                         user_orderitems = user_order.orderitem_set.all()
                         print('OrderITEM ARE: ', user_orderitems)
                         for item in cookie_orderitems:
-                            new_item, created = OrderItem.objects.get_or_create(product=item.product, order=user_order)
+                            new_item, created = OrderItem.objects.get_or_create(product=item.product, order=user_order, size=item.size, color=item.color)
                             if new_item.quantity == 0:
                                 new_item.quantity = item.quantity
                             else:

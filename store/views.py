@@ -578,34 +578,26 @@ def product_details(request, product_id):
         product = product,
         time_visited = datetime.now()
     )
-    try:
-        order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__email=request.user.email)
-    except:
-        order_item, created = OrderItem.objects.get_or_create(product=product, order__customer__device=request.session.get('device'))
     
     users_recently_viewed_products = UsersRecentlyViewedProduct.objects.filter(customer=customer).order_by('-time_visited').values('product').distinct()
     users_recently_viewed_products = Product.objects.filter(product_id__in=users_recently_viewed_products, customer_viewed_by=customer).order_by('-last_visit')
     for i in users_recently_viewed_products:
         if i.product_id == product_id:
             users_recently_viewed_products
-    # try:
-    #     request.session.get['p_id']
-    # except:
-    #     request.session['p_id'] = product_id
     
+    product_sizes = product.product_sizes.split(',')
+    product_colors = product.product_colors.split(',')
+
     COLOR_CHOICES = []
     SIZE_CHOICES = []
-    for color in order_item.ordered_product_color:
+    for color in product_colors:
         color = color.strip()
         COLOR_CHOICES.append((color, color))
-        # order_item.save()
-    for size in order_item.ordered_product_size:
+    for size in product_sizes:
         size = size.strip()
         SIZE_CHOICES.append((size, size))
 
     orderitemform = OrderItemForm(SIZE_CHOICES, COLOR_CHOICES)
-    product_sizes = product.product_sizes.split(',')
-    product_colors = product.product_colors.split(',')
     
     context['product'] = product
     context['productss'] = Product.objects.all()
