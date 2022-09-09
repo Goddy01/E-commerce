@@ -107,7 +107,7 @@ def vendor_dashboard(request):
     return render(request, 'store/vendor_dashboard.html', {'vendor_products': vendor_products, 'completed_order_products': completed_order_products, 'uncompleted_order_products': uncompleted_order_products})
 
 def billing_address(request, transaction_id):
-    billing_address = BillingAddress.objects.get(transaction_id=transaction_id)
+    billing_address = BillingAddress.objects.get(order__transaction_id=transaction_id)
     return render(request, 'store/ordered_product_shipping_address.html', {'billing_address': billing_address})
 
 def customer_dashboard(request):

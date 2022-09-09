@@ -57,7 +57,7 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>
-                    <a href="{% url 'billing_address' completed_order_product.order.transaction_id %}" class="font-weight-bold text-dark">
+                    <a href="{% url 'billing_address' completed_order_product.order.transaction_id %}" class="font-weight-bold">
                         {{ completed_order_product.product.product_name|title }}
                     </a>
                 </td>
