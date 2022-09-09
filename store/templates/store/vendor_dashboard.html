@@ -56,7 +56,11 @@
             {% for completed_order_product in completed_order_products %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ completed_order_product.product.product_name|title }}</td>
+                <td>
+                    <a href="" class="font-weight-bold text-dark">
+                        {{ completed_order_product.product.product_name|title }}
+                    </a>
+                </td>
                 <td>${{ completed_order_product.product.product_price }}</td>
                 <td>{{ completed_order_product.quantity }}</td>
                 <td>{{ completed_order_product.product.product_colors|title }}</td>

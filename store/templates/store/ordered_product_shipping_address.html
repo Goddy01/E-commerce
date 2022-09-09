@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Shipping/Billing Address{% endblock title %}
+{% block content %}
+<div class="m-5">
+    <style>
+        .table {
+            margin-bottom: 180px;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+    </style>
+    <table class="table">
+        <h3>Ordered Product Biling/Shipping Address</h3>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fullname</th>
+            <th scope="col">Username</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Country</th>
+            <th scope="col">State</th>
+            <th scope="col">City</th>
+            <th scope="col">Zipcode</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold text-dark">
+                </td>
+                <td>${{ vendor_product.product_price }}</td>
+                <td>{{ vendor_product.number_available }}</td>
+                <td>{{ vendor_product.product_colors|title }}</td>
+                <td>{{ vendor_product.product_sizes|upper }}</td>
+                <td>{{ vendor_product.date_added }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
