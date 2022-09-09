@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load countries %}
 {% block title %}Shipping/Billing Address{% endblock title %}
 {% block content %}
 <div class="m-5">
@@ -10,10 +11,9 @@
         }
     </style>
     <table class="table">
-        <h3>Ordered Product Biling/Shipping Address</h3>
+        <h3>Ordered Product Details</h3>
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Fullname</th>
             <th scope="col">Username</th>
             <th scope="col">Phone Number</th>
@@ -27,13 +27,15 @@
         </thead>
         <tbody>
             <tr>
-                <td class="font-weight-bold text-dark">
-                </td>
-                <td>${{ vendor_product.product_price }}</td>
-                <td>{{ vendor_product.number_available }}</td>
-                <td>{{ vendor_product.product_colors|title }}</td>
-                <td>{{ vendor_product.product_sizes|upper }}</td>
-                <td>{{ vendor_product.date_added }}</td>
+                <td>{{ billing_address.fullname }}</td>
+                <td>{{ billing_address.customer.username }}</td>
+                <td>{{ billing_address.phone_num1.country_code }}</td>
+                <td>{{ billing_address.email }}</td>
+                <td>{{ billing_address.address }}</td>
+                <td>{{ billing_address.country.name }}</td>
+                <td>{{ billing_address.state|title }}</td>
+                <td>{{ billing_address.city|upper }}</td>
+                <td>{{ billing_address.zipcode }}</td>
             </tr>
         </tbody>
     </table>
