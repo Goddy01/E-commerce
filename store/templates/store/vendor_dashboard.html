@@ -63,8 +63,8 @@
                 </td>
                 <td>${{ completed_order_product.product.product_price }}</td>
                 <td>{{ completed_order_product.quantity }}</td>
-                <td>{{ completed_order_product.product.product_colors|title }}</td>
-                <td>{{ completed_order_product.product.product_sizes|upper }}</td>
+                <td>{{ completed_order_product.color|title }}</td>
+                <td>{{ completed_order_product.size|upper }}</td>
                 <td>{{ completed_order_product.order.date_ordered }}</td>
             </tr>
             {% endfor %}
