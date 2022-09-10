@@ -68,7 +68,7 @@ paystack==1.5.0
 phonenumbers==8.12.48
 pickleshare==0.7.5
 Pillow==9.0.1
-pip==20.3
+pip==22.2.2
 platformdirs==2.5.1
 prometheus-client==0.12.0
 prompt-toolkit==3.0.24
@@ -76,6 +76,7 @@ pycparser==2.21
 Pygments==2.11.2
 pyparsing==3.0.6
 pypiwin32==223
+pypaystack==1.24
 pyrsistent==0.18.0
 python-dateutil==2.8.2
 python-dotenv==0.20.0
