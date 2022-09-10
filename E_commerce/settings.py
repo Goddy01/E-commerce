@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'store',
     'phonenumber_field',
     'django_countries',
-    'paystack',
+    # "paystack",
+    "paystack.frameworks.django",
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -83,6 +84,9 @@ TEMPLATES = [
         'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
+            'libraries': {
+                'paystack': 'paystack.frameworks.django.templatetags.paystack',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -91,9 +95,6 @@ TEMPLATES = [
                 'store.context_processor.website_content',
                 # 'store.context_processor.wishlist_counts',
             ],
-            'libraries': {
-                'paystack': 'paystack.templatetags.paystack',
-            }
         },
     },
 ]
