@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'store',
     'phonenumber_field',
     'django_countries',
-    # "paystack",
     "paystack.frameworks.django",
 
     'django.contrib.admin',
