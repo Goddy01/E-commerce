@@ -41,7 +41,7 @@ from store.views import (
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("paystack", include(('paystack.urls', 'paystack'),namespace='paystack')),
+    path("paystack", include(("paystack.frameworks.django.urls", 'paystack'),namespace='paystack')),
     path('', home_page, name='home'),
     path('make-payment/', make_payment, name='make-payment'),
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
