@@ -1,1 +1,1 @@
-web: python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic && gunicorn E_commerce.wsgi
+web: python manage.py makemigrations && python manage.py migrate && python manage.py migrate --run-syncdb && python manage.py collectstatic && gunicorn E_commerce.wsgi
