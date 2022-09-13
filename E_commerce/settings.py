@@ -222,4 +222,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net" if not DEBUG else ""
+STATIC_URL = STATIC_HOST + "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
