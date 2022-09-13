@@ -37,7 +37,7 @@ DEBUG = False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['summit.up.railway.app']
-
+CSRF_TRUSTED_ORIGINS=['summit.up.railway.app']
 
 # Application definition
 
