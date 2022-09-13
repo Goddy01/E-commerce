@@ -23,6 +23,7 @@ django-phone-field==1.8.1
 django-phonenumber-field==6.1.0
 django-rest-paystack==2.2.2
 django-shell-plus==1.1.7
+django-storages==1.13.1
 djangorestframework==3.13.1
 entrypoints==0.3
 environ==1.0
