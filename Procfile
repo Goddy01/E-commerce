@@ -1,1 +1,1 @@
-web: python manage.py makemigrations && python manage.py migrate && gunicorn 'E_commerce.wsgi'
+web: sh -c 'python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic && gunicorn E_commerce.wsgi'
