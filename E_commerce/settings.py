@@ -16,44 +16,17 @@ from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 import mimetypes
 
+DEBUG = False
+
 mimetypes.add_type("text/css", ".css", True)
 load_dotenv(find_dotenv())
 
-
-# AWS S3 SETTINGS
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'toshiro-ecommerce'
-AWS_S3_CUSTOM_DOMAIN = ''
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_DEFAULT_ACL = 'public-read'
-
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400'
-}
-
-AWS_LOCATION = 'static'
-AWS_QUERYSTRING_AUTH = False
-AWS_HEADERS = {
-    'Access-Control-Allow-Origin': '*',
-}
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
-DEBUG = False
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
 if DEBUG:
     MEDIA_URL = '/media/'
-else:
-    MEDIA_URL = 'https://d1q43jnb3s7abw.cloudfront.net/media/'
 
 # environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
@@ -65,7 +38,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG_PROPAGATE_EXCEPTIONS = True
+
 
 ALLOWED_HOSTS = ['summit.up.railway.app']
 CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app']
@@ -81,6 +54,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_countries',
     "paystack.frameworks.django",
+    'storages',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,6 +114,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'E_commerce.wsgi.application'
 
+if not DEBUG:
+    # AWS S3 SETTINGS
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_DEFAULT_ACL = 'public-read'
+
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400'
+    }
+
+    AWS_LOCATION = 'static'
+    AWS_QUERYSTRING_AUTH = False
+    AWS_HEADERS = {
+        'Access-Control-Allow-Origin': '*',
+    }
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+    # STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+    DEBUG_PROPAGATE_EXCEPTIONS = True
 
 
 # Database
@@ -203,7 +203,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-# STATIC_URL = '/static/'
+if DEBUG
+    STATIC_URL = '/static/'
 
 
 
@@ -285,6 +286,6 @@ LOGGING = {
 }
 }
 
-STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net"
-STATIC_URL = STATIC_HOST + "/static/"
+# STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net"
+# STATIC_URL = STATIC_HOST + "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
