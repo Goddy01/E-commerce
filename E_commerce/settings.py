@@ -14,7 +14,9 @@ from pathlib import Path
 import os
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
+import mimetypes
 
+mimetypes.add_type("text/css", ".css", True)
 load_dotenv(find_dotenv())
 
 # import dj_database_url
