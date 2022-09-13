@@ -19,12 +19,16 @@ import mimetypes
 mimetypes.add_type("text/css", ".css", True)
 load_dotenv(find_dotenv())
 
-# import dj_database_url
 
+DEBUG = False
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
+if DEBUG:
+    MEDIA_URL = '/media/'
+else:
+    MEDIA_URL = 'https://d1q43jnb3s7abw.cloudfront.net/media/'
+
 # environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
@@ -34,7 +38,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['summit.up.railway.app']
@@ -177,7 +181,10 @@ STATICFILES_DIRS = [
 
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    MEDIA_ROOT = 'https://d1q43jnb3s7abw.cloudfront.net/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
