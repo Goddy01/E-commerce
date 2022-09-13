@@ -203,7 +203,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-if DEBUG
+if DEBUG:
     STATIC_URL = '/static/'
 
 
