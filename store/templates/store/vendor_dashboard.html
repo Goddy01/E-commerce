@@ -56,15 +56,15 @@
     </table>
 
     <table class="table table-responsive">
-        <h3>Orders</h3>
+        <h3>Completed Orders</h3>
         <thead>
           <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Colors</th>
-            <th scope="col">Sizes</th>
+            <th scope="col">Color</th>
+            <th scope="col">Size</th>
             <th scope="col">Date Ordered</th>
           </tr>
         </thead>
@@ -79,8 +79,8 @@
                 </td>
                 <td label ="Price">N{{ completed_order_product.product.product_price }}</td>
                 <td label ="Quantity">{{ completed_order_product.quantity }}</td>
-                <td label ="Colors">{{ completed_order_product.color|title }}</td>
-                <td label ="Sizes">{{ completed_order_product.size|upper }}</td>
+                <td label ="Color">{{ completed_order_product.color|title }}</td>
+                <td label ="Size">{{ completed_order_product.size|upper }}</td>
                 <td label ="Date Ordered">{{ completed_order_product.order.date_ordered }}</td>
             </tr>
             {% endfor %}
@@ -95,8 +95,8 @@
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Colors</th>
-            <th scope="col">Sizes</th>
+            <th scope="col">Color</th>
+            <th scope="col">Size</th>
             <th scope="col">Date Added</th>
           </tr>
         </thead>
@@ -107,8 +107,8 @@
                 <td label ="Name">{{ uncompleted_order_product.product.product_name|title }}</td>
                 <td label ="Price">N{{ uncompleted_order_product.product.product_price }}</td>
                 <td label ="Quantity">{{ uncompleted_order_product.quantity }}</td>
-                <td label ="Colors">{{ uncompleted_order_product.color|title }}</td>
-                <td label ="Sizes">{{ uncompleted_order_product.size|upper }}</td>
+                <td label ="Color">{{ uncompleted_order_product.color|title }}</td>
+                <td label ="Size">{{ uncompleted_order_product.size|upper }}</td>
                 <td label ="Date Ordered">{{ uncompleted_order_product.date_added }}</td>
             </tr>
             {% endfor %}

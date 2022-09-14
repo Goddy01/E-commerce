@@ -1,48 +1,64 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard{% endblock title %}
 {% block content %}
-<div class="m-5" style="width: 100vh;">
-    <style>
-        .table {
+<style>
+    .table {
             margin-bottom: 180px;
             border-collapse: separate;
             border-spacing: 0 15px;
+            
+            /* background-color: red; */
         }
-    </style>
-    <table class="table">
+    @media screen and (max-width: 600px) {
+    table thead {
+        display: none;
+    }  table td {
+        display: flex;
+    }
+    
+    table td::before {
+        content: attr(label);
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+    }
+    }
+</style>
+<div class="m-1">
+    <table class="table table-responsive">
         <h3>Completed Orders</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
+            <th scope="col">Qty</th>
             <th scope="col">Color</th>
             <th scope="col">Size</th>
-            <th scope="col">Date Added</th>
+            <!-- <th scope="col">Date Added</th> -->
             <th scope="col">Date Ordered</th>
           </tr>
         </thead>
         <tbody>
             {% for completed_orders in completed_orders %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ completed_orders.product.product_name|title }}</td>
-                <td>#{{ completed_orders.product.product_price }}</td>
-                <td>{{ completed_orders.quantity }}</td>
-                <td>{{ completed_orders.color|title }}</td>
-                <td>{{ completed_orders.size|upper }}</td>
-                <td>{{ completed_orders.date_added }}</td>
-                <td>{{ completed_orders.order.date_ordered }}</td>
+            <tr class="text-dark">
+                <td label="#" scope="row">{{ forloop.counter }}</td>
+                <td label="Name">{{ completed_orders.product.product_name|title }}</td>
+                <td label="Price">N{{ completed_orders.product.product_price }}</td>
+                <td label="Qty">{{ completed_orders.quantity }}</td>
+                <td label="Color">{{ completed_orders.color|title }}</td>
+                <td label="Size">{{ completed_orders.size|upper }}</td>
+                <!-- <td label="">{{ completed_orders.date_added }}</td> -->
+                <td label="Date Ordered">{{ completed_orders.order.date_ordered }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <table class="table">
-        <h3>Uncompleted Order</h3>
+        <h3>Uncompleted Orders</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -54,14 +70,14 @@
         </thead>
         <tbody>
             {% for uncompleted_orders in uncompleted_orders %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ uncompleted_orders.product.product_name|title }}</td>
-                <td>#{{ uncompleted_orders.product.product_price }}</td>
-                <td>{{ uncompleted_orders.quantity }}</td>
-                <td>{{ uncompleted_orders.color|title }}</td>
-                <td>{{ uncompleted_orders.size|upper }}</td>
-                <td>{{ uncompleted_orders.date_added }}</td>
+            <tr class="text-dark">
+                <td label="#" scope="row">{{ forloop.counter }}</td>
+                <td label="Name">{{ uncompleted_orders.product.product_name|title }}</td>
+                <td label="Price">N{{ uncompleted_orders.product.product_price }}</td>
+                <td label="Qty">{{ uncompleted_orders.quantity }}</td>
+                <td label="Color">{{ uncompleted_orders.color|title }}</td>
+                <td label="Size">{{ uncompleted_orders.size|upper }}</td>
+                <td label="Date Added">{{ uncompleted_orders.date_added }}</td>
             </tr>
             {% endfor %}
         </tbody>
