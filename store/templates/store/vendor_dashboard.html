@@ -2,77 +2,63 @@
 {% block title %}Dashboard{% endblock title %}
 {% block content %}
 <style>
-    /* @media screen and (max-width: 600px) {
-   table {width:100%;}
-   thead {display: none;}
-   tr:nth-of-type(2n) {background-color: inherit;}
-   tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
-   tbody td {display: block;  text-align:center;}
-   tbody td:before { 
-       content: attr(data-th); 
-       display: block;
-       text-align:center;  
-   } */
-   @media screen and (max-width: 600px) {
-  table thead {
-    display: none;
-  }  table td {
-    display: flex;
-  }
-  
-  table td::before {
-    content: attr(label);
-    font-weight: bold;
-    width: 120px;
-    min-width: 120px;
-  }
-}
-/* } */
-</style>
-<div class="m-1">
-    <style>
-        .table {
+    .table {
             margin-bottom: 180px;
             border-collapse: separate;
             border-spacing: 0 15px;
             
             /* background-color: red; */
         }
-    </style>
-        <table class="table table-responsive">
-            <h3>Products</h3>
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Qty Avail</th>
-                <th scope="col">Colors</th>
-                <th scope="col">Sizes</th>
-                <th scope="col">Date Added</th>
+    @media screen and (max-width: 600px) {
+    table thead {
+        display: none;
+    }  table td {
+        display: flex;
+    }
+    
+    table td::before {
+        content: attr(label);
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+    }
+    }
+</style>
+<div class="m-1">
+    <table class="table table-responsive">
+        <h3>Products</h3>
+        <thead>
+        <tr class="text-dark">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Qty Avail</th>
+            <th scope="col">Colors</th>
+            <th scope="col">Sizes</th>
+            <th scope="col">Date Added</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for vendor_product in vendor_products %}
+            <tr class="text-dark">
+                <td label ="#" scope="row">{{ forloop.counter }}</td>
+                <td label ="Name">
+                    <a href="{% url 'v_product_details' vendor_product.product_id %} ">{{ vendor_product.product_name|title }}</a>
+                </td>
+                <td label ="Price">N{{ vendor_product.product_price }}</td>
+                <td label ="Qty Avail">{{ vendor_product.number_available }}</td>
+                <td label ="Colors">{{ vendor_product.product_colors|title }}</td>
+                <td label ="Sizes">{{ vendor_product.product_sizes|upper }}</td>
+                <td label ="Date Added">{{ vendor_product.date_added }}</td>
             </tr>
-            </thead>
-            <tbody>
-                {% for vendor_product in vendor_products %}
-                <tr class="text-dark">
-                    <td label ="#" scope="row">{{ forloop.counter }}</td>
-                    <td label ="Name">
-                        <a href="{% url 'v_product_details' vendor_product.product_id %} ">{{ vendor_product.product_name|title }}</a>
-                    </td>
-                    <td label ="Price">N{{ vendor_product.product_price }}</td>
-                    <td label ="Qty Avail">{{ vendor_product.number_available }}</td>
-                    <td label ="Colors">{{ vendor_product.product_colors|title }}</td>
-                    <td label ="Sizes">{{ vendor_product.product_sizes|upper }}</td>
-                    <td label ="Date Added">{{ vendor_product.date_added }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <table class="table">
         <h3>Orders</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -84,18 +70,18 @@
         </thead>
         <tbody>
             {% for completed_order_product in completed_order_products %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td label ="bro">
+            <tr class="text-dark">
+                <td scope="row" label="#">{{ forloop.counter }}</td>
+                <td label ="Name">
                     <a href="{% url 'billing_address' completed_order_product.order.transaction_id %}" class="font-weight-bold">
                         {{ completed_order_product.product.product_name|title }}
                     </a>
                 </td>
-                <td label ="bro">#{{ completed_order_product.product.product_price }}</td>
-                <td label ="bro">{{ completed_order_product.quantity }}</td>
-                <td label ="bro">{{ completed_order_product.color|title }}</td>
-                <td label ="bro">{{ completed_order_product.size|upper }}</td>
-                <td label ="bro">{{ completed_order_product.order.date_ordered }}</td>
+                <td label ="Price">N{{ completed_order_product.product.product_price }}</td>
+                <td label ="Quantity">{{ completed_order_product.quantity }}</td>
+                <td label ="Colors">{{ completed_order_product.color|title }}</td>
+                <td label ="Sizes">{{ completed_order_product.size|upper }}</td>
+                <td label ="Date Ordered">{{ completed_order_product.order.date_ordered }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -117,13 +103,13 @@
         <tbody>
             {% for uncompleted_order_product in uncompleted_order_products %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td label ="bro">{{ uncompleted_order_product.product.product_name|title }}</td>
-                <td label ="bro">#{{ uncompleted_order_product.product.product_price }}</td>
-                <td label ="bro">{{ uncompleted_order_product.quantity }}</td>
-                <td label ="bro">{{ uncompleted_order_product.color|title }}</td>
-                <td label ="bro">{{ uncompleted_order_product.size|upper }}</td>
-                <td label ="bro">{{ uncompleted_order_product.date_added }}</td>
+                <td label ="#" scope="row">{{ forloop.counter }}</td>
+                <td label ="Name">{{ uncompleted_order_product.product.product_name|title }}</td>
+                <td label ="Price">N{{ uncompleted_order_product.product.product_price }}</td>
+                <td label ="Quantity">{{ uncompleted_order_product.quantity }}</td>
+                <td label ="Colors">{{ uncompleted_order_product.color|title }}</td>
+                <td label ="Sizes">{{ uncompleted_order_product.size|upper }}</td>
+                <td label ="Date Ordered">{{ uncompleted_order_product.date_added }}</td>
             </tr>
             {% endfor %}
         </tbody>
