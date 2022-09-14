@@ -83,7 +83,7 @@ pycparser==2.21
 Pygments==2.11.2
 pyparsing==3.0.6
 -e git+https://github.com/gbozee/pypaystack.git@24df1c9ca209031e0ec940ff8552d45ca6b55421#egg=pypaystack
-pypiwin32==223
+# pypiwin32==223
 pyrsistent==0.18.0
 python-dateutil==2.8.2
 python-dotenv==0.20.0
