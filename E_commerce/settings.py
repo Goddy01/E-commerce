@@ -9,10 +9,9 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
-import dj_database_url
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 import mimetypes
@@ -25,7 +24,7 @@ load_dotenv(find_dotenv())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if DEBUG:
     MEDIA_URL = '/media/'
 
@@ -286,4 +285,3 @@ LOGGING = {
 
 # STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net"
 # STATIC_URL = STATIC_HOST + "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
