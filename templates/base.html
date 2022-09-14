@@ -45,6 +45,17 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+    <style>
+        .search-box {
+            width: 100vw
+        }
+        
+        @media (max-width: 600px) {
+            .search-box {
+                width: 72vw;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -109,7 +120,7 @@
             <div class="col-lg-6 col-6 text-left">
                 <form action="{% url 'search' %}" method="get">
                     {% csrf_token %}
-                    <div class="input-group">
+                    <div class="input-group search-box">
                         <input type="text" class="form-control" placeholder="Search by product name, product description, and product category." name="query" id="id_query" value="{{request.GET.query}}">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
@@ -389,22 +400,6 @@
             </div>
         </div>
         <div class="row border-top border-light mx-xl-5 py-2">
-            <div class="col-lg-6 text-center mx-auto">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="https://twitter.com/toshix2ro/">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="https://linkedin.com/in/godwin-adigun-b5a138219">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="https://instagram.com/dev_toshiro/">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-dark pl-2" href="https://github.com/Goddy01/">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
             <div class="col-md-12 px-xl-0 mt-2">
                 <p class="text-center mx-auto text-dark">
                     &copy; <a class="text-dark font-weight-semi-bold" href="/">Summit</a>. All Rights Reserved. 
@@ -417,6 +412,22 @@
             <p class="d-block mx-auto text-center font-weight-bold">Built by 
                 <a href="https://github.com/Goddy01/">Toshiro</a>.
             </p>
+        </div>
+        <div class="col-lg-6 text-center mx-auto pb-3" style="margin-top: -10px;">
+            <div class="d-inline-flex align-items-center">
+                <a class="text-dark px-2" href="https://twitter.com/toshix2ro/">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="text-dark px-2" href="https://linkedin.com/in/godwin-adigun-b5a138219">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a class="text-dark px-2" href="https://instagram.com/dev_toshiro/">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="text-dark pl-2" href="https://github.com/Goddy01/">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
         </div>
     </div>
     <!-- Footer End -->

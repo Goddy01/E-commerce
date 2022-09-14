@@ -657,7 +657,7 @@ def product_details(request, product_id):
     context['orderitemform'] = orderitemform
     context['reviews'] = reviews[:5]
     context['reviews_counter'] = reviews_counter
-    context['users_recently_viewed_products'] = users_recently_viewed_products[:4]
+    context['users_recently_viewed_products'] = users_recently_viewed_products[:3]
     return render(request, 'store/detail.html', context)
 
 def all_reviews(request, product_id):
