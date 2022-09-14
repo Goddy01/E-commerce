@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}WishList{% endblock title %}
 {% block content %}
-<div class="m-5">
-    <style>
-        .table {
+<style>
+    .table {
             margin-bottom: 180px;
             /* border-collapse: separate;
             border-spacing: 0 15px; */
         }
-    </style>
-    <table class="table">
+</style>
+<div class="">
+    <table class="table" style="table-layout: fixed;width:100%;">
         <h3>Wishlist</h3>
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
-            <th scope="col">Quantity Available</th>
+            <th scope="col">Qty Avail</th>
             <th scope="col">Colors</th>
             <th scope="col">Sizes</th>
-            <th scope="col">Date Added</th>
+            <!-- <th scope="col">Date Added</th> -->
             <th scope="col"></th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@
                     <td>{{ item.product.number_available }}</td>
                     <td>{{ item.product.product_colors|upper }}</td>
                     <td>{{ item.product.product_sizes|upper }}</td>
-                    <td>{{ item.date_added }}</td>
+                    <!-- <td>{{ item.date_added }}</td> -->
                     <td>
                         <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-2 btn" onclick="return confirm('Are you sure you want to remove this product from your wishlist?')">Remove</a>
                     </td>
