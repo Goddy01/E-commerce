@@ -16,7 +16,7 @@ from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 import mimetypes
 
-DEBUG = False
+DEBUG = True
 
 mimetypes.add_type("text/css", ".css", True)
 load_dotenv(find_dotenv())
@@ -40,7 +40,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 
-ALLOWED_HOSTS = ['summit.up.railway.app', ]
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app', ]
 
 # Application definition
