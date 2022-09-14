@@ -40,8 +40,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app']
+ALLOWED_HOSTS = ['summit.up.railway.app', ]
+CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app', ]
 
 # Application definition
 
@@ -285,3 +285,4 @@ LOGGING = {
 
 # STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net"
 # STATIC_URL = STATIC_HOST + "/static/"
+del DATABASES['default']['OPTIONS']['sslmode']
