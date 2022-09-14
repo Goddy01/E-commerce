@@ -18,7 +18,7 @@ debugpy==1.5.1
 decorator==5.1.1
 defusedxml==0.7.1
 distlib==0.3.4
-dj_database_url==1.0.0
+dj-database-url==1.0.0
 Django==4.0.2
 django-countries==7.3.2
 django-crispy-forms==1.14.0
@@ -82,8 +82,8 @@ prompt-toolkit==3.0.24
 pycparser==2.21
 Pygments==2.11.2
 pyparsing==3.0.6
-# -e git+https://github.com/gbozee/pypaystack.git@24df1c9ca209031e0ec940ff8552d45ca6b55421#egg=pypaystack
-# pypiwin32==223
+-e git+https://github.com/gbozee/pypaystack.git@24df1c9ca209031e0ec940ff8552d45ca6b55421#egg=pypaystack
+pypiwin32==223
 pyrsistent==0.18.0
 python-dateutil==2.8.2
 python-dotenv==0.20.0
@@ -114,7 +114,5 @@ validus==0.3.0
 virtualenv==20.14.1
 wcwidth==0.2.5
 webencodings==0.5.1
-# wheel==0.37.1
-# whitenoise==6.2.0
 widgetsnbextension==3.5.2
 wincertstore==0.2
