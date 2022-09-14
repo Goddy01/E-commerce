@@ -55,7 +55,7 @@
         </tbody>
     </table>
 
-    <table class="table">
+    <table class="table table-responsive">
         <h3>Orders</h3>
         <thead>
           <tr class="text-dark">
@@ -87,10 +87,10 @@
         </tbody>
     </table>
 
-    <table class="table">
+    <table class="table table-responsive">
         <h3>Uncompleted Orders</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -102,7 +102,7 @@
         </thead>
         <tbody>
             {% for uncompleted_order_product in uncompleted_order_products %}
-            <tr>
+            <tr class="text-dark">
                 <td label ="#" scope="row">{{ forloop.counter }}</td>
                 <td label ="Name">{{ uncompleted_order_product.product.product_name|title }}</td>
                 <td label ="Price">N{{ uncompleted_order_product.product.product_price }}</td>

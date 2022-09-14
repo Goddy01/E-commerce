@@ -4,15 +4,31 @@
 <style>
     .table {
             margin-bottom: 180px;
-            /* border-collapse: separate;
-            border-spacing: 0 15px; */
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            
+            /* background-color: red; */
         }
+    @media screen and (max-width: 600px) {
+    table thead {
+        display: none;
+    }  table td {
+        display: flex;
+    }
+    
+    table td::before {
+        content: attr(label);
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+    }
+    }
 </style>
 <div class="">
-    <table class="table" style="table-layout: fixed;width:100%;">
+    <table class="table table-responsive">
         <h3>Wishlist</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -25,14 +41,14 @@
         </thead>
         <tbody>
             {% for item in wishlist %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ item.product.product_name|title }}</td>
-                    <td>${{ item.product.product_price }}</td>
-                    <td>{{ item.product.number_available }}</td>
-                    <td>{{ item.product.product_colors|upper }}</td>
-                    <td>{{ item.product.product_sizes|upper }}</td>
-                    <!-- <td>{{ item.date_added }}</td> -->
+                <tr class="text-dark">
+                    <td label="#" scope="row">{{ forloop.counter }}</td>
+                    <td label="Name">{{ item.product.product_name|title }}</td>
+                    <td label="Price">N{{ item.product.product_price }}</td>
+                    <td label="Qty Avail">{{ item.product.number_available }}</td>
+                    <td label="Colors">{{ item.product.product_colors|upper }}</td>
+                    <td label="Sizes">{{ item.product.product_sizes|upper }}</td>
+                    <!-- <td label="">{{ item.date_added }}</td> -->
                     <td>
                         <a id="remove-wishitem" href="{% url 'remove_from_wishlist_view' item.product.product_id %}" class="font-weight-semi-bold text-decoration-none text-light bg-danger p-2 btn" onclick="return confirm('Are you sure you want to remove this product from your wishlist?')">Remove</a>
                     </td>
