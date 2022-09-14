@@ -285,4 +285,4 @@ LOGGING = {
 
 # STATIC_HOST = "d1q43jnb3s7abw.cloudfront.net"
 # STATIC_URL = STATIC_HOST + "/static/"
-del DATABASES['default']['OPTIONS']['sslmode']
+# del DATABASES['default']['OPTIONS']['sslmode']
