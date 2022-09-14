@@ -2,18 +2,34 @@
 {% load countries %}
 {% block title %}Shipping/Billing Address{% endblock title %}
 {% block content %}
-<div class="m-5" style="width: 100vh;">
-    <style>
-        .table {
+<style>
+    .table {
             margin-bottom: 180px;
             border-collapse: separate;
             border-spacing: 0 15px;
+            
+            /* background-color: red; */
         }
-    </style>
+    @media screen and (max-width: 600px) {
+    table thead {
+        display: none;
+    }  table td {
+        display: flex;
+    }
+    
+    table td::before {
+        content: attr(label);
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+    }
+    }
+</style>
+<div class="m-1">
     <table class="table">
-        <h3>Ordered Product Details</h3>
+        <h3>Order Details</h3>
         <thead>
-          <tr>
+          <tr class="text-dark">
             <th scope="col">Fullname</th>
             <th scope="col">Username</th>
             <th scope="col">Phone Number</th>
@@ -26,16 +42,16 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>{{ billing_address.fullname }}</td>
-                <td>{{ billing_address.customer.username }}</td>
-                <td>{{ billing_address.phone_num1 }}</td>
-                <td>{{ billing_address.email }}</td>
-                <td>{{ billing_address.address }}</td>
-                <td>{{ billing_address.country.name }}</td>
-                <td>{{ billing_address.state|title }}</td>
-                <td>{{ billing_address.city|upper }}</td>
-                <td>{{ billing_address.zipcode }}</td>
+            <tr class="text-dark">
+                <td label="Fullname">{{ billing_address.fullname }}</td>
+                <td label="Username">{{ billing_address.customer.username }}</td>
+                <td label="Phone Number">{{ billing_address.phone_num1 }}</td>
+                <td label="Email">{{ billing_address.email }}</td>
+                <td label="Address">{{ billing_address.address }}</td>
+                <td label="Country">{{ billing_address.country.name }}</td>
+                <td label="State">{{ billing_address.state|title }}</td>
+                <td label="City">{{ billing_address.city|upper }}</td>
+                <td label="Zipcode">{{ billing_address.zipcode }}</td>
             </tr>
         </tbody>
     </table>
