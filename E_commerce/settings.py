@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import os, dj_database_url
+import os
+import dj_database_url
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 import mimetypes
