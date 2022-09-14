@@ -82,7 +82,7 @@
     <!-- <h1>{{ cart_items }}</h1> -->
     <!-- Topbar Start -->
     <div class="container-fluid base-header">
-        <div class="row bg-secondary py-2 px-xl-5">
+        <div class="row bg-secondary py-0 px-xl-5">
             <!-- <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark" href="">FAQs</a>
@@ -92,30 +92,14 @@
                     <a class="text-dark" href="">Support</a>
                 </div>
             </div> -->
-            <div class="col-lg-6 text-center mx-auto">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="https://twitter.com/toshix2ro/">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="https://linkedin.com/in/godwin-adigun-b5a138219">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="https://instagram.com/dev_toshiro/">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-dark pl-2" href="https://github.com/Goddy01/">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
+            <p class="text-center text-success font-weight-semi-bold w-50 mx-auto mt-1">
+                <span class="text-dark">Hi, </span>
+            {% if request.user.is_authenticated %}
+            {{request.user.fullname|title}}.</p>
+            {% else %}
+            Guest.</p>
+            {% endif %}
         </div>
-        <p class="text-center text-success font-weight-semi-bold w-50 mx-auto mt-1">
-            <span class="text-dark">Hi, </span>
-        {% if request.user.is_authenticated %}
-        {{request.user.fullname|title}}.</p>
-        {% else %}
-        Guest.</p>
-        {% endif %}
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <!-- <a href="{% url 'home' %}" class=""> -->
@@ -284,9 +268,9 @@
                                 <img class="img-fluid" src="{% static 'img/carousel-1.jpg' %}" alt="Image">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                     <div class="p-3" style="max-width: 700px;">
-                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                                        <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">Fast Delivery</h4>
+                                        <h4 class="text-white font-weight-medium mb-4">Reasonable Price</h4>
+                                        <a href="" class="btn btn-primary py-2 px-3">Summit</a>
                                     </div>
                                 </div>
                             </div>
@@ -294,9 +278,9 @@
                                 <img class="img-fluid" src="{% static 'img/carousel-2.jpg' %}" alt="Image">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                     <div class="p-3" style="max-width: 700px;">
-                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                                        <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">Fast Delivery</h4>
+                                        <h4 class="text-white font-weight-medium mb-4">Reasonable Price</h4>
+                                        <a href="" class="btn btn-primary py-2 px-3">Summit</a>
                                     </div>
                                 </div>
                             </div>
@@ -405,6 +389,22 @@
             </div>
         </div>
         <div class="row border-top border-light mx-xl-5 py-2">
+            <div class="col-lg-6 text-center mx-auto">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="https://twitter.com/toshix2ro/">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://linkedin.com/in/godwin-adigun-b5a138219">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://instagram.com/dev_toshiro/">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="https://github.com/Goddy01/">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
             <div class="col-md-12 px-xl-0 mt-2">
                 <p class="text-center mx-auto text-dark">
                     &copy; <a class="text-dark font-weight-semi-bold" href="/">Summit</a>. All Rights Reserved. 
@@ -414,7 +414,7 @@
             <!-- <div class="col-md-6 px-xl-0 text-center text-md-right">
                 <img class="img-fluid" src="{% static 'img/payments.png' %}" alt="">
             </div> -->
-            <p class="d-block mx-auto text-center mt-2 font-weight-bold">Built by 
+            <p class="d-block mx-auto text-center font-weight-bold">Built by 
                 <a href="https://github.com/Goddy01/">Toshiro</a>.
             </p>
         </div>
