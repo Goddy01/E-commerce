@@ -8,6 +8,21 @@
             margin: .3rem;
         }
     </style>
+    <div class="errors mb-2" style="margin-left: 2rem;">
+        {% for field in form %}
+            <p>
+            {% for error in field.errors %}
+                <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
+            {% endfor %}
+            </p>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div style="color: rgb(175, 23, 23);">
+                {{form.non_field_errors}}
+            </div>
+        {% endif %}
+    </div>
     <div class="content text-dark p-3"> 
         <h1 style="text-align: center;">Register</h1>
         {% if request.user.type == "CUSTOMER" %}
@@ -54,21 +69,6 @@
                     <input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat your password" >
                 </div>
 
-            <div class="errors" style="margin-left: 2rem;">
-                {% for field in form %}
-                    <p>
-                    {% for error in field.errors %}
-                        <p style="color: rgb(175, 23, 23);">{{field.label_tag}} {{error}}</p>
-                    {% endfor %}
-                    </p>
-                {% endfor %}
-    
-                {% if form.non_field_errors %}
-                    <div style="color: rgb(175, 23, 23);">
-                        {{form.non_field_errors}}
-                    </div>
-                {% endif %}
-            </div>
 
             <button class="mt-4 px-5 py-2" style="background-color: #C5837C;margin-left: .3rem;" type="submit">
                 Submit
