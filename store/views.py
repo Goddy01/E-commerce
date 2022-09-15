@@ -331,7 +331,7 @@ def remove_from_wishlist_view(request, product_id):
     customer = Customer.objects.get(email=request.user.email)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
-    messages.error(request, 'The item has been removed from your wishlist.')
+    # messages.error(request, 'The item has been removed from your wishlist.')
     # if True:
     return redirect('wishlist')
     # return render(request, 'store/wishlist.html')
