@@ -43,7 +43,11 @@
             {% for item in wishlist %}
                 <tr class="text-dark">
                     <td label="#" scope="row">{{ forloop.counter }}</td>
-                    <td label="Name">{{ item.product.product_name|title }}</td>
+                    <td label="Name">
+                        <a href="{% url 'product_details' item.product.product_id %}">
+                            {{ item.product.product_name|title }}
+                        </a>
+                    </td>
                     <td label="Price">N{{ item.product.product_price }}</td>
                     <td label="Qty Avail">{{ item.product.number_available }}</td>
                     <td label="Colors">{{ item.product.product_colors|upper }}</td>
