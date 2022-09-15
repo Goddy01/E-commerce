@@ -44,7 +44,7 @@ def customer_reg_view(request):
             msg = 'Account created successfully'
             login(request, raw_user)
             request.session['device'] = []
-            return redirect('checkout')
+            return redirect('home')
         else:
             msg = 'Form is Invalid!'
     else:
