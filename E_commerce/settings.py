@@ -146,7 +146,18 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
+    #   SQL
+    # 'default': dj_database_url.config(default='postgres://USER:PASSWORD@HOST:PORT/NAME', conn_max_age=600)
+    'default': dj_database_url.config(default=f'postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}', conn_max_age=600)
+    
+#     'default': {
+#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     'NAME': 'e_commerce',
+#     'USER': 'postgres',
+#     'PASSWORD': 'test123',
+#     'HOST': 'localhost',
+#     'PORT': '5432',
+# }
 }
 
 
