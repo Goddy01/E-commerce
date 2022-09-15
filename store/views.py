@@ -308,7 +308,7 @@ def add_to_wishlist(request, product_id):
     else:
         wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1, date_added=datetime.now())
         bool = True
-        messages.success(request, 'The item has been added to your wishlist.')
+        # messages.success(request, 'The item has been added to your wishlist.')
     return JsonResponse(bool, safe=False)
 
 def remove_from_wishlist(request, product_id):
@@ -319,7 +319,7 @@ def remove_from_wishlist(request, product_id):
     customer = Customer.objects.get(email=request.user.email)
     wish_item = WishList.objects.get(product=product, customer=customer)
     wish_item.delete()
-    messages.error(request, 'The item has been removed from your wishlist.')
+    # messages.error(request, 'The item has been removed from your wishlist.')
     bool = True
     return HttpResponse('OK.')
 
