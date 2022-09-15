@@ -160,7 +160,7 @@ class WishList(models.Model):
     item_id =           models.UUIDField(default=uuid.uuid4, editable=True, null=True, unique=True)
     customer =          models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product =           models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    date_added =        models.DateTimeField()
+    date_added =        models.DateTimeField(auto_now_add=True)
     heart_val =         models.BooleanField(default=False)
     wish_item_counter = models.IntegerField(null=True, blank=False)
 

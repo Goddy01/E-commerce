@@ -306,7 +306,7 @@ def add_to_wishlist(request, product_id):
     if wish_item.count() > 0:
         bool = False
     else:
-        wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1, date_added=datetime.now())
+        wish_item = WishList.objects.create(product=product, customer=customer, heart_val=1)
         bool = True
         # messages.success(request, 'The item has been added to your wishlist.')
     return JsonResponse(bool, safe=False)
