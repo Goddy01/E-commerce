@@ -149,6 +149,7 @@ DATABASES = {
     #   SQL
     # 'default': dj_database_url.config(default='postgres://USER:PASSWORD@HOST:PORT/NAME', conn_max_age=600)
     'default': dj_database_url.config(default=f'postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}', conn_max_age=600)
+}
     
 #     'default': {
 #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -158,7 +159,6 @@ DATABASES = {
 #     'HOST': 'localhost',
 #     'PORT': '5432',
 # }
-}
 
 
 # Password validation
