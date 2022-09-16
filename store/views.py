@@ -98,7 +98,7 @@ def female_children_category(request):
 
 def pagination(request, items_list, num_of_pages):
     page_number = request.GET.get('page', 1)
-    products_paginator = Paginator(items_list.order_by('-id'), num_of_pages)
+    products_paginator = Paginator(items_list.order_by('-product_id'), num_of_pages)
     try:
         productss = products_paginator.page(page_number)
     except PageNotAnInteger:
