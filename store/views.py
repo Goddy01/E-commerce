@@ -262,7 +262,7 @@ def add_to_cart(request, product_id):
                 orderitem.quantity += 0
                 messages.error(request, 'Quantity more than available product.')
                 OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
-            if orderitemform.cleaned_data['quantity'] < orderitem.product.number_available:
+            if orderitemform.cleaned_data['quantity'] < orderitem.product.number_available and orderitemform.cleaned_data['quantity'] > 0:
                 if sum_qty <= orderitem.product.number_available:
                     if orderitem.size == orderitemform.cleaned_data['size'] and orderitemform.cleaned_data['color'] == orderitem.color:
                         orderitem.quantity += orderitemform.cleaned_data['quantity']
