@@ -219,14 +219,15 @@
     <script>
         let wishlist = document.getElementById('wishlist');
         wishlist.addEventListener('click', function (){wishListFunc()});
-        {% if request.user.is_authenticated %}
         function wishListFunc() {
+            {% if request.user.is_authenticated %}
             if (wishlist.classList.contains('far')) {
                 wishlist.setAttribute('class', 'fas fa-heart text-primary');
             }
             else {
                 wishlist.setAttribute('class', 'far fa-heart text-primary');
             }
+            {% endif %}
         }
         $(document).on('click', '#wishlist', function () {
             let _pId = $(this).attr('data-product');
@@ -257,11 +258,6 @@
             }
             // End Ajax
         })
-        {% else %}
-        let alertDanger = document.querySelector('.alert-info');
-        alertDanger.style.display = 'block';
-        alertDanger.innerHTML = 'Note: You must be logged in to add items to your WishList.';
-        {% endif %}
     </script>
 
 <!-- Script for rating products -->
