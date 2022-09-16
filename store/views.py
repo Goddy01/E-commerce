@@ -280,6 +280,8 @@ def add_to_cart(request, product_id):
                 messages.error(request, 'You must add at least one item.')
             orderitem.date_added = datetime.now()
             orderitem.save()
+        if request.POST.get('quantity') == 0:
+            messages.error(request, 'You must add at least one item.')
     else:
         orderitemform = OrderItemForm(size_choices=SIZE_CHOICES, color_choices=COLOR_CHOICES)
 
