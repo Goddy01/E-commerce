@@ -275,7 +275,7 @@ def add_to_cart(request, product_id):
                     #     orderitem.quantity += orderitemform.cleaned_data['quantity']
                     
                     messages.success(request, 'Item has been added to Cart.')
-            elif orderitemform.cleaned_data['quantity'] <= 0:
+            if orderitemform.cleaned_data['quantity'] <= 0:
                 orderitem.quantity += 0
                 messages.error(request, 'You must add at least one item.')
             orderitem.date_added = datetime.now()
