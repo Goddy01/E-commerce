@@ -220,14 +220,12 @@
         let wishlist = document.getElementById('wishlist');
         wishlist.addEventListener('click', function (){wishListFunc()});
         function wishListFunc() {
-            {% if request.user.is_authenticated %}
             if (wishlist.classList.contains('far')) {
                 wishlist.setAttribute('class', 'fas fa-heart text-primary');
             }
             else {
                 wishlist.setAttribute('class', 'far fa-heart text-primary');
             }
-            {% endif %}
         }
         $(document).on('click', '#wishlist', function () {
             let _pId = $(this).attr('data-product');
