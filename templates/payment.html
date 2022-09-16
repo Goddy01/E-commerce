@@ -7,7 +7,7 @@
             <form class="col-12" action="{% url 'make-payment' %}" method="post" id="payForm">
                 {% csrf_token %}
                 <input type="text" id="hide" style="visibility: hidden;" value="bro" name="bool">
-                <h5>Make Payment for #{{ total }} in Naira.</h5>
+                <h5>Make Payment for N{{ total }} in Naira.</h5>
                 <script src="https://js.paystack.co/v1/inline.js"></script>
                 <button class="btn btn-large btn-success" id="make-payment-btn">Make Payment</button>
             </form>
