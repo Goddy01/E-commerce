@@ -22,7 +22,7 @@ class Product(models.Model):
     seller =                    models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE, null=True, blank=True)
     product_id =                models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True, verbose_name="product's id", blank=True)
     product_name =              models.CharField(max_length=128, verbose_name="product's name", null=False, blank=False)
-    product_price =             models.DecimalField(max_digits=10, decimal_places=2, verbose_name="product's price", null=False, blank=False)
+    product_price =             models.DecimalField(max_digits=255, decimal_places=2, verbose_name="product's price", null=False, blank=False)
     product_sizes =             models.CharField(max_length=255, null=False, blank=False, verbose_name="product sizes")
     number_available =          models.IntegerField(verbose_name='number available', blank=False, null=False)
     product_colors =            models.CharField(max_length=255,verbose_name="product's colors", blank=False, null=False)
@@ -81,7 +81,7 @@ class Order(models.Model):
     customer =              models.ForeignKey(Customer, null=True, blank=True, on_delete=models.CASCADE)
     date_ordered =          models.DateTimeField(auto_now_add=True)
     complete =              models.BooleanField(default=False)
-    total_order_price =     models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    total_order_price =     models.DecimalField(max_digits=255, decimal_places=2, null=True)
 
 
     @property
@@ -130,8 +130,8 @@ class OrderItem(models.Model):
     product =               models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     date_added =            models.DateTimeField(auto_now_add=True)
     quantity =              models.IntegerField(null=True, blank=True, default=0)
-    size =                 models.CharField(max_length=10, null=True, blank=False)
-    color =                 models.CharField(max_length=10, null=True, blank=False)
+    size =                 models.CharField(max_length=255, null=True, blank=False)
+    color =                 models.CharField(max_length=255, null=True, blank=False)
     
     @property
     def ordered_product_color(self):
