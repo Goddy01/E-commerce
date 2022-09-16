@@ -299,7 +299,7 @@ def add_to_cart(request, product_id):
 
 def add_to_wishlist(request, product_id):
     if not request.user.is_authenticated:
-        return redirect('user:must_auth')
+        messages.info(request, 'Note: You must be logged in to add items to your WishList.')
     
     product = Product.objects.get(product_id=product_id)
     customer = Customer.objects.get(email=request.user.email)
@@ -586,8 +586,8 @@ def review(request, product_id):
 
 def product_details(request, product_id):
     context = {}
-    if not request.user.is_authenticated:
-        messages.info(request, 'Note: You must be logged in to add items to your WishList.')
+    # if not request.user.is_authenticated:
+    #     messages.info(request, 'Note: You must be logged in to add items to your WishList.')
     product = get_object_or_404(Product, product_id=product_id)
     try:
         context['heart_val'] = heart_val = WishList.objects.get(product=product, customer=request.user).heart_val
