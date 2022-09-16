@@ -218,8 +218,8 @@
     <!-- Script to add/remove to/from wishlist -->
     <script>
         let wishlist = document.getElementById('wishlist');
-        {% if request.user.is_authenticated %}
         wishlist.addEventListener('click', function (){wishListFunc()});
+        {% if request.user.is_authenticated %}
         function wishListFunc() {
             if (wishlist.classList.contains('far')) {
                 wishlist.setAttribute('class', 'fas fa-heart text-primary');
@@ -260,6 +260,7 @@
         {% else %}
         let alertDanger = document.querySelector('.alert-info');
         alertDanger.style.display = 'block';
+        alertDanger.style.font-weight = 'bold';
         alertDanger.innerHTML = 'Note: You must be logged in to add items to your WishList.';
         {% endif %}
     </script>
