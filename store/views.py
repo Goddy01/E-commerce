@@ -209,7 +209,7 @@ def just_arrived(request):
     context = {}
     products = Product.objects.all()
 
-    context['latest_products'] = pagination(request, sorted(products, key=attrgetter('date_added'), reverse=True), 9)
+    context['latest_products'] = pagination(request, products, 9)
     return render(request, 'store/just_arrived.html', context)
 
 def add_to_cart(request, product_id):
