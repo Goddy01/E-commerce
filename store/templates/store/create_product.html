@@ -20,7 +20,7 @@
     {% endif %}
 </div>
 <link rel="stylesheet" href="{% static 'css/jupyter-pattern.css' %}">
-<div class="w-100 mx-auto bg-white" style="padding: 4rem 1rem;margin-top: 10rem;margin-bottom: 5rem;color: black;">
+<div class="w-100 mx-auto bg-white" style="padding: 2rem 1rem;margin-bottom: 5rem;color: black;">
     <h2 style="text-align: center; margin-bottom: 4rem">Want to sell a product?</h2>
     <form method="post" action="{% url 'add-product' %}" enctype="multipart/form-data">
         {% csrf_token %}
