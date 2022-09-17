@@ -3,6 +3,11 @@
 {% block title %}Shop{% endblock title %}
 
 {% block content %}
+<style>
+    .category {
+        margin-bottom: 6rem;
+    }
+</style>
 
     <div class="container-fluid bg-secondary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
@@ -16,11 +21,11 @@
     </div>
     <!-- Shop Start -->
     <div class="container-fluid pt-5">
-        <div class="men mb-5">
+        <div class="category">
             <div class="text-center mb-2">
                 <h2 class="section-title px-5"><span class="px-2">Men's Category</span></h2>
             </div>
-            <div class="row px-xl-5 pb-3">
+            <div class="row px-xl-5 pb-1">
                 {% for l_product in m %}
                     
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
@@ -34,11 +39,11 @@
             </div>
         </div>
 
-        <div class="women mb-5 mt-3">
+        <div class="category">
             <div class="text-center mb-2">
                 <h2 class="section-title px-5"><span class="px-2">Women's Category</span></h2>
             </div>
-            <div class="row px-xl-5 pb-3">
+            <div class="row px-xl-5 pb-1">
                 {% for l_product in w %}
                     
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
@@ -52,11 +57,11 @@
             </div>
         </div>
 
-        <div class="m-c mb-5 mt-3">
+        <div class="category">
             <div class="text-center mb-2">
                 <h2 class="section-title px-5"><span class="px-2">Male Children's Category</span></h2>
             </div>
-            <div class="row px-xl-5 pb-3">
+            <div class="row px-xl-5 pb-1">
                 {% for l_product in m_c %}
                     
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
@@ -70,11 +75,11 @@
             </div>
         </div>
 
-        <div class="f-c mb-5 mt-3">
+        <div class="category">
             <div class="text-center mb-2">
                 <h2 class="section-title px-5"><span class="px-2">Female Children's Category</span></h2>
             </div>
-            <div class="row px-xl-5 pb-3">
+            <div class="row px-xl-5 pb-1">
                 {% for l_product in f_c %}
                     
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
