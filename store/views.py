@@ -298,8 +298,8 @@ def add_to_cart(request, product_id):
     return render(request, 'store/detail.html', context)
 
 def add_to_wishlist(request, product_id):
-    if not request.user.is_authenticated:
-        messages.info(request, 'Note: You must be logged in to add items to your WishList.')
+    # if not request.user.is_authenticated:
+    #     messages.info(request, 'Note: You must be logged in to add items to your WishList.')
     
     product = Product.objects.get(product_id=product_id)
     customer = Customer.objects.get(email=request.user.email)
