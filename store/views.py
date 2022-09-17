@@ -126,6 +126,7 @@ def add_product_view(request):
             obj.seller = request.user
             obj.save()
             messages.success(request, 'Product has been added to store.')
+            return redirect('v_dashboard')
         # else:
         #     return HttpResponse('buggy')
         else:
@@ -732,6 +733,7 @@ def update_product(request, product_id):
         if update_product_form.is_valid():
             update_product_form.save()
             messages.success(request, 'The product has been updated.')
+            return redirect('v_dashboard')
         else:
             messages.error(request, 'There was error in the form.')
     update_product_form = UpdateProductForm(instance=request.user, initial= {
