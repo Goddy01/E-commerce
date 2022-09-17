@@ -684,8 +684,8 @@ def vendor_product_detail(request, product_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    if request.user != product.seller:
-        return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    # if request.user != product.seller:
+    #     return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     product = Product.objects.get(product_id=product_id)
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
