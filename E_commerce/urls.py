@@ -37,12 +37,13 @@ from store.views import (
     men_category,women_category,
     male_children_category, female_children_category,
     no_search, billing_address,
-    make_payment
+    make_payment, shop
     )
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("paystack", include(("paystack.frameworks.django.urls", 'paystack'),namespace='paystack')),
     path('', home_page, name='home'),
+    path('shop/', shop, name='shop'),
     path('make-payment/', make_payment, name='make-payment'),
     path('add_to_cart/<product_id>/', add_to_cart, name='add_to_cart'),
     path('just_arrived_products/', just_arrived, name='just_arrived'),
