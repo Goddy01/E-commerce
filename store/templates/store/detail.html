@@ -216,9 +216,9 @@
     <!-- Products End -->
 
     <!-- Script to add/remove to/from wishlist -->
+    {% if request.user.is_authenticated %}
     <script>
         let wishlist = document.getElementById('wishlist');
-        {% if request.user.is_authenticated %}
         wishlist.addEventListener('click', function (){wishListFunc()});
         function wishListFunc() {
             if (wishlist.classList.contains('far')) {
@@ -257,11 +257,17 @@
             }
             // End Ajax
         })
-        {% else %}
+    </script>
+    {% else %}
+    <script>
+        let noWishlist = document.getElementById('wishlist');
+        noWishlist.addEventListener('click', function (){noWishListFunc()});
+        function noWishListFunc() {
         let alertInfo = document.querySelector('.alert-info');
         alertInfo.style.display = 'block';
-        {% endif %}
+        }
     </script>
+    {% endif %}
 
 <!-- Script for rating products -->
 <script>
