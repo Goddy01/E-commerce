@@ -31,9 +31,9 @@ from Accounts.models import Vendor
 
 def make_payment(request):
     vendors = Vendor.objects.all()
-    for vendor in vendors:
-        if vendor.username == request.user.username:
-            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
+    # for vendor in vendors:
+    if request.user in vendors:
+        return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     if request.user.is_authenticated:
         order = Order.objects.filter(customer__email=request.user.email).order_by('-id').first()
         if order.total_order_price is None:
@@ -141,9 +141,9 @@ def vendor_dashboard(request):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username != request.user.username:
-            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    # for vendor in vendors:
+    if request.user not in vendors:
+        return HttpResponse('You cannot access this page because you are not a vendor.')
     vendor_username = request.user.username
     vendor = Vendor.objects.get(username=vendor_username)
     vendor_products = Product.objects.filter(seller=vendor)
@@ -155,9 +155,10 @@ def billing_address(request, transaction_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username != request.user.username:
-            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    # order = 
+    # for vendor in vendors:
+    if request.user not in vendors:
+        return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     # order = Order.objects.get(transaction_id=transaction_id)
     try:
         billing_address = BillingAddress.objects.get(order__transaction_id=transaction_id)
@@ -170,9 +171,9 @@ def customer_dashboard(request):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username == request.user.username:
-            return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
+    # for vendor in vendors:
+    if request.user not in customers:
+        return HttpResponse("You must create a Customer Account to be able to access customers' privileges.")
     completed_orders = OrderItem.objects.filter(order__customer__username=request.user.username, order__complete=True)
     
     uncompleted_orders = OrderItem.objects.filter(order__customer__username=request.user.username, order__complete=False)
@@ -678,12 +679,12 @@ def all_reviews(request, product_id):
     return render(request, 'store/all_reviews.html', {'all_reviews': reviews, 'reviews_counter': product.num_of_reviews, })
 
 def vendor_product_detail(request, product_id):
+    product = Product.objects.get(product_id=product_id)
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username != request.user.username:
-            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    if request.user != product.seller:
+        return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     product = Product.objects.get(product_id=product_id)
     reviews = product.review_set.all()
     reviews = sorted(reviews, key=attrgetter('created_on'), reverse=True)
@@ -723,9 +724,9 @@ def update_product(request, product_id):
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username != request.user.username:
-            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    # for vendor in vendors:
+    if product.seller != request.user:
+        return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     if request.method == 'POST':
         update_product_form = UpdateProductForm(request.POST or None, request.FILES or None, instance=product)
         if update_product_form.is_valid():
@@ -749,12 +750,13 @@ def update_product(request, product_id):
     return render(request, 'store/update_product.html', {'product': product, 'update_product_form': update_product_form,})
 
 def delete_product(request, product_id):
+    product = Product.objects.get(product_id=product_id)
     vendors = Vendor.objects.all()
     if not request.user.is_authenticated:
         return redirect('user:must_auth')
-    for vendor in vendors:
-        if vendor.username != request.user.username:
-            return HttpResponse('You cannot access this page because you are not the vendor of this product.')
+    # for vendor in vendors:
+    if request.user != product.seller:
+        return HttpResponse('You cannot access this page because you are not the vendor of this product.')
     
     product = Product.objects.get(product_id=product_id)
     product.delete()
