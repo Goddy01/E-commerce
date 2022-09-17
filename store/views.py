@@ -206,10 +206,10 @@ def home_page(request):
     return render(request, 'store/index.html', context)
 
 def shop(request):
-    m = Product.objects.filter(product_categories=['M'])
-    w = Product.objects.filter(product_categories=['W'])
-    m_c = Product.objects.filter(product_categories=['MC'])
-    f_c = Product.objects.filter(product_categories=['FC'])
+    m = Product.objects.filter(product_categories=['M'])[:3]
+    w = Product.objects.filter(product_categories=['W'])[:3]
+    m_c = Product.objects.filter(product_categories=['MC'])[:3]
+    f_c = Product.objects.filter(product_categories=['FC'])[:3]
     return render(request, 'store/shop.html', {'m':m, 'w':w, 'm_c':m_c, 'f_c':f_c})
 
 def just_arrived(request):
