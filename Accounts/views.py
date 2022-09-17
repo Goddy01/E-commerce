@@ -50,7 +50,7 @@ def customer_reg_view(request):
         #     msg = 'Form is Invalid!'
         else:
             for error in form.errors.as_data():
-                messages.error(request, f'{error}')
+                # messages.error(request, f'{error}')
                 messages.error(request, f'{error}')
     else:
         form = CustomerRegForm()
