@@ -15,7 +15,68 @@
         </div>
     </div>
     <!-- Shop Start -->
-    
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Men's Category</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            {% for l_product in m %}
+                
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    {% include '../snippets/product_card.html' %}
+                </div>
+                
+            {% endfor %}
+            <div class="mx-auto">
+                <a href="{% url 'just_arrived' %}" class="bg-primary p-2 text-light text-decoration-none">View All</a>
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Women's Category</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            {% for l_product in w %}
+                
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    {% include '../snippets/product_card.html' %}
+                </div>
+                
+            {% endfor %}
+            <div class="mx-auto">
+                <a href="{% url 'just_arrived' %}" class="bg-primary p-2 text-light text-decoration-none">View All</a>
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Male Children's Category</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            {% for l_product in m_c %}
+                
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    {% include '../snippets/product_card.html' %}
+                </div>
+                
+            {% endfor %}
+            <div class="mx-auto">
+                <a href="{% url 'just_arrived' %}" class="bg-primary p-2 text-light text-decoration-none">View All</a>
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Female Children's Category</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            {% for l_product in f_c %}
+                
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    {% include '../snippets/product_card.html' %}
+                </div>
+                
+            {% endfor %}
+            <div class="mx-auto">
+                <a href="{% url 'just_arrived' %}" class="bg-primary p-2 text-light text-decoration-none">View All</a>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock content %}
