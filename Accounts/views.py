@@ -8,6 +8,7 @@ from .forms import (
 from .models import User
 from store.models import Order, OrderItem
 from phonenumber_field.phonenumber import PhoneNumber
+from django.contrib import messages
 import phonenumbers
 # Create your views here.
 def customer_reg_view(request):
@@ -45,8 +46,12 @@ def customer_reg_view(request):
             login(request, raw_user)
             request.session['device'] = []
             return redirect('home')
+        # else:
+        #     msg = 'Form is Invalid!'
         else:
-            msg = 'Form is Invalid!'
+            for error in form.errors:
+                messages.error(request, f'{error}')
+                messages.error(request, f'{error.as_data()}')
     else:
         form = CustomerRegForm()
     return render(request, 'Accounts/register.html', {
