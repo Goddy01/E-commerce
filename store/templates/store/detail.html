@@ -4,7 +4,7 @@
 
 {% block content %}
     {% include 'messages.html' %}
-    <p class="alert alert-info" role="alert" style="display: none;font-weight: bold;"></p>
+    <p class="alert alert-info" role="alert" style="display: none;font-weight: bold;">Note: You must be logged in to add items to your WishList.</p>
         <div class="container-fluid bg-secondary mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
                 <h1 class="font-weight-semi-bold text-uppercase mb-3">Shop Detail</h1>
@@ -218,6 +218,7 @@
     <!-- Script to add/remove to/from wishlist -->
     <script>
         let wishlist = document.getElementById('wishlist');
+        {% if request.user.is_authenticated %}
         wishlist.addEventListener('click', function (){wishListFunc()});
         function wishListFunc() {
             if (wishlist.classList.contains('far')) {
@@ -256,6 +257,10 @@
             }
             // End Ajax
         })
+        {% else %}
+        let alertInfo = document.querySelector('.alert-info');
+        alertInfo.style.display = 'block';
+        {% endif %}
     </script>
 
 <!-- Script for rating products -->
