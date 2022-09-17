@@ -205,6 +205,13 @@ def home_page(request):
     context['latest_products'] = sorted(recently_added_products, key=attrgetter('date_added'), reverse=True)[:6]
     return render(request, 'store/index.html', context)
 
+def shop(request):
+    m = Product.objects.filter(product_categories=['M'])
+    w = Product.objects.filter(product_categories=['W'])
+    m_c = Product.objects.filter(product_categories=['MC'])
+    f_c = Product.objects.filter(product_categories=['FC'])
+    return render(request, 'store/shop.html', {'m':m, 'w':w, 'm_c':m_c, 'f_c':f_c})
+
 def just_arrived(request):
     context = {}
     products = Product.objects.all()
