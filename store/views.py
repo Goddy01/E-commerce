@@ -263,6 +263,7 @@ def add_to_cart(request, product_id):
             sum_qty = 0
             for i in OrderItem.objects.filter(order=order, product=product):
                 sum_qty += i.quantity
+            # if orderitemform.cleaned_data['quantity'] is not None:
             sum_qty = orderitemform.cleaned_data['quantity'] + sum_qty
             # 
             if orderitem.product.number_available == 0:
