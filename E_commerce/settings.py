@@ -39,9 +39,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-
-ALLOWED_HOSTS = ['summit.up.railway.app']
-CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app', ]
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['summit.up.railway.app']
+# CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app', ]
 
 # Application definition
 
