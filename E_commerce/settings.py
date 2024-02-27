@@ -40,8 +40,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['summit-shop.up.railway.app']
-CSRF_TRUSTED_ORIGINS=['https://summit-shop.up.railway.app']
+ALLOWED_HOSTS = ['summit.up.railway.app']
+CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app']
 
 # Application definition
 
