@@ -40,8 +40,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['e-commerce-blond-iota.vercel.app', 'e-commerce-git-main-godwin-adiguns-projects.vercel.app', 'e-commerce-pspxbhe9f-godwin-adiguns-projects.vercel.app']
-CSRF_TRUSTED_ORIGINS=['https://e-commerce-blond-iota.vercel.app', 'https://e-commerce-git-main-godwin-adiguns-projects.vercel.app', 'https://e-commerce-pspxbhe9f-godwin-adiguns-projects.vercel.app']
+ALLOWED_HOSTS = ['summit-shop.up.railway.app']
+CSRF_TRUSTED_ORIGINS=['https://summit-shop.up.railway.app']
 
 # Application definition
 
