@@ -40,8 +40,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 
-ALLOWED_HOSTS = ['e-commerce-wpqc.onrender.com/']
-CSRF_TRUSTED_ORIGINS=['https://e-commerce-wpqc.onrender.com/', ]
+ALLOWED_HOSTS = ['e-commerce-wpqc.onrender.com']
+CSRF_TRUSTED_ORIGINS=['https://e-commerce-wpqc.onrender.com', ]
 
 # Application definition
 
@@ -146,7 +146,7 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=f"postgresql://{os.environ.get('PGUSER')}:{os.environ.get('PGPASSWORD')}@{os.environ.get('PGHOST')}:{os.environ.get('PGPORT')}/{os.environ.get('PGDATABASE')}", conn_max_age=600)
+    'default': dj_database_url.config(default=os.environ.get('DB_PUBLIC_URL'), conn_max_age=600)
 }
     
 
