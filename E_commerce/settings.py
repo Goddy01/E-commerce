@@ -40,8 +40,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 
-ALLOWED_HOSTS = ['summit.up.railway.app']
-CSRF_TRUSTED_ORIGINS=['https://summit.up.railway.app', ]
+ALLOWED_HOSTS = ['e-commerce-wpqc.onrender.com/']
+CSRF_TRUSTED_ORIGINS=['https://e-commerce-wpqc.onrender.com/', ]
 
 # Application definition
 
